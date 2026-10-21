@@ -141,13 +141,22 @@ def parse_race_id(race_id: str) -> tuple[str, date, int]:
     if len(parts) != 3:
         raise ValueError(f"bad race id: {race_id!r}")
     code, ymd, num = parts
-    if not code or not code.isalnum() or len(ymd) != 8 or not ymd.isdigit() or not num.isdigit():
+    if (not code or not code.isalnum() or code != code.upper() or len(ymd) != 8 or not ymd.isdigit()
+            or not num.isdigit() or num != str(int(num))):
         raise ValueError(f"bad race id: {race_id!r}")
-    return code, datetime.strptime(ymd, "%Y%m%d").date(), int(num)
+    return code, _ymd(ymd, race_id), int(num)
+
+
+def _ymd(ymd: str, whole: str) -> date:
+    try:
+        return datetime.strptime(ymd, "%Y%m%d").date()
+    except ValueError:
+        raise ValueError(f"bad date in id: {whole!r}") from None
 
 
 def parse_track_id(track_id: str) -> tuple[str, date]:
     parts = track_id.split("-")
-    if len(parts) != 2 or not parts[0].isalnum() or len(parts[1]) != 8 or not parts[1].isdigit():
+    if (len(parts) != 2 or not parts[0].isalnum() or parts[0] != parts[0].upper() or len(parts[1]) != 8
+            or not parts[1].isdigit()):
         raise ValueError(f"bad track id: {track_id!r}")
-    return parts[0], datetime.strptime(parts[1], "%Y%m%d").date()
+    return parts[0], _ymd(parts[1], track_id)

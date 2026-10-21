@@ -12,6 +12,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.middleware.gzip import GZipMiddleware
 from starlette.concurrency import run_in_threadpool
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.trustedhost import TrustedHostMiddleware
@@ -42,8 +43,9 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
     # The API has no auth (personal, loopback-only). Two guards stop other
     # websites from using it through the user's browser: reject foreign Host
     # headers (DNS rebinding) and foreign Origins on writes (CSRF).
+    app.add_middleware(GZipMiddleware, minimum_size=1024)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
-    local_origins = {f"http://{h}:{p}" for h in ("127.0.0.1", "localhost") for p in (8765, 5173, 4173)}
+    loopback_origin = re.compile(r"^http://(127\.0\.0\.1|localhost)(:\d{1,5})?$")
 
     def svc() -> Service:
         if "svc" not in state:
@@ -80,7 +82,7 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
     async def _headers(request: Request, call_next):
         if request.method not in ("GET", "HEAD", "OPTIONS"):
             origin = request.headers.get("origin")
-            if origin and origin not in local_origins:
+            if origin and not loopback_origin.match(origin):
                 return JSONResponse({"error": "forbidden_origin", "detail": "cross-site request refused"}, status_code=403)
         resp = await call_next(request)
         resp.headers.setdefault("X-Content-Type-Options", "nosniff")
@@ -88,6 +90,8 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
         resp.headers.setdefault("X-Frame-Options", "DENY")
         if request.url.path.startswith("/api/"):
             resp.headers.setdefault("Cache-Control", "no-store")
+        elif request.url.path.startswith("/assets/"):
+            resp.headers.setdefault("Cache-Control", "public, max-age=31536000, immutable")
         else:
             resp.headers.setdefault(
                 "Content-Security-Policy",

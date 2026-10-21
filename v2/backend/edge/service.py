@@ -308,7 +308,9 @@ class Service:
             raise BadRequest("stake must be a number") from None
         if not math.isfinite(stake) or not (0.01 <= stake <= 100_000):
             raise BadRequest("stake must be between $0.01 and $100,000")
-        t, r, _ = self.race(str(body.get("race_id", "")))
+        if not body.get("race_id"):
+            raise BadRequest("race_id is required")
+        t, r, _ = self.race(str(body["race_id"]))
         if r.status != RaceStatus.OPEN:
             raise BadRequest("betting on this race is closed")
         pred = self.predict(r)
@@ -370,8 +372,20 @@ class Service:
         }
 
     def delete_ticket(self, tid: str) -> None:
-        if not self.store.delete_ticket(tid):
+        """Withdraw a paper ticket — only while betting is still open, so a
+        losing ticket can't be dropped from the record after the off."""
+        t = self.store.ticket(tid)
+        if t is None or t["status"] != "open":
             raise NotFound("no open ticket with that id")
+        post = datetime.fromisoformat(t["post_time"]) if t.get("post_time") else None
+        try:
+            _, race, _ = self.race(t["race_id"])
+            closed = race.status != RaceStatus.OPEN
+        except (NotFound, SourceError):
+            closed = post is not None and self.source.now() >= post
+        if closed:
+            raise BadRequest("betting on this race has closed; the ticket stays on the record")
+        self.store.delete_ticket(tid)
 
     # ------------------------------------------------------------- results
     def _on_result(self, race: Race) -> None:
