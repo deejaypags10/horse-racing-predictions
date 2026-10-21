@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS tickets (
     status       TEXT NOT NULL DEFAULT 'open',   -- open | won | lost | void
     payout       REAL,
     closing_odds REAL,
-    settled_at   TEXT
+    settled_at   TEXT,
+    breed        TEXT
 );
 CREATE INDEX IF NOT EXISTS tickets_race ON tickets(race_id);
 """
@@ -71,6 +72,9 @@ class Store:
         self._conn = sqlite3.connect(str(path), check_same_thread=False, isolation_level=None)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(SCHEMA)
+        cols = {r[1] for r in self._conn.execute("PRAGMA table_info(tickets)")}
+        if "breed" not in cols:  # v2.0 databases created before the column existed
+            self._conn.execute("ALTER TABLE tickets ADD COLUMN breed TEXT")
 
     @contextmanager
     def tx(self) -> Iterator[sqlite3.Connection]:
@@ -136,11 +140,11 @@ class Store:
         with self.tx() as c:
             c.execute(
                 """INSERT INTO tickets(id, created_at, race_id, track_name, race_number, post_time, kind, selection,
-                   stake, odds_taken, model_prob, fair_decimal, model, note)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                   stake, odds_taken, model_prob, fair_decimal, model, note, breed)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (tid, _now(), t["race_id"], t["track_name"], t["race_number"], t.get("post_time"), t["kind"],
                  json.dumps(t["selection"]), t["stake"], t.get("odds_taken"), t.get("model_prob"),
-                 t.get("fair_decimal"), t.get("model"), t.get("note")))
+                 t.get("fair_decimal"), t.get("model"), t.get("note"), t.get("breed")))
         return self.ticket(tid)  # type: ignore[return-value]
 
     def ticket(self, tid: str) -> dict | None:

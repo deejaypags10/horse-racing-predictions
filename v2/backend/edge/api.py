@@ -13,6 +13,7 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .config import Settings
@@ -65,6 +66,11 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
     @app.exception_handler(BadRequest)
     async def _br(_: Request, exc: BadRequest):
         return JSONResponse({"error": "bad_request", "detail": str(exc)}, status_code=400)
+
+    @app.exception_handler(StarletteHTTPException)
+    async def _http(_: Request, exc: StarletteHTTPException):
+        code = {400: "bad_request", 404: "not_found", 415: "unsupported_media_type"}.get(exc.status_code, "error")
+        return JSONResponse({"error": code, "detail": exc.detail}, status_code=exc.status_code)
 
     @app.exception_handler(SourceError)
     async def _se(_: Request, exc: SourceError):

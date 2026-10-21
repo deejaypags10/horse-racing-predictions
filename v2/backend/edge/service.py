@@ -282,8 +282,12 @@ class Service:
         }
 
     def _track_dto(self, t: Track) -> dict:
+        link = None
+        if self.live:
+            ref = t.provider_ref
+            link = f"https://www.twinspires.com/bet/program/classic/{ref.get('slug')}/{ref.get('code')}/{ref.get('type')}/1/advanced"
         return {"id": t.id, "code": t.code, "name": t.name, "breed": t.breed.value, "country": t.country,
-                "date": t.card_date.isoformat(), "race_count": t.race_count}
+                "date": t.card_date.isoformat(), "race_count": t.race_count, "deep_link": link}
 
     # ------------------------------------------------------------- tickets
     def create_ticket(self, body: dict) -> dict:
@@ -338,6 +342,7 @@ class Service:
         note = str(body.get("note") or "")[:280] or None
         return self.store.add_ticket({
             "race_id": r.id, "track_name": t.name, "race_number": r.number, "post_time": _iso(r.post_time),
+            "breed": r.breed.value,
             "kind": kind, "selection": sel, "stake": stake, "odds_taken": odds_taken,
             "model_prob": model_prob, "fair_decimal": (1.0 / model_prob) if model_prob else None,
             "model": pred.model_version, "note": note,
@@ -351,6 +356,7 @@ class Service:
         returned = sum(x["payout"] or 0 for x in settled)
         clvs = [x["clv"] for x in map(_with_clv, settled) if x.get("clv") is not None]
         return {
+            "now": _iso(self.source.now()),
             "tickets": [_with_clv(x) for x in tickets],
             "summary": {
                 "count": len(tickets), "settled": len(settled), "open": sum(1 for x in tickets if x["status"] == "open"),
@@ -444,6 +450,7 @@ class Service:
     def status(self) -> dict:
         h = self.source.health()
         return {
+            "now": _iso(self.source.now()),
             "source": self.source.name, "live": self.live, "ok": h.get("ok", True),
             "replay_date": h.get("replay_date"), "detail": h.get("detail"),
             "last_success": h.get("last_success"), "recent_errors": h.get("recent_errors", []),
