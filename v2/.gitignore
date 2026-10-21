@@ -1,0 +1,7 @@
+var/
+web/node_modules/
+web/dist/
+*.sqlite3*
+__pycache__/
+*.egg-info/
+.pytest_cache/
