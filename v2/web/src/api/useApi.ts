@@ -52,18 +52,26 @@ export function useApi<T>(
     const ctl = new AbortController();
     let timer: number | undefined;
     let stopped = false;
+    let inFlight = false;
 
     const schedule = () => {
+      window.clearTimeout(timer); // exactly one pending timer at a time
+      timer = undefined;
       const iv = intervalRef.current;
       const ms = typeof iv === 'function' ? iv(dataRef.current) : iv;
       if (!ms || stopped) return;
       timer = window.setTimeout(() => {
+        timer = undefined;
         if (document.hidden) return; // resumes on visibilitychange
         void run();
       }, ms);
     };
 
     const run = async () => {
+      if (inFlight || stopped) return; // never overlap fetches
+      inFlight = true;
+      window.clearTimeout(timer);
+      timer = undefined;
       setRefreshing(true);
       try {
         const d = await fetcherRef.current(ctl.signal);
@@ -76,6 +84,7 @@ export function useApi<T>(
         if (stopped || (e as Error).name === 'AbortError') return;
         setError(e instanceof ApiError ? e : new ApiError(0, 'unknown', 'Something went wrong.'));
       } finally {
+        inFlight = false;
         if (!stopped) {
           setLoading(false);
           setRefreshing(false);
@@ -86,7 +95,6 @@ export function useApi<T>(
 
     const onVis = () => {
       if (!document.hidden) {
-        window.clearTimeout(timer);
         void run();
       }
     };

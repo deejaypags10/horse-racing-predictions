@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { api } from '../api/client';
+import { api, errorText } from '../api/client';
 import type { TrackRace, TrackResponse } from '../api/types';
 import { useApi } from '../api/useApi';
 import { Cloth } from '../components/Cloth';
@@ -33,7 +33,8 @@ export function TrackPage() {
   const { trackId = '' } = useParams();
   const nav = useNavigate();
   const board = useBoard();
-  const { togglePin, isPinned } = useSettings();
+  const { togglePin, isPinned, settings } = useSettings();
+  const showValue = settings.valueFlags && !settings.coolOff;
   const tableRef = useRef<HTMLTableElement>(null);
   const st = useApi<TrackResponse>(`track:${trackId}`, (s) => api.track(trackId, s), 60_000);
   const d = st.data;
@@ -68,13 +69,13 @@ export function TrackPage() {
 
   return (
     <>
-      <NextUpStrip items={board.data?.next_up ?? null} loading={board.loading} />
+      <NextUpStrip items={board.data?.next_up ?? null} loading={board.loading} error={!!board.error} />
       <div className="page track">
         <Link to="/" className="back-link">‹ Today</Link>
         {st.loading && <SkeletonRows rows={10} cols={[8, 14, 40, 16]} height={40} label="Loading the card" />}
         {st.error && !d && (
           <InlineError title="Couldn't load this card." onRetry={st.refresh} back={{ to: '/', label: 'Go to Today' }} error={st.error}>
-            {st.error.isOutage ? 'The data source didn’t respond.' : st.error.message}
+            {errorText(st.error, false)}
           </InlineError>
         )}
         {d && (
@@ -90,14 +91,16 @@ export function TrackPage() {
                 <button type="button" className="btn btn-secondary pin-btn" aria-pressed={pinned} onClick={() => togglePin(d.track.code)}>
                   <IconStar filled={pinned} /> {pinned ? 'Pinned' : 'Pin track'}
                 </button>
-                {replay && (
-                  <button type="button" className="btn btn-secondary" disabled title="Replay — betting links are off">Bet on TwinSpires ↗</button>
+                {d.track.deep_link ? (
+                  <a className="btn btn-secondary" href={d.track.deep_link} target="_blank" rel="noopener noreferrer" title="Opens this card on TwinSpires in a new tab. Equine Edge doesn't place bets.">Bet on TwinSpires <span aria-hidden="true">↗</span></a>
+                ) : (
+                  <button type="button" className="btn btn-secondary" disabled title={replay ? 'Replay — betting links are off' : 'No TwinSpires link for this card'}>Bet on TwinSpires <span aria-hidden="true">↗</span></button>
                 )}
               </div>
             </header>
-            {st.error && <p className="stale-note" role="status">Couldn't refresh. Showing the card as of {fmtTime(st.updatedAt)}.</p>}
+            {st.error && <p className="stale-note" role="status">{errorText(st.error, true).replace(/\.$/, '')} from {fmtTime(st.updatedAt)}.</p>}
             {!anyLive && races.some((r) => r.status === 'open') && (
-              <p className="banner banner-muted">Tote not open yet for most races. Top picks are shown against the morning line, and overlays only appear once real tote odds exist.</p>
+              <p className="banner banner-muted">Tote not open yet for most races. Highest chances are shown against the morning line, and value flags only appear once real tote odds exist.</p>
             )}
             {races.length === 0 ? (
               <EmptyState title="Card not published yet.">TwinSpires usually posts entries by 9 AM ET.</EmptyState>
@@ -112,18 +115,18 @@ export function TrackPage() {
                       <th scope="col" className="c-mtp num" abbr="Minutes to post">MTP</th>
                       <th scope="col" className="c-cond">Conditions</th>
                       <th scope="col" className="c-purse num">Purse</th>
-                      <th scope="col" className="c-pick">Top pick</th>
-                      <th scope="col" className="c-over">Best overlay</th>
+                      <th scope="col" className="c-pick">Highest chance</th>
+                      {showValue && <th scope="col" className="c-over">Best value</th>}
                       <th scope="col" className="c-status">Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {races.map((r) => <RaceRow key={r.id} r={r} />)}
+                    {races.map((r) => <RaceRow key={r.id} r={r} showValue={showValue} />)}
                   </tbody>
                 </table>
               </div>
             )}
-            <p className="table-note">Top pick = highest model win chance. Best overlay needs live tote odds, an edge of +2.0 pts or more, and at least “Some” evidence.</p>
+            <p className="table-note">Highest chance = the runner the model rates most likely to win; not a tip. {showValue ? 'Best value needs live tote odds, a price longer than fair, an edge of +2.0 pts or more, and at least “Some” evidence.' : settings.coolOff ? 'Cool-off is on: edge and value are hidden.' : 'Value flags are off in Settings.'}</p>
           </>
         )}
       </div>
@@ -131,14 +134,14 @@ export function TrackPage() {
   );
 }
 
-function RaceRow({ r }: { r: TrackRace }) {
+function RaceRow({ r, showValue }: { r: TrackRace; showValue: boolean }) {
   const cls = r.race_class ? r.race_class : '';
   const status = statusText(r);
   return (
     <tr className={`${r.is_next ? 'is-next' : ''} st-${r.status}`}>
       <th scope="row" className="c-r">
-        <Link to={`/r/${r.id}`} className="race-link stretched" aria-label={`Race ${r.number}${r.race_name ? `, ${r.race_name}` : ''}, post ${fmtTime(r.post_time)}`}>
-          <span className="race-n">R{r.number}</span>
+        <Link to={`/r/${r.id}`} className="race-link stretched">
+          <span className="race-n">R{r.number}</span><span className="visually-hidden">, race {r.number}{r.race_name ? `, ${r.race_name}` : ''}, post {fmtTime(r.post_time)}</span>
         </Link>
       </th>
       <td className="c-post num"><time dateTime={r.post_time ?? undefined}>{fmtTime(r.post_time)}</time></td>
@@ -155,15 +158,15 @@ function RaceRow({ r }: { r: TrackRace }) {
           <span className="pick"><Cloth program={r.top_pick.program} breed={r.breed} size="sm" /> <span className="pick-p model-ink">{fmtPct(r.top_pick.p_model)}</span><span className="pick-name">{r.top_pick.name}</span></span>
         ) : <span className="muted">—</span>}
       </td>
-      <td className="c-over">
+      {showValue && <td className="c-over">
         {r.best_value ? (
-          <span className="pick"><Cloth program={r.best_value.program} breed={r.breed} size="sm" /> <span className="edge edge-over"><span aria-hidden="true">▲ {fmtEdge(r.best_value.edge_pts)}</span><span className="visually-hidden">overlay, {fmtEdge(r.best_value.edge_pts)} points</span></span></span>
-        ) : r.market !== 'live' && r.status === 'open' ? <span className="muted">ML only</span> : <span className="muted" aria-label="none">—</span>}
-      </td>
+          <span className="pick"><Cloth program={r.best_value.program} breed={r.breed} size="sm" /> <span className="edge edge-over"><span aria-hidden="true">▲ {fmtEdge(r.best_value.edge_pts)}</span><span className="visually-hidden">value, {fmtEdge(r.best_value.edge_pts)} points</span></span></span>
+        ) : r.market !== 'live' && r.status === 'open' ? <span className="muted">ML only</span> : <span className="muted">—<span className="visually-hidden">none</span></span>}
+      </td>}
       <td className="c-status">
         <span className={`status status-${r.status}`}>{status}</span>
         {r.status === 'official' && r.finish.length > 0 && (
-          <span className="finish-chips" aria-label={`Finish ${r.finish.join(', ')}`}>
+          <span className="finish-chips" role="img" aria-label={`Finish ${r.finish.join(', ')}`}>
             {r.finish.slice(0, 3).map((p) => <Cloth key={p} program={p} breed={r.breed} size="xs" label={false} />)}
           </span>
         )}

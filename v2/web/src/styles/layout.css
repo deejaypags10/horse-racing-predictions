@@ -197,6 +197,8 @@
 .nextup-list li { scroll-snap-align: start; flex: none; }
 .nextup-list li + li .nextup-item { border-left: 1px solid var(--c-rule); }
 .nextup-item {
+  position: relative; /* contains its visually-hidden description inside the scroller */
+
   display: flex;
   align-items: center;
   gap: var(--sp-2);

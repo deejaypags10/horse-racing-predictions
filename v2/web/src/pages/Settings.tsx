@@ -49,6 +49,12 @@ export function SettingsPage() {
       </fieldset>
 
       <fieldset className="set-group">
+        <legend>Edge and value</legend>
+        <Toggle label="Value flags" hint="Mark runners whose price beats the model's fair price. The flags are unvalidated until the model's blend is calibrated on recorded races, so treat them as a prompt to look, not a tip." checked={settings.valueFlags} onChange={(v) => update({ valueFlags: v })} />
+        <Toggle label="Cool-off" hint="Hide edge and value everywhere: chances and prices only. Use it when you want to watch without the urge to bet." checked={settings.coolOff} onChange={(v) => update({ coolOff: v })} />
+      </fieldset>
+
+      <fieldset className="set-group">
         <legend>Behaviour</legend>
         <Toggle label="Single-key keyboard shortcuts" hint="Turn off if you use speech input or a screen reader that conflicts." checked={settings.shortcuts} onChange={(v) => update({ shortcuts: v })} />
         <Toggle label="Colour underlays" hint="When off, negative edges are shown in neutral ink." checked={settings.showUnderlays} onChange={(v) => update({ showUnderlays: v })} />

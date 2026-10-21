@@ -41,15 +41,25 @@ describe('edge encoding', () => {
     expect(classifyEdge(-2)).toBe('under');
   });
   it('flags only a backend value overlay on live odds with evidence', () => {
-    const v = edgeView({ pts: 7.9, value: true, evidence: 'strong', priceSource: 'live' })!;
+    const v = edgeView({ pts: 7.9, value: true, evidence: 'strong', priceSource: 'live', expReturn: 0.34 })!;
     expect(v.flagged).toBe(true);
     expect(v.glyph).toBe('▲');
     expect(v.speech).toBe('overlay, plus 7.9 points');
   });
   it('never flags without the value flag', () => {
-    const v = edgeView({ pts: 4.1, value: false, evidence: 'strong', priceSource: 'live' })!;
+    const v = edgeView({ pts: 4.1, value: false, evidence: 'strong', priceSource: 'live', expReturn: 0.05 })!;
     expect(v.flagged).toBe(false);
     expect(v.glyph).toBe('△');
+  });
+  it('calls positive points without a positive return "short of fair"', () => {
+    const v = edgeView({ pts: 1.83, value: false, evidence: 'strong', priceSource: 'live', expReturn: -0.04 })!;
+    expect(v.cls).toBe('short');
+    expect(v.glyph).toBe('≈');
+    expect(v.tone).toBe('muted');
+    expect(v.label).toBe('model higher, still short of fair');
+  });
+  it('drops the filled flag when value flags are off', () => {
+    expect(edgeView({ pts: 7.9, value: true, evidence: 'strong', priceSource: 'live', expReturn: 0.34, flags: false })!.flagged).toBe(false);
   });
   it('mutes morning-line edges with no glyph', () => {
     const v = edgeView({ pts: 4.13, value: false, evidence: 'strong', priceSource: 'morning_line' })!;
@@ -58,7 +68,7 @@ describe('edge encoding', () => {
     expect(v.tone).toBe('muted');
   });
   it('hollows stale or thin-evidence edges', () => {
-    expect(edgeView({ pts: 5, value: true, evidence: 'strong', priceSource: 'live', stale: true })!.glyph).toBe('△');
+    expect(edgeView({ pts: 5, value: true, evidence: 'strong', priceSource: 'live', stale: true, expReturn: 0.2 })!.glyph).toBe('△');
     const thin = edgeView({ pts: -3, evidence: 'thin', priceSource: 'live' })!;
     expect(thin.glyph).toBe('▽');
     expect(thin.tone).toBe('muted');

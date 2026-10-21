@@ -12,6 +12,10 @@ export interface Settings {
   shortcuts: boolean;
   showUnderlays: boolean;
   sounds: boolean;
+  /** Show value (overlay) flags. Unvalidated until the blend is calibrated. */
+  valueFlags: boolean;
+  /** Cool-off: hide edge and value everywhere, leaving a plain race viewer. */
+  coolOff: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -21,6 +25,8 @@ export const DEFAULT_SETTINGS: Settings = {
   shortcuts: true,
   showUnderlays: true,
   sounds: false,
+  valueFlags: true,
+  coolOff: false,
 };
 
 const KEY = 'ee.settings';

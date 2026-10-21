@@ -245,8 +245,10 @@
   .runner-table .c-model, .runner-table .c-fair { display: none; }
   .runner-table .c-mini { grid-area: mini; display: flex; align-items: center; gap: var(--sp-3); margin: 4px 0 2px; }
   .mini-text { font-family: var(--ff-num); font-size: var(--fs-13); white-space: nowrap; }
-  .runner-table .c-edge { grid-area: edge; width: auto; text-align: left; }
+  .runner-table .c-edge { grid-area: edge; width: auto; min-width: 0; text-align: left; white-space: normal; line-height: 1.3; }
   .runner-table .c-edge .edge-word { display: inline; }
+  .runner-table .c-edge .edge { white-space: normal; }
+  .runner-table .c-edge .edge-word { font-weight: 500; }
   .runner-table .c-evid { grid-area: evid; width: auto; }
   .runner-table .c-menu { grid-area: menu; width: auto; }
   .runner-table .c-pays { grid-column: 2 / -1; width: auto; text-align: left; }
@@ -294,3 +296,36 @@
 @media (max-width: 767px) { .mtp-hero.mtp-k-far .mtp-hero-num { font-size: var(--fs-20); } }
 
 .dumbbell foreignObject .cloth { display: grid; }
+
+/* Horse name doubles as the drawer toggle (aria-expanded lives on this button). */
+.horse-toggle { background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-1); }
+.horse-toggle:hover .horse-name { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--c-rule-strong); }
+.runner-table .c-betat { width: 60px; color: var(--c-ink-2); }
+.mini-betat { color: var(--c-ink-2); }
+@media (max-width: 1023px) and (min-width: 768px) { .runner-table .c-betat { display: none; } }
+@media (min-width: 768px) { @container (max-width: 700px) { .runner-table .c-betat { display: none; } } }
+@media (max-width: 767px) {
+  .runner-table .c-betat { display: none; }
+  .mini-text { white-space: normal; text-align: right; }
+}
+.db-short { fill: var(--c-ink-3); }
+.db-end.short { fill: var(--c-ink-3); }
+.mini-db-bar.is-short { background: var(--c-ink-3); }
+
+/* Two-second verdict above the runner table. */
+.verdict {
+  display: flex; align-items: baseline; gap: var(--sp-3); flex-wrap: wrap;
+  margin: var(--sp-2) 0 var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--c-sheet);
+  border: 1px solid var(--c-rule);
+  border-left: 3px solid var(--c-ink-2);
+  font-size: var(--fs-15);
+}
+.verdict-label { font-family: var(--ff-num); font-size: var(--fs-12); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-2); }
+.verdict-text { font-family: var(--ff-num); font-variant-numeric: tabular-nums; font-weight: 600; flex: 1; min-width: 0; }
+.verdict-value { border-left-color: var(--c-over); background: var(--c-over-wash); }
+.verdict-value .verdict-label { color: var(--c-over); }
+.verdict-ml .verdict-text, .verdict-noprice .verdict-text, .verdict-hidden .verdict-text, .verdict-nomodel .verdict-text { font-weight: 500; color: var(--c-ink-2); }
+.tag-unvalidated { border: 1px dashed var(--c-ink-2); color: var(--c-ink-2); text-decoration: none; text-transform: uppercase; }
+.tag-unvalidated:hover { color: var(--c-ink); border-color: var(--c-ink); }

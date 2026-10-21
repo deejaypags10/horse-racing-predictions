@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { decimalToWire, exactFraction, fmtOdds, MINUS, oddsSpeech, parseOddsInput, toAmerican, toteFraction } from '../domain/odds';
+import { decimalToWire, exactFraction, fmtOdds, MINUS, oddsSpeech, parseOddsInput, parsePrice, parseStake, toAmerican, toteFraction } from '../domain/odds';
 
 describe('odds formatting', () => {
   it('uses the source label verbatim in fractional mode', () => {
@@ -28,16 +28,31 @@ describe('odds formatting', () => {
     expect(toAmerican(1.5)).toBe(`${MINUS}200`);
     expect(fmtOdds(null, 'american')).toBe('—');
   });
-  it('parses what users type', () => {
+  it('parses prices by the explicit rule', () => {
     expect(parseOddsInput('5-2', 'fractional')).toBe(3.5);
-    expect(parseOddsInput('9/5', 'fractional')).toBe(2.8);
-    expect(parseOddsInput('12', 'fractional')).toBe(13);
+    expect(parseOddsInput('9/5', 'american')).toBe(2.8);
+    expect(parseOddsInput('even', 'fractional')).toBe(2);
     expect(parseOddsInput('3.50', 'decimal')).toBe(3.5);
     expect(parseOddsInput('+250', 'american')).toBe(3.5);
-    expect(parseOddsInput('-200', 'american')).toBe(1.5);
-    expect(parseOddsInput('even', 'fractional')).toBe(2);
-    expect(parseOddsInput('abc', 'fractional')).toBeNull();
-    expect(parseOddsInput('0-1', 'fractional')).toBeNull();
+    expect(parseOddsInput(`${MINUS}200`, 'fractional')).toBe(1.5);
+    expect(parseOddsInput('999-1', 'fractional')).toBe(1000);
+  });
+  it('rejects ambiguous or out-of-range prices with a message', () => {
+    expect(parsePrice('12', 'fractional').error).toMatch(/Enter the price like/);
+    expect(parsePrice('3.50', 'fractional').error).toMatch(/Enter the price like/);
+    expect(parsePrice('+50', 'american').error).toMatch(/at least 100/);
+    expect(parsePrice('1000-1', 'fractional').error).toMatch(/above 999-1/);
+    expect(parsePrice('0-1', 'fractional').error).toBeTruthy();
+    expect(parsePrice('1.00', 'decimal').error).toMatch(/above 1.00/);
+    expect(parsePrice('abc', 'decimal').error).toBeTruthy();
+  });
+  it('validates stakes strictly', () => {
+    expect(parseStake('10').value).toBe(10);
+    expect(parseStake('$1,250.50').value).toBe(1250.5);
+    expect(parseStake('2abc').error).toBeTruthy();
+    expect(parseStake('0').error).toMatch(/at least/);
+    expect(parseStake('').error).toBeTruthy();
+    expect(parseStake('100001').error).toMatch(/at most/);
   });
   it('sends prices in a backend-parseable form', () => {
     expect(decimalToWire(3.5)).toBe('5-2');

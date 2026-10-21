@@ -1,14 +1,15 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { api, ApiError } from '../api/client';
+import { api, ApiError, errorText } from '../api/client';
 import type { Ticket, TicketsResponse } from '../api/types';
 import { useApi } from '../api/useApi';
 import { Cloth } from '../components/Cloth';
 import { IconTicket } from '../components/Icons';
-import { MtpCell } from '../components/Mtp';
+import { useMtp } from '../components/Mtp';
+import { fmtMtp } from '../domain/mtp';
 import { EmptyState, InlineError, SkeletonRows } from '../components/States';
 import { Stamp } from '../components/Stamp';
-import { fmtMoney, fmtRoi, fmtShortDate, fmtSigned, plural } from '../domain/format';
+import { fmtMoney, fmtRoi, fmtShortDate, fmtSigned, fmtTime, plural } from '../domain/format';
 import { fmtOdds } from '../domain/odds';
 import { serverNow } from '../domain/clock';
 import { useSettings } from '../state/settings';
@@ -33,8 +34,8 @@ export function TicketsPage() {
     const all = st.data?.tickets ?? [];
     if (range === 'all') return all;
     const days = range === '7d' ? 7 : 30;
-    const cutoff = Date.now() - days * 86_400_000;
-    return all.filter((t) => Date.parse(t.created_at) >= cutoff);
+    const cutoff = serverNow() - days * 86_400_000;
+    return all.filter((t) => Date.parse(raceDate(t)) >= cutoff - 86_400_000);
   }, [st.data, range]);
 
   const setRange = (r: Range) => {
@@ -47,15 +48,29 @@ export function TicketsPage() {
   const open = tickets.filter((t) => t.status === 'open');
   const settled = tickets.filter((t) => t.status !== 'open').sort((a, b) => Date.parse(b.settled_at ?? b.created_at) - Date.parse(a.settled_at ?? a.created_at));
 
+  const openHeading = useRef<HTMLHeadingElement>(null);
+  const pendingFocus = useRef<string | null>(null);
+  // After a delete, move focus to the next open ticket's link, or the group heading.
+  useEffect(() => {
+    if (pendingFocus.current === null || !st.data) return;
+    const id = pendingFocus.current;
+    pendingFocus.current = null;
+    const el = id ? document.querySelector<HTMLElement>(`[data-ticket="${CSS.escape(id)}"] .stub-race`) : null;
+    (el ?? openHeading.current ?? document.querySelector<HTMLElement>('.tickets .page-title'))?.focus();
+  }, [st.data]);
+
   const del = async (t: Ticket) => {
     setDelErr(null);
+    const i = open.findIndex((x) => x.id === t.id);
+    const next = open[i + 1] ?? open[i - 1] ?? null;
     try {
       await api.deleteTicket(t.id);
       setConfirming(null);
       toast({ text: `Ticket ${serial(t)} deleted.` });
+      pendingFocus.current = next ? next.id : '';
       st.refresh();
     } catch (e) {
-      setDelErr(e instanceof ApiError ? e.message : 'Couldn’t delete the ticket.');
+      setDelErr(e instanceof ApiError ? `Couldn’t delete ${serial(t)}: ${sentence(e.message)}` : 'Couldn’t delete the ticket.');
     }
   };
 
@@ -63,7 +78,7 @@ export function TicketsPage() {
     <div className="page tickets">
       <header className="page-head tickets-head">
         <div>
-          <h1 className="page-title">Tickets</h1>
+          <h1 className="page-title" tabIndex={-1}>Tickets</h1>
           <p className="dateline-sub">Paper record — no real money.</p>
         </div>
         <div className="chips" role="group" aria-label="Date range">
@@ -74,7 +89,7 @@ export function TicketsPage() {
       </header>
 
       {st.loading && <SkeletonRows rows={5} label="Loading tickets" />}
-      {st.error && !st.data && <InlineError title="Couldn't load your tickets." onRetry={st.refresh} error={st.error}>Your tickets are safe in the local database. The server didn't answer.</InlineError>}
+      {st.error && !st.data && <InlineError title="Couldn't load your tickets." onRetry={st.refresh} error={st.error}>{errorText(st.error, false)} Your tickets are safe in the local database.</InlineError>}
 
       {st.data && summary && (
         <>
@@ -92,7 +107,7 @@ export function TicketsPage() {
           {delErr && <p className="form-error" role="alert">{delErr}</p>}
           {open.length > 0 && (
             <section className="stub-group" aria-label="Open tickets">
-              <h2 className="group-title"><span>Open ({open.length})</span></h2>
+              <h2 className="group-title" ref={openHeading} tabIndex={-1}><span>Open ({open.length})</span></h2>
               <ul className="stubs">
                 {open.map((t) => (
                   <Stub key={t.id} t={t} fmt={fmt}
@@ -120,6 +135,32 @@ export function TicketsPage() {
   );
 }
 
+function sentence(s: string): string {
+  const t = s.trim();
+  if (!t) return t;
+  const c = t[0].toUpperCase() + t.slice(1);
+  return /[.!?]$/.test(c) ? c : `${c}.`;
+}
+
+/** The race's own date: from post_time, else the YYYYMMDD in the race id, else when it was recorded. */
+function raceDate(t: Ticket): string {
+  if (t.post_time) return t.post_time.slice(0, 10);
+  const m = /-(\d{4})(\d{2})(\d{2})-/.exec(t.race_id);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  return t.created_at.slice(0, 10);
+}
+
+function PendingLabel({ post }: { post: string | null | undefined }) {
+  const s = useMtp(post, 'open');
+  const text = s.kind === 'mtp' ? `${fmtMtp(s)} MTP`
+    : s.kind === 'soon' ? 'under 1 MTP'
+    : s.kind === 'far' ? `post ${fmtTime(post)}`
+    : s.kind === 'atpost' ? 'at post'
+    : s.kind === 'off' ? 'race off'
+    : 'post time unknown';
+  return <span className="stub-pending">Pending · {text}</span>;
+}
+
 function serial(t: Ticket): string {
   return `EE-${t.id.slice(0, 4).toUpperCase()}`;
 }
@@ -139,18 +180,18 @@ function SummaryStrip({ s, t, all }: { s: TicketsResponse['summary']; t: Ticket[
   return (
     <dl className="summary">
       <div><dt>Tickets</dt><dd>{t.length}</dd></div>
-      <div><dt>Staked</dt><dd>{fmtMoney(staked)}</dd><span className="summary-sub">settled only</span></div>
+      <div><dt>Staked</dt><dd>{fmtMoney(staked)}</dd><dd className="summary-sub">settled only</dd></div>
       <div><dt>Returned</dt><dd>{fmtMoney(returned)}</dd></div>
       <div><dt>Net</dt><dd>{fmtMoney(net, { signed: true })}</dd></div>
       <div className="summary-wide">
         <dt>ROI</dt>
         <dd>{fmtRoi(roi)}</dd>
-        <span className="summary-sub">{n >= 10 && all && s.roi_ci ? `95%: ${fmtRoi(s.roi_ci[0])} to ${fmtRoi(s.roi_ci[1])}` : `Too few settled tickets to judge (n = ${n}).`}</span>
+        <dd className="summary-sub">{n >= 10 && all && s.roi_ci ? `95%: ${fmtRoi(s.roi_ci[0])} to ${fmtRoi(s.roi_ci[1])}` : `Too few settled tickets to judge (n = ${n}).`}</dd>
       </div>
       <div className="summary-wide">
         <dt title="Closing-line value: market chance at close minus the chance implied by your price. Beating the closing price is a better long-run skill signal than short-run profit.">Avg CLV</dt>
         <dd>{avgClv == null ? '—' : `${fmtSigned(avgClv, 1)} pts`}</dd>
-        <span className="summary-sub">{clvN ? `beat the close on ${beat} of ${clvN}` : 'win tickets with a price, once settled'}</span>
+        <dd className="summary-sub">{clvN ? `beat the close on ${beat} of ${clvN}` : 'win tickets with a price, once settled'}</dd>
       </div>
       <div><dt>Settled</dt><dd>{n} <span className="summary-of">of {t.length}</span></dd></div>
     </dl>
@@ -208,12 +249,12 @@ function Stub({ t, fmt, action }: { t: Ticket; fmt: ReturnType<typeof useSetting
   const stamp = t.status === 'won' ? `PAID ${fmtMoney(t.payout)}` : t.status === 'lost' ? 'NOT IN THE MONEY' : t.status === 'void' ? `REFUNDED ${fmtMoney(t.stake)}` : null;
   const waiting = t.status === 'open' && t.post_time && serverNow() - Date.parse(t.post_time) > 2 * 3600_000;
   return (
-    <li className={`stub stub-${t.status}`}>
-      <span className="stub-serial num" aria-label={`Ticket ${serial(t)}`}>{serial(t)}</span>
+    <li className={`stub stub-${t.status}`} data-ticket={t.id}>
+      <span className="stub-serial num"><span className="visually-hidden">Ticket </span>{serial(t)}</span>
       <Link to={`/r/${t.race_id}`} className="stub-race num" title={t.track_name}>{code} R{t.race_number}</Link>
       <span className="stub-kind">{KIND_LABEL[t.kind]}</span>
-      <span className="stub-sel" aria-label={`Selection ${t.selection.join(', ')}`}>
-        {t.selection.map((s, i) => <span key={s} className="combo-part">{i > 0 && <span className="combo-dash" aria-hidden="true" />}<Cloth program={s} size="xs" label={false} /></span>)}
+      <span className="stub-sel" role="img" aria-label={`Selection ${t.selection.join(', ')}`}>
+        {t.selection.map((s, i) => <span key={s} className="combo-part">{i > 0 && <span className="combo-dash" aria-hidden="true" />}<Cloth program={s} breed={t.breed} size="xs" label={false} /></span>)}
       </span>
       <span className="stub-stake num">{fmtMoney(t.stake)}{t.odds_taken ? <> at {fmtOdds(t.odds_taken, fmt)}</> : null}</span>
       <span className="stub-model num">Model {t.model_prob != null ? `${(t.model_prob * 100).toFixed(t.model_prob < 0.1 ? 1 : 0)}%` : '—'}</span>
@@ -221,9 +262,9 @@ function Stub({ t, fmt, action }: { t: Ticket; fmt: ReturnType<typeof useSetting
       <span className="stub-status">
         {stamp ? <Stamp>{stamp}</Stamp>
           : waiting ? <span className="muted">Waiting for official result</span>
-          : <span className="stub-pending">Pending · <MtpCell post={t.post_time} status="open" showPostWhenFar /></span>}
+          : <PendingLabel post={t.post_time} />}
       </span>
-      <span className="stub-meta num">{fmtShortDate(t.created_at.slice(0, 10))}{t.note ? ` · ${t.note}` : ''}</span>
+      <span className="stub-meta num">{fmtShortDate(raceDate(t))}{t.note ? ` · ${t.note}` : ''}</span>
       {action && <span className="stub-action">{action}</span>}
     </li>
   );

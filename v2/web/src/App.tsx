@@ -95,12 +95,13 @@ export function App() {
   const boardScreens = loc.pathname === '/' || loc.pathname.startsWith('/t/') || loc.pathname.startsWith('/r/');
 
   useEffect(() => {
-    // Keep the ribbon/lamp right even on pages that don't otherwise hit /api/status.
-    if (!net.status) api.status().catch(() => {});
-    // /api/status and /api/tickets carry no `now`; align the source clock once
-    // so replay countdowns are right on every page.
-    if (!isClockSynced() && !boardScreens) api.board().catch(() => {});
-  }, [net.status]); // eslint-disable-line react-hooks/exhaustive-deps
+    // Board screens get status (and `now`) from /api/board; elsewhere ask
+    // /api/status once so the ribbon, lamp and clock are right.
+    if (boardScreens || net.status) return;
+    api.status()
+      .then(() => { if (!isClockSynced()) return api.board(); return undefined; }) // older servers send no `now`
+      .catch(() => {});
+  }, [net.status, boardScreens]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     document.getElementById('main')?.focus({ preventScroll: true });

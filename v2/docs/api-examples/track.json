@@ -6,9 +6,10 @@
   "breed": "thoroughbred",
   "country": "USA",
   "date": "2026-06-06",
-  "race_count": 11
+  "race_count": 11,
+  "deep_link": null
  },
- "now": "2026-06-06T14:20:08+00:00",
+ "now": "2026-06-06T14:20:09+00:00",
  "races": [
   {
    "id": "CD-20260606-1",
@@ -31,8 +32,8 @@
    "top_pick": {
     "program": "5",
     "name": "Richeztoo",
-    "p_model": 0.2442,
-    "edge_pts": 4.13,
+    "p_model": 0.2453,
+    "edge_pts": 4.24,
     "evidence": "strong"
    },
    "best_value": null,
@@ -59,8 +60,8 @@
    "top_pick": {
     "program": "7",
     "name": "Yellow Sun Dress",
-    "p_model": 0.3478,
-    "edge_pts": 4.55,
+    "p_model": 0.3661,
+    "edge_pts": 6.38,
     "evidence": "strong"
    },
    "best_value": null,
@@ -87,8 +88,8 @@
    "top_pick": {
     "program": "7",
     "name": "Go Go Playmate",
-    "p_model": 0.3851,
-    "edge_pts": 2.61,
+    "p_model": 0.3903,
+    "edge_pts": 3.13,
     "evidence": "some"
    },
    "best_value": null,
@@ -115,8 +116,8 @@
    "top_pick": {
     "program": "7",
     "name": "Magicstrikesagain",
-    "p_model": 0.2544,
-    "edge_pts": -2.88,
+    "p_model": 0.2603,
+    "edge_pts": -2.29,
     "evidence": "thin"
    },
    "best_value": null,
@@ -143,9 +144,9 @@
    "top_pick": {
     "program": "2",
     "name": "I Don't Get It",
-    "p_model": 0.3546,
-    "edge_pts": 5.57,
-    "evidence": "strong"
+    "p_model": 0.3511,
+    "edge_pts": 5.22,
+    "evidence": "some"
    },
    "best_value": null,
    "finish": []
@@ -171,8 +172,8 @@
    "top_pick": {
     "program": "10",
     "name": "Let's Be Frank",
-    "p_model": 0.3185,
-    "edge_pts": 16.73,
+    "p_model": 0.2897,
+    "edge_pts": 13.84,
     "evidence": "strong"
    },
    "best_value": null,
@@ -199,8 +200,8 @@
    "top_pick": {
     "program": "10",
     "name": "Couplet",
-    "p_model": 0.3205,
-    "edge_pts": -0.31,
+    "p_model": 0.3237,
+    "edge_pts": 0.0,
     "evidence": "thin"
    },
    "best_value": null,
@@ -227,8 +228,8 @@
    "top_pick": {
     "program": "4",
     "name": "Sumood",
-    "p_model": 0.2941,
-    "edge_pts": 10.51,
+    "p_model": 0.2951,
+    "edge_pts": 10.6,
     "evidence": "strong"
    },
    "best_value": null,
@@ -255,8 +256,8 @@
    "top_pick": {
     "program": "10",
     "name": "Madaket Road",
-    "p_model": 0.2091,
-    "edge_pts": -7.04,
+    "p_model": 0.3692,
+    "edge_pts": 8.97,
     "evidence": "strong"
    },
    "best_value": null,
@@ -283,8 +284,8 @@
    "top_pick": {
     "program": "2",
     "name": "Troubleshooting",
-    "p_model": 0.2002,
-    "edge_pts": 4.44,
+    "p_model": 0.2482,
+    "edge_pts": 9.24,
     "evidence": "strong"
    },
    "best_value": null,
@@ -311,8 +312,8 @@
    "top_pick": {
     "program": "3",
     "name": "Wrong Shoes",
-    "p_model": 0.3194,
-    "edge_pts": 14.4,
+    "p_model": 0.3374,
+    "edge_pts": 16.2,
     "evidence": "strong"
    },
    "best_value": null,
@@ -320,6 +321,7 @@
   }
  ],
  "status": {
+  "now": "2026-06-06T14:20:09+00:00",
   "source": "archive",
   "live": false,
   "ok": true,
@@ -327,9 +329,9 @@
   "detail": "Replaying recorded TVG cards from the repository archive.",
   "last_success": null,
   "recent_errors": [],
-  "model_version": "form-20261021-1810",
+  "model_version": "form-20261021-1857",
   "model_loaded": true,
-  "history_runs": 794526,
+  "history_runs": 762553,
   "history_horses": 83469,
   "history_through": "2026-05-09"
  }

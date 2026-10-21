@@ -7,6 +7,7 @@ export type MarketKind = 'live' | 'morning_line' | 'none';
 export type PriceSource = 'live' | 'morning_line' | null;
 
 export interface SourceStatus {
+  now?: string;
   source: 'archive' | 'twinspires' | string;
   live: boolean;
   ok: boolean;
@@ -51,6 +52,7 @@ export interface BoardTrack {
   first_post?: string | null;
   last_post?: string | null;
   error?: string;
+  deep_link?: string | null;
 }
 
 export interface NextUp {
@@ -102,6 +104,7 @@ export interface TrackRace extends RaceHeader {
 }
 
 export interface TrackInfo {
+  deep_link?: string | null;
   id: string;
   code: string;
   name: string;
@@ -197,6 +200,8 @@ export interface Prediction {
   whatif: string[];
   active_interests: number;
   sum_p: number;
+  /** False until the blend weights are fitted from recorded races. */
+  blend_calibrated?: boolean;
 }
 
 export interface ExactaCombo { combo: string[]; p: number; fair_2: number }
@@ -248,6 +253,7 @@ export interface Ticket {
   closing_odds: number | null;
   settled_at: string | null;
   clv?: number | null;
+  breed?: Breed;
 }
 
 export interface TicketSummary {
@@ -265,6 +271,7 @@ export interface TicketSummary {
 }
 
 export interface TicketsResponse {
+  now?: string;
   tickets: Ticket[];
   summary: TicketSummary;
 }
@@ -319,6 +326,7 @@ export interface ModelCard {
   };
   track_record: { races: number; log_loss_model: number | null; log_loss_market: number | null };
   blend: Record<string, { a: number; b: number }>;
+  blend_calibrated?: boolean;
 }
 
 export interface ApiErrorBody {

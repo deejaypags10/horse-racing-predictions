@@ -1,5 +1,5 @@
 {
- "version": "form-20261021-1810",
+ "version": "form-20261021-1857",
  "features": [
   "has_history",
   "log_starts",
@@ -21,7 +21,7 @@
   "recent_starts"
  ],
  "meta": {
-  "trained_at": "2026-10-21T18:10:32+00:00",
+  "trained_at": "2026-10-21T18:57:17+00:00",
   "archive": "us_races_cleaned.parquet",
   "train_period": [
    "2025-01-01",
@@ -31,188 +31,188 @@
    "protocol": "fit on races before 2026-01-01, scored on 2026-01-01..2026-05-09",
    "metrics": {
     "thoroughbred": {
-     "races": 4739,
-     "runners": 37718,
-     "log_loss": 1.9344,
-     "log_loss_uniform": 2.0456,
-     "log_loss_gain_vs_uniform": 0.1113,
-     "top1": 0.2505,
-     "top1_uniform": 0.1328,
-     "favorite_top1": 0.3696,
-     "model_top1_same_races": 0.2563,
-     "second_log_loss": 1.8198,
-     "second_log_loss_uniform": 1.9027,
-     "share_runners_with_history": 0.9463
+     "races": 4279,
+     "runners": 33996,
+     "log_loss": 1.9164,
+     "log_loss_uniform": 2.043,
+     "log_loss_gain_vs_uniform": 0.1266,
+     "top1": 0.2629,
+     "top1_uniform": 0.1333,
+     "favorite_top1": 0.3715,
+     "model_top1_same_races": 0.2628,
+     "second_log_loss": 1.8126,
+     "second_log_loss_uniform": 1.8994,
+     "share_runners_with_history": 0.9445
     },
     "harness": {
-     "races": 7101,
-     "runners": 57866,
-     "log_loss": 1.8736,
-     "log_loss_uniform": 2.0882,
-     "log_loss_gain_vs_uniform": 0.2146,
-     "top1": 0.2914,
+     "races": 7113,
+     "runners": 57957,
+     "log_loss": 1.8731,
+     "log_loss_uniform": 2.0881,
+     "log_loss_gain_vs_uniform": 0.215,
+     "top1": 0.2916,
      "top1_uniform": 0.1252,
-     "favorite_top1": 0.4538,
+     "favorite_top1": 0.4536,
      "model_top1_same_races": 0.2914,
-     "second_log_loss": 1.8211,
-     "second_log_loss_uniform": 1.9543,
-     "share_runners_with_history": 0.9901
+     "second_log_loss": 1.8209,
+     "second_log_loss_uniform": 1.9541,
+     "share_runners_with_history": 0.9902
     },
     "quarter_horse": {
      "races": 593,
      "runners": 5214,
-     "log_loss": 2.0115,
+     "log_loss": 2.0124,
      "log_loss_uniform": 2.1593,
-     "log_loss_gain_vs_uniform": 0.1478,
-     "top1": 0.2648,
+     "log_loss_gain_vs_uniform": 0.147,
+     "top1": 0.2597,
      "top1_uniform": 0.1174,
      "favorite_top1": 0.4013,
-     "model_top1_same_races": 0.2648,
-     "second_log_loss": 1.9625,
+     "model_top1_same_races": 0.2597,
+     "second_log_loss": 1.9632,
      "second_log_loss_uniform": 2.0341,
      "share_runners_with_history": 0.7275
     },
     "all": {
-     "races": 12433,
-     "runners": 100798,
-     "log_loss": 1.9034,
-     "log_loss_uniform": 2.0754,
-     "log_loss_gain_vs_uniform": 0.172,
-     "top1": 0.2745,
+     "races": 11985,
+     "runners": 97167,
+     "log_loss": 1.8955,
+     "log_loss_uniform": 2.0755,
+     "log_loss_gain_vs_uniform": 0.1801,
+     "top1": 0.2798,
      "top1_uniform": 0.1277,
-     "favorite_top1": 0.4212,
-     "model_top1_same_races": 0.2776,
-     "second_log_loss": 1.8275,
-     "second_log_loss_uniform": 1.9393,
+     "favorite_top1": 0.4217,
+     "model_top1_same_races": 0.2796,
+     "second_log_loss": 1.8249,
+     "second_log_loss_uniform": 1.9385,
      "share_runners_with_history": 0.9601
     },
     "calibration": [
      {
       "lo": 0.0,
       "hi": 0.03,
-      "n": 3673,
-      "predicted": 0.0215,
-      "observed": 0.0237
+      "n": 3686,
+      "predicted": 0.0216,
+      "observed": 0.0241
      },
      {
       "lo": 0.03,
       "hi": 0.06,
-      "n": 15472,
+      "n": 15231,
       "predicted": 0.0467,
-      "observed": 0.0434
+      "observed": 0.0437
      },
      {
       "lo": 0.06,
       "hi": 0.1,
-      "n": 28906,
-      "predicted": 0.0799,
-      "observed": 0.076
+      "n": 27612,
+      "predicted": 0.0798,
+      "observed": 0.0747
      },
      {
       "lo": 0.1,
       "hi": 0.15,
-      "n": 25765,
-      "predicted": 0.1225,
-      "observed": 0.1252
+      "n": 24543,
+      "predicted": 0.1224,
+      "observed": 0.1234
      },
      {
       "lo": 0.15,
       "hi": 0.2,
-      "n": 13097,
+      "n": 12588,
       "predicted": 0.1721,
-      "observed": 0.1794
+      "observed": 0.1819
      },
      {
       "lo": 0.2,
       "hi": 0.3,
-      "n": 9922,
+      "n": 9591,
       "predicted": 0.2389,
-      "observed": 0.2524
+      "observed": 0.2545
      },
      {
       "lo": 0.3,
       "hi": 0.4,
-      "n": 2717,
+      "n": 2667,
       "predicted": 0.3402,
-      "observed": 0.3338
+      "observed": 0.3375
      },
      {
       "lo": 0.4,
       "hi": 0.55,
-      "n": 992,
-      "predicted": 0.4566,
-      "observed": 0.375
+      "n": 985,
+      "predicted": 0.4553,
+      "observed": 0.3949
      },
      {
       "lo": 0.55,
       "hi": 1.0,
-      "n": 254,
-      "predicted": 0.6533,
-      "observed": 0.4724
+      "n": 264,
+      "predicted": 0.6526,
+      "observed": 0.4545
      }
     ]
    }
   },
   "coefficients": {
    "thoroughbred": {
-    "has_history": 0.0285,
-    "log_starts": 0.0,
-    "win_rate": -0.0914,
-    "top3_rate": 0.1237,
-    "form_last": 0.1365,
-    "form_avg3": 0.203,
-    "won_last": -0.101,
-    "fav_last": 0.1464,
-    "log_days": 0.0198,
-    "layoff": -0.0378,
-    "purse_delta": -0.3821,
-    "same_surface": 0.0299,
-    "surface_win_rate": 0.1413,
-    "dist_delta": -0.0533,
-    "track_seen": -0.0354,
-    "post_rel": -0.0588,
-    "post_rel_sq": 0.0817,
-    "recent_starts": 0.0238
+    "has_history": 0.0553,
+    "log_starts": -0.0123,
+    "win_rate": -0.0934,
+    "top3_rate": 0.1303,
+    "form_last": 0.1362,
+    "form_avg3": 0.2122,
+    "won_last": -0.1025,
+    "fav_last": 0.1495,
+    "log_days": -0.0059,
+    "layoff": -0.0366,
+    "purse_delta": -0.392,
+    "same_surface": 0.0175,
+    "surface_win_rate": 0.1396,
+    "dist_delta": -0.0559,
+    "track_seen": -0.0416,
+    "post_rel": -0.0633,
+    "post_rel_sq": 0.0858,
+    "recent_starts": -0.0127
    },
    "harness": {
-    "has_history": 0.0104,
-    "log_starts": -0.0645,
-    "win_rate": 0.0858,
-    "top3_rate": 0.1279,
-    "form_last": 0.1857,
+    "has_history": 0.0099,
+    "log_starts": -0.0649,
+    "win_rate": 0.0861,
+    "top3_rate": 0.1274,
+    "form_last": 0.1858,
     "form_avg3": 0.2196,
-    "won_last": -0.0154,
-    "fav_last": 0.1558,
-    "log_days": -0.2685,
+    "won_last": -0.0147,
+    "fav_last": 0.1559,
+    "log_days": -0.2674,
     "layoff": 0.0506,
-    "purse_delta": -0.5227,
-    "same_surface": 0.0104,
-    "surface_win_rate": 0.0858,
-    "dist_delta": -0.0076,
-    "track_seen": -0.0674,
-    "post_rel": 0.2171,
-    "post_rel_sq": -0.5128,
-    "recent_starts": -0.0765
+    "purse_delta": -0.5267,
+    "same_surface": 0.0099,
+    "surface_win_rate": 0.0861,
+    "dist_delta": -0.0074,
+    "track_seen": -0.0672,
+    "post_rel": 0.218,
+    "post_rel_sq": -0.5137,
+    "recent_starts": -0.0741
    },
    "quarter_horse": {
-    "has_history": 0.1411,
-    "log_starts": 0.1328,
-    "win_rate": -0.4656,
-    "top3_rate": 0.1546,
-    "form_last": 0.1258,
-    "form_avg3": 0.1858,
-    "won_last": -0.0544,
-    "fav_last": 0.0558,
-    "log_days": -0.0415,
-    "layoff": 0.0062,
-    "purse_delta": -0.3936,
-    "same_surface": -0.0466,
-    "surface_win_rate": 0.5966,
-    "dist_delta": -0.055,
-    "track_seen": 0.0011,
-    "post_rel": -0.2374,
-    "post_rel_sq": 0.3174,
-    "recent_starts": -0.0107
+    "has_history": 0.1297,
+    "log_starts": 0.1327,
+    "win_rate": -0.5818,
+    "top3_rate": 0.155,
+    "form_last": 0.1245,
+    "form_avg3": 0.1856,
+    "won_last": -0.0532,
+    "fav_last": 0.0551,
+    "log_days": -0.0398,
+    "layoff": 0.0082,
+    "purse_delta": -0.397,
+    "same_surface": -0.0409,
+    "surface_win_rate": 0.7135,
+    "dist_delta": -0.0549,
+    "track_seen": 0.003,
+    "post_rel": -0.2306,
+    "post_rel_sq": 0.3118,
+    "recent_starts": -0.0031
    }
   },
   "l2": 1.0
@@ -231,5 +231,6 @@
    "a": 0.85,
    "b": 0.6
   }
- }
+ },
+ "blend_calibrated": false
 }

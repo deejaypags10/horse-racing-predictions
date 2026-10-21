@@ -5,9 +5,12 @@ import { fmtEdge } from '../domain/format';
 import { fmtMtp, mtpSpeech, mtpState } from '../domain/mtp';
 import { useNow } from '../state/clock';
 import { Cloth } from './Cloth';
+import { useSettings } from '../state/settings';
 
-export function NextUpStrip({ items, loading }: { items: NextUp[] | null; loading?: boolean }) {
+export function NextUpStrip({ items, loading, error }: { items: NextUp[] | null; loading?: boolean; error?: boolean }) {
   const now = useNow();
+  const { settings } = useSettings();
+  const showValue = settings.valueFlags && !settings.coolOff;
   const ref = useRef<HTMLUListElement>(null);
   const live = (items ?? []).filter((n) => {
     const s = mtpState(n.post_time, 'open', now);
@@ -36,20 +39,20 @@ export function NextUpStrip({ items, loading }: { items: NextUp[] | null; loadin
             {[0, 1, 2, 3].map((i) => <li key={i} className="nextup-skel" />)}
           </ul>
         ) : live.length === 0 ? (
-          <p className="nextup-empty">Nothing posts in the next hour on these tracks.</p>
+          error ? null : <p className="nextup-empty">Nothing posts in the next hour on these tracks.</p>
         ) : (
           <ul className="nextup-list" ref={ref} onKeyDown={onKey}>
             {live.map((n, i) => {
               const s = mtpState(n.post_time, 'open', now);
-              const v = n.best_value;
+              const v = showValue ? n.best_value : null;
               return (
                 <li key={n.race_id}>
-                  <Link to={`/r/${n.race_id}`} tabIndex={i === 0 ? 0 : -1} className="nextup-item"
-                    aria-label={`${n.track_name} race ${n.number}, ${mtpSpeech(s)}${v ? `, overlay on number ${v.program}, plus ${fmtEdge(v.edge_pts)} points` : ''}`}>
+                  <Link to={`/r/${n.race_id}`} tabIndex={i === 0 ? 0 : -1} className="nextup-item">
                     {n.top_pick ? <Cloth program={n.top_pick.program} breed={n.breed} size="sm" label={false} /> : <span className="cloth cloth-sm cloth-neutral" aria-hidden="true" />}
                     <span className="nextup-race"><span className="nextup-code">{n.track_code}</span> R{n.number}</span>
                     <span className={`nextup-mtp mtp-${s.tone}`}>{s.kind === 'far' ? fmtMtpFar(n.post_time) : fmtMtp(s)}{s.kind === 'mtp' || s.kind === 'soon' ? <span className="nextup-mtp-unit">m</span> : null}</span>
-                    {v && <span className="nextup-edge edge-over">▲ {fmtEdge(v.edge_pts)}</span>}
+                    {v && <span className="nextup-edge edge-over"><span aria-hidden="true">▲ </span>{fmtEdge(v.edge_pts)}</span>}
+                    <span className="visually-hidden">: {n.track_name} race {n.number}, {mtpSpeech(s)}{n.top_pick ? `, model's highest chance number ${n.top_pick.program}` : ''}{v ? `, value on number ${v.program}, ${fmtEdge(v.edge_pts)} points` : ''}</span>
                   </Link>
                 </li>
               );

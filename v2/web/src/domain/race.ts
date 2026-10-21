@@ -14,9 +14,14 @@ export function programCompare(a: string, b: string): number {
   return a.localeCompare(b);
 }
 
-/** Is this row the first (model-bearing) member of its betting interest? */
+/**
+ * Is this row the model-bearing member of its betting interest? The lead is
+ * the first member (program order) that is neither scratched nor what-if
+ * scratched, so a coupled entry keeps its chance when its lead is taken out.
+ */
 export function isInterestLead(r: Runner, all: Runner[]): boolean {
-  const members = all.filter((x) => x.interest === r.interest && !x.scratched);
+  if (isOut(r)) return false;
+  const members = all.filter((x) => x.interest === r.interest && !isOut(x));
   if (members.length <= 1) return true;
   const lead = [...members].sort((a, b) => programCompare(a.program, b.program))[0];
   return lead.program === r.program;

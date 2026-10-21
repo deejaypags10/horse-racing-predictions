@@ -16,6 +16,20 @@ export class ApiError extends Error {
   get isNotFound() { return this.status === 404; }
   /** Network failure or a server/source fault (not a client mistake). */
   get isOutage() { return this.status === 0 || this.status >= 500; }
+  /** TwinSpires (the upstream source) is down; our server is fine. */
+  get isSource() { return this.code === 'source_unavailable' || this.status === 503; }
+}
+
+/** What to tell the user about a failed read (DESIGN 7.3: what failed, what is still shown). */
+export function errorText(e: ApiError, hasData: boolean): string {
+  const still = hasData ? ' Showing the last loaded data.' : '';
+  if (e.isSource) {
+    const d = e.message && !/^the server had a problem/i.test(e.message) ? ` (${e.message.replace(/\.$/, '')})` : '';
+    return `TwinSpires isn't answering right now${d}.${still}`;
+  }
+  if (e.status === 0) return `The Equine Edge server isn't responding. It may still be starting up.${still}`;
+  if (e.status >= 500) return `The Equine Edge server had a problem.${still}`;
+  return `${e.message}${still}`;
 }
 
 interface Opts {

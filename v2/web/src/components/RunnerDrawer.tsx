@@ -44,7 +44,7 @@ export function RunnerDrawer({ runner, race, field, format, onWhatIf, onTicket, 
                   <td>{p.track}</td>
                   <td className="num">{fmtDistance(null, p.dist_f)}</td>
                   <td>{p.surface ? cap(p.surface) : '—'}</td>
-                  <td className="num">{p.position ? `${ordinal(p.position)}${p.field ? `/${p.field}` : ''}` : '—'}{p.favorite && <abbr title="Favourite" className="fav-tag">fav</abbr>}</td>
+                  <td className="num">{p.position ? `${ordinal(p.position)}${p.field ? `/${p.field}` : ''}` : <abbr title="Unplaced: finished outside the recorded places">unpl.</abbr>}{p.favorite && <abbr title="Favourite" className="fav-tag">fav</abbr>}</td>
                 </tr>
               ))}
             </tbody>
@@ -69,7 +69,7 @@ export function RunnerDrawer({ runner, race, field, format, onWhatIf, onTicket, 
             <div><dt>Top two (place)</dt><dd>{fmtPct(m.p_top2)}</dd></div>
             <div><dt>Top three (show)</dt><dd>{fmtPct(m.p_top3)}</dd></div>
             <div><dt>Fair odds</dt><dd>{fmtOdds(m.fair_decimal, format, { round: 'tote' })}</dd></div>
-            <div><dt>Worth backing at</dt><dd>{fmtOdds(m.min_price_decimal, format, { round: 'tote' })} or longer</dd></div>
+            <div><dt>Bet at</dt><dd>{fmtOdds(m.min_price_decimal, format, { round: 'tote' })} or longer</dd></div>
             {m.exp_return != null && <div><dt>Expected return per $1 at {m.price_source === 'live' ? 'this price' : 'the ML'}</dt><dd>{fmtMoney(m.exp_return, { signed: true })}</dd></div>}
             <div><dt>Evidence</dt><dd><EvidenceMeter evidence={m.evidence} starts={m.starts} /> {EVIDENCE_NAME[m.evidence]} · {plural(m.starts, 'start')}</dd></div>
           </dl>

@@ -3,7 +3,7 @@ import { api, ApiError } from '../api/client';
 import type { RaceResponse, TicketKind } from '../api/types';
 import { exactaProb, orderModel, trifectaProb } from '../domain/exotics';
 import { fmtEdge, fmtMoney, fmtPct } from '../domain/format';
-import { decimalToWire, fmtOdds, parseOddsInput } from '../domain/odds';
+import { decimalToWire, fmtOdds, parsePrice, parseStake } from '../domain/odds';
 import { activeInterests } from '../domain/race';
 import { useSettings } from '../state/settings';
 import { useToast } from '../state/toast';
@@ -112,20 +112,22 @@ export function TicketSheet({ open, onClose, data, preset, stale }: {
   }
 
   const priceRequired = kind === 'win' && (stale || !lead?.live_decimal);
-  const parsedPrice = price.trim() ? parseOddsInput(price, fmt) : null;
+  const priceParse = price.trim() ? parsePrice(price, fmt) : null;
+  const parsedPrice = priceParse?.decimal ?? null;
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setErr(null);
-    const st = parseFloat(stake.replace(/[$,\s]/g, ''));
     if (!complete) { setErr(need === 1 ? 'Pick a runner.' : `Pick ${need} different runners in finishing order.`); return; }
-    if (!(st > 0) || st > 100_000) { setErr('Stake must be between $0.01 and $100,000.'); return; }
-    if (price.trim() && !parsedPrice) { setErr('Price should look like 5-2, 9/5, 3.50 or +250.'); return; }
+    const stakeParse = parseStake(stake);
+    if (stakeParse.error != null) { setErr(stakeParse.error); return; }
+    const st = stakeParse.value;
+    if (priceParse?.error) { setErr(priceParse.error); return; }
     if (priceRequired && !parsedPrice) { setErr('Type the price you took. Live odds are missing or out of date.'); return; }
     setSaving(true);
     try {
       const t = await api.createTicket({
-        race_id: data.race.id, kind, selection: sel, stake: Math.round(st * 100) / 100,
+        race_id: data.race.id, kind, selection: sel, stake: st,
         ...(parsedPrice && (kind === 'win' || kind === 'place' || kind === 'show') ? { odds_taken: decimalToWire(parsedPrice) } : {}),
         ...(note.trim() ? { note: note.trim().slice(0, 280) } : {}),
       });

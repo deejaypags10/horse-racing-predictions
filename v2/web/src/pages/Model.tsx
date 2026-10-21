@@ -87,8 +87,8 @@ export function ModelPage() {
               the market's number. Place, show, exacta and trifecta chances all come from that one win vector.
             </p>
             <p>
-              <strong>What it is not.</strong> Not a tip, not a guarantee, and not inside information. An “overlay” only means our
-              number is higher than the tote's. Overlays lose most of the time.
+              <strong>What it is not.</strong> Not a tip, not a guarantee, and not inside information. An “overlay” only means the
+              tote is paying more than our fair price; it is our estimate, not a fact. Overlays lose most of the time.
             </p>
           </section>
 
@@ -120,7 +120,7 @@ export function ModelPage() {
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">Top-pick win rate</th>
+                      <th scope="row">Highest-chance win rate</th>
                       <td className="num model-ink">{pct(cur.top1)}</td>
                       <td className="num">{pct(cur.favorite_top1)}</td>
                       <td className="num">{pct(cur.top1_uniform)}</td>
@@ -222,6 +222,9 @@ export function ModelPage() {
               <li>Quarter Horse coverage is thin: only {pct(metrics?.quarter_horse?.share_runners_with_history, 0)} of runners had history in testing.</li>
               <li>Before the tote opens, everything is measured against the morning line, which is a track handicapper's guess, not a price.</li>
               <li>Exotic chances multiply any error in the win chances. Treat them as rough.</li>
+              {card.blend_calibrated === false && (
+                <li>The blend of model and market is not calibrated yet: its weights are fixed starting values until they can be fitted from recorded races. Value flags are unvalidated until then.</li>
+              )}
             </ul>
             <p className="fineprint">
               Model {card.version} · trained {card.meta.trained_at ? fmtDateline(card.meta.trained_at.slice(0, 10), { year: true }) : '—'}

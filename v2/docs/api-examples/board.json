@@ -1,6 +1,6 @@
 {
  "date": "2026-06-06",
- "now": "2026-06-06T14:20:07+00:00",
+ "now": "2026-06-06T14:20:09+00:00",
  "tracks": [
   {
    "id": "ABQ-20260606",
@@ -10,6 +10,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 11,
+   "deep_link": null,
    "next_race": {
     "race_id": "ABQ-20260606-1",
     "number": 1,
@@ -32,6 +33,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 14,
+   "deep_link": null,
    "next_race": {
     "race_id": "BEL-20260606-1",
     "number": 1,
@@ -56,6 +58,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 14,
+   "deep_link": null,
    "next_race": {
     "race_id": "BUF-20260606-1",
     "number": 1,
@@ -78,6 +81,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 7,
+   "deep_link": null,
    "next_race": {
     "race_id": "CBY-20260606-1",
     "number": 1,
@@ -101,6 +105,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 11,
+   "deep_link": null,
    "next_race": {
     "race_id": "CD-20260606-1",
     "number": 1,
@@ -124,6 +129,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "CHT-20260606-1",
     "number": 1,
@@ -146,6 +152,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 9,
+   "deep_link": null,
    "next_race": {
     "race_id": "DED-20260606-1",
     "number": 1,
@@ -168,6 +175,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "DEL-20260606-1",
     "number": 1,
@@ -191,6 +199,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "EMD-20260606-1",
     "number": 1,
@@ -213,6 +222,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 10,
+   "deep_link": null,
    "next_race": {
     "race_id": "EVD-20260606-1",
     "number": 1,
@@ -236,6 +246,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 7,
+   "deep_link": null,
    "next_race": {
     "race_id": "FP-20260606-1",
     "number": 1,
@@ -258,6 +269,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 10,
+   "deep_link": null,
    "next_race": {
     "race_id": "FTC-20260606-1",
     "number": 1,
@@ -280,6 +292,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 11,
+   "deep_link": null,
    "next_race": {
     "race_id": "GP-20260606-1",
     "number": 1,
@@ -303,6 +316,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 14,
+   "deep_link": null,
    "next_race": {
     "race_id": "HOO-20260606-1",
     "number": 1,
@@ -325,6 +339,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 11,
+   "deep_link": null,
    "next_race": {
     "race_id": "HOU-20260606-1",
     "number": 1,
@@ -347,6 +362,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 9,
+   "deep_link": null,
    "next_race": {
     "race_id": "IJN-20260606-1",
     "number": 1,
@@ -370,6 +386,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "LA-20260606-1",
     "number": 1,
@@ -392,6 +409,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 7,
+   "deep_link": null,
    "next_race": {
     "race_id": "LAD-20260606-1",
     "number": 1,
@@ -415,6 +433,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 14,
+   "deep_link": null,
    "next_race": {
     "race_id": "LRL-20260606-1",
     "number": 1,
@@ -438,6 +457,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 15,
+   "deep_link": null,
    "next_race": {
     "race_id": "MED-20260606-1",
     "number": 1,
@@ -460,6 +480,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 13,
+   "deep_link": null,
    "next_race": {
     "race_id": "MMA-20260606-1",
     "number": 1,
@@ -482,6 +503,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "MTH-20260606-1",
     "number": 1,
@@ -505,6 +527,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 16,
+   "deep_link": null,
    "next_race": {
     "race_id": "NFL-20260606-1",
     "number": 1,
@@ -527,6 +550,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 9,
+   "deep_link": null,
    "next_race": {
     "race_id": "PHI-20260606-1",
     "number": 1,
@@ -549,6 +573,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 14,
+   "deep_link": null,
    "next_race": {
     "race_id": "POC-20260606-1",
     "number": 1,
@@ -571,6 +596,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 9,
+   "deep_link": null,
    "next_race": {
     "race_id": "PRM-20260606-1",
     "number": 1,
@@ -593,6 +619,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "RD-20260606-1",
     "number": 1,
@@ -616,6 +643,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 10,
+   "deep_link": null,
    "next_race": {
     "race_id": "SA-20260606-1",
     "number": 1,
@@ -639,6 +667,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 15,
+   "deep_link": null,
    "next_race": {
     "race_id": "SCD-20260606-1",
     "number": 1,
@@ -661,6 +690,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 8,
+   "deep_link": null,
    "next_race": {
     "race_id": "TDN-20260606-1",
     "number": 1,
@@ -683,6 +713,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 11,
+   "deep_link": null,
    "next_race": {
     "race_id": "TGD-20260606-1",
     "number": 1,
@@ -705,6 +736,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 12,
+   "deep_link": null,
    "next_race": {
     "race_id": "VER-20260606-1",
     "number": 1,
@@ -727,6 +759,7 @@
    "country": "USA",
    "date": "2026-06-06",
    "race_count": 9,
+   "deep_link": null,
    "next_race": {
     "race_id": "YON-20260606-1",
     "number": 1,
@@ -756,8 +789,8 @@
    "top_pick": {
     "program": "2",
     "name": "Powerful Justice",
-    "p_model": 0.2503,
-    "edge_pts": -0.66,
+    "p_model": 0.2487,
+    "edge_pts": -0.81,
     "evidence": "some"
    },
    "best_value": null
@@ -775,8 +808,8 @@
    "top_pick": {
     "program": "4",
     "name": "Cold Spell",
-    "p_model": 0.4259,
-    "edge_pts": 2.91,
+    "p_model": 0.4251,
+    "edge_pts": 2.83,
     "evidence": "thin"
    },
    "best_value": null
@@ -794,8 +827,8 @@
    "top_pick": {
     "program": "1",
     "name": "Catty Justice",
-    "p_model": 0.3339,
-    "edge_pts": 1.72,
+    "p_model": 0.3353,
+    "edge_pts": 1.86,
     "evidence": "some"
    },
    "best_value": null
@@ -813,9 +846,9 @@
    "top_pick": {
     "program": "3",
     "name": "Life And Times",
-    "p_model": 0.3421,
-    "edge_pts": 5.72,
-    "evidence": "strong"
+    "p_model": 0.3061,
+    "edge_pts": 2.12,
+    "evidence": "some"
    },
    "best_value": null
   },
@@ -832,8 +865,8 @@
    "top_pick": {
     "program": "7",
     "name": "Pro Fever",
-    "p_model": 0.329,
-    "edge_pts": 6.04,
+    "p_model": 0.3324,
+    "edge_pts": 6.38,
     "evidence": "some"
    },
    "best_value": null
@@ -851,9 +884,9 @@
    "top_pick": {
     "program": "4",
     "name": "Enzo",
-    "p_model": 0.262,
-    "edge_pts": -1.99,
-    "evidence": "strong"
+    "p_model": 0.252,
+    "edge_pts": -2.99,
+    "evidence": "some"
    },
    "best_value": null
   },
@@ -870,8 +903,8 @@
    "top_pick": {
     "program": "2",
     "name": "Tavern Time",
-    "p_model": 0.2487,
-    "edge_pts": -2.74,
+    "p_model": 0.2468,
+    "edge_pts": -2.93,
     "evidence": "strong"
    },
    "best_value": null
@@ -889,8 +922,8 @@
    "top_pick": {
     "program": "8",
     "name": "Intellect (Fr)",
-    "p_model": 0.7666,
-    "edge_pts": 27.91,
+    "p_model": 0.7594,
+    "edge_pts": 27.2,
     "evidence": "strong"
    },
    "best_value": null
@@ -908,8 +941,8 @@
    "top_pick": {
     "program": "2",
     "name": "Worker Bee",
-    "p_model": 0.2612,
-    "edge_pts": -6.7,
+    "p_model": 0.265,
+    "edge_pts": -6.32,
     "evidence": "strong"
    },
    "best_value": null
@@ -927,8 +960,8 @@
    "top_pick": {
     "program": "2",
     "name": "Cowgirl Chic",
-    "p_model": 0.2938,
-    "edge_pts": 7.36,
+    "p_model": 0.2981,
+    "edge_pts": 7.79,
     "evidence": "strong"
    },
    "best_value": null
@@ -946,8 +979,8 @@
    "top_pick": {
     "program": "3",
     "name": "Basil",
-    "p_model": 0.2516,
-    "edge_pts": -0.01,
+    "p_model": 0.2525,
+    "edge_pts": 0.09,
     "evidence": "some"
    },
    "best_value": null
@@ -965,14 +998,15 @@
    "top_pick": {
     "program": "2",
     "name": "Kessel Run",
-    "p_model": 0.217,
-    "edge_pts": -0.94,
+    "p_model": 0.2197,
+    "edge_pts": -0.66,
     "evidence": "none"
    },
    "best_value": null
   }
  ],
  "status": {
+  "now": "2026-06-06T14:20:09+00:00",
   "source": "archive",
   "live": false,
   "ok": true,
@@ -980,9 +1014,9 @@
   "detail": "Replaying recorded TVG cards from the repository archive.",
   "last_success": null,
   "recent_errors": [],
-  "model_version": "form-20261021-1810",
+  "model_version": "form-20261021-1857",
   "model_loaded": true,
-  "history_runs": 794526,
+  "history_runs": 762553,
   "history_horses": 83469,
   "history_through": "2026-05-09"
  }

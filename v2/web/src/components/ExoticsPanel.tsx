@@ -9,7 +9,7 @@ type Kind = 'exacta' | 'trifecta';
 
 function Combo({ combo, breed }: { combo: string[]; breed: Breed }) {
   return (
-    <span className="combo" aria-label={combo.map((c) => `number ${c}`).join(' then ')}>
+    <span className="combo" role="img" aria-label={combo.map((c) => `number ${c}`).join(' then ')}>
       {combo.map((c, i) => (
         <span key={c} className="combo-part">
           {i > 0 && <span className="combo-dash" aria-hidden="true" />}

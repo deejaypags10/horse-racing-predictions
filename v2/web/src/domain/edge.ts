@@ -6,7 +6,7 @@ import { fmtEdge } from './format';
 export const EDGE_OVERLAY = 2.0;
 export const EDGE_SLIGHT = 1.0;
 
-export type EdgeClass = 'over' | 'slight-over' | 'close' | 'slight-under' | 'under';
+export type EdgeClass = 'over' | 'slight-over' | 'short' | 'close' | 'slight-under' | 'under';
 
 export interface EdgeView {
   cls: EdgeClass;
@@ -27,6 +27,10 @@ export interface EdgeInput {
   evidence?: Evidence;
   priceSource?: PriceSource;
   stale?: boolean;
+  /** Expected return per $1 at the current price (model.exp_return). */
+  expReturn?: number | null;
+  /** User setting: show the filled value-flag treatment at all. */
+  flags?: boolean;
 }
 
 export function classifyEdge(pts: number): EdgeClass {
@@ -40,17 +44,20 @@ export function classifyEdge(pts: number): EdgeClass {
 const LABEL: Record<EdgeClass, string> = {
   over: 'overlay',
   'slight-over': 'slight overlay',
+  short: 'model higher, still short of fair',
   close: 'close to market',
   'slight-under': 'slight underlay',
   under: 'underlay',
 };
-const SOLID: Record<EdgeClass, string> = { over: '▲', 'slight-over': '△', close: '≈', 'slight-under': '▽', under: '▼' };
-const HOLLOW: Record<EdgeClass, string> = { over: '△', 'slight-over': '△', close: '≈', 'slight-under': '▽', under: '▽' };
+const SOLID: Record<EdgeClass, string> = { over: '▲', 'slight-over': '△', short: '≈', close: '≈', 'slight-under': '▽', under: '▼' };
+const HOLLOW: Record<EdgeClass, string> = { over: '△', 'slight-over': '△', short: '≈', close: '≈', 'slight-under': '▽', under: '▽' };
 
 export function edgeView(input: EdgeInput): EdgeView | null {
   const { pts } = input;
   if (pts == null || !Number.isFinite(pts)) return null;
-  const cls = classifyEdge(pts);
+  let cls = classifyEdge(pts);
+  // "Overlay" means the price beats fair: positive points alone are not enough.
+  if ((cls === 'over' || cls === 'slight-over') && !(input.expReturn != null && input.expReturn > 0)) cls = 'short';
   const ml = input.priceSource === 'morning_line';
   const thin = input.evidence != null && EVIDENCE_LEVEL[input.evidence] < 2;
   const lowConfidence = ml || !!input.stale || thin;
@@ -64,10 +71,10 @@ export function edgeView(input: EdgeInput): EdgeView | null {
       speech: `${num} versus the morning line, not a market price`,
     };
   }
-  const tone = lowConfidence || cls === 'close' ? 'muted' : pts > 0 ? 'over' : 'under';
-  const flagged = !lowConfidence && cls === 'over' && input.value === true;
+  const tone = lowConfidence || cls === 'close' || cls === 'short' ? 'muted' : pts > 0 ? 'over' : 'under';
+  const flagged = !lowConfidence && cls === 'over' && input.value === true && input.flags !== false;
   // A ▲ is reserved for a flagged overlay; everything else that is positive is hollow.
   const glyph = lowConfidence ? HOLLOW[cls] : cls === 'over' && !flagged ? '△' : SOLID[cls];
-  const label = `${LABEL[cls]}${lowConfidence && cls !== 'close' ? ', low confidence' : ''}`;
+  const label = `${LABEL[cls]}${lowConfidence && cls !== 'close' && cls !== 'short' ? ', low confidence' : ''}`;
   return { cls, glyph, text, tone, flagged, lowConfidence, ml: false, label, speech: `${label}, ${num}` };
 }

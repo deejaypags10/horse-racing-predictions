@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { errorText } from '../api/client';
 import type { BoardTrack } from '../api/types';
 import { BreedTag } from '../components/BreedTag';
 import { IconStar } from '../components/Icons';
@@ -8,7 +9,6 @@ import { NextUpStrip } from '../components/NextUpStrip';
 import { EmptyState, InlineError, SkeletonRows } from '../components/States';
 import { BREED_CODE, BREED_KEYS, BREED_LABEL, breedKey, parseBreedParam, type BreedKey } from '../domain/breed';
 import { fmtTime, plural } from '../domain/format';
-import { mtpState } from '../domain/mtp';
 import { useBoard } from '../state/board';
 import { useNow } from '../state/clock';
 import { moveFocus, useShortcuts } from '../state/keys';
@@ -91,7 +91,7 @@ export function BoardPage() {
 
   return (
     <>
-      <NextUpStrip items={data ? nextUp : null} loading={board.loading} />
+      <NextUpStrip items={data ? nextUp : null} loading={board.loading} error={!!board.error} />
       <div className="page board">
         <div className="page-head board-head">
           <h1 className="page-title">Today's racing</h1>
@@ -115,11 +115,11 @@ export function BoardPage() {
 
         {board.error && !data && (
           <InlineError title="Couldn't load today's tracks." onRetry={board.refresh} error={board.error}>
-            {board.error.isOutage ? 'The Equine Edge server is not responding. It may still be starting up.' : board.error.message}
+            {errorText(board.error, false)}
           </InlineError>
         )}
         {board.error && data && (
-          <p className="stale-note" role="status">Couldn't refresh. Showing tracks as of {fmtTime(board.updatedAt)}.</p>
+          <p className="stale-note" role="status">{errorText(board.error, true).replace(/\.$/, '')} from {fmtTime(board.updatedAt)}.</p>
         )}
 
         {board.loading && <SkeletonRows rows={8} label="Loading tracks" />}
@@ -188,16 +188,15 @@ function TrackGroup({ title, tracks, onPin, isPinned, header, hideTitle, pinned 
 }
 
 function TrackRow({ t, pinned, onPin }: { t: BoardTrack; pinned: boolean; onPin: () => void }) {
-  const now = useNow();
+  const { settings } = useSettings();
+  const showValue = settings.valueFlags && !settings.coolOff;
   const nr = t.next_race;
-  const s = nr ? mtpState(nr.post_time, 'open', now) : null;
   const done = !nr;
   const overlays = t.overlays_next_hour ?? 0;
   const signal = t.error ? <span className="signal-muted">Card unavailable</span>
     : done ? <span className="signal-muted">{t.official ? `${t.official} of ${t.race_count} official` : 'Finished'}</span>
-    : overlays > 0 ? <span className="signal-over">▲ {plural(overlays, 'overlay')}</span>
-    : s?.kind === 'far' && (s.minutes ?? 0) > LATER_MIN ? <span className="signal-muted">Opens {fmtTime(t.first_post)}</span>
-    : <span className="signal-muted" aria-label="no overlays">—</span>;
+    : overlays > 0 && showValue ? <span className="signal-over"><span aria-hidden="true">▲ </span>{overlays} value{overlays === 1 ? '' : 's'} next hour</span>
+    : <span className="signal-muted">—<span className="visually-hidden">no value flags</span></span>;
   return (
     <li className={`track-row${done ? ' is-done' : ''}`}>
       <button type="button" className="pin" aria-pressed={pinned} aria-label={`Pin ${t.name}`} title={pinned ? `Unpin ${t.name}` : `Pin ${t.name}`} onClick={onPin}>

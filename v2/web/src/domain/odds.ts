@@ -93,37 +93,58 @@ export function oddsSpeech(text: string): string {
   return text;
 }
 
+export const MAX_DECIMAL = 1000; // 999-1
+
+export type PriceParse = { decimal: number; error?: undefined } | { decimal?: undefined; error: string };
+
 /**
- * Parse a price the user typed. Accepts "5-2", "5/2", "9:5", "EVEN", "12"
- * (12-1 in fractional/american-less contexts), "3.50" (decimal), "+250" / "-150".
- * `format` decides how a bare number is read. Returns a decimal price or null.
+ * Parse a price the user typed, by an explicit rule:
+ *  - "a-b", "a/b" (or "a:b") is fractional (US "to"), "even" is 1-1;
+ *  - a number with a decimal point is a decimal price, only when the user's format is decimal;
+ *  - American only with an explicit sign and |n| >= 100 ("+250", "-150");
+ *  - anything else is rejected with a message. Prices above 999-1 are rejected, never capped.
  */
-export function parseOddsInput(input: string, format: OddsFormat): number | null {
-  const s = input.trim().toLowerCase().replace(MINUS, '-');
-  if (!s) return null;
-  if (s === 'even' || s === 'evens' || s === 'evn' || s === 'ev') return 2;
-  const frac = /^(\d+(?:\.\d+)?)\s*[-/:]\s*(\d+(?:\.\d+)?)$/.exec(s);
-  if (frac) {
+export function parsePrice(input: string, format: OddsFormat): PriceParse {
+  const s = input.trim().toLowerCase().replace(MINUS, '-').replace(/\s+/g, '');
+  if (!s) return { error: 'Enter a price.' };
+  let dec: number | null = null;
+  if (s === 'even' || s === 'evens' || s === 'evn') dec = 2;
+  const frac = /^(\d+(?:\.\d+)?)[-/:](\d+(?:\.\d+)?)$/.exec(s);
+  const am = /^([+-])(\d+(?:\.\d+)?)$/.exec(s);
+  if (dec == null && frac) {
     const n = parseFloat(frac[1]);
     const d = parseFloat(frac[2]);
-    if (!(d > 0) || !(n > 0)) return null;
-    return round4(n / d + 1);
-  }
-  const am = /^([+-])(\d+(?:\.\d+)?)$/.exec(s);
-  if (am) {
+    if (!(n > 0) || !(d > 0)) return { error: 'Both sides of a fractional price must be above zero, like 5-2.' };
+    dec = n / d + 1;
+  } else if (dec == null && am) {
     const v = parseFloat(am[2]);
-    if (!(v > 0)) return null;
-    return round4(am[1] === '+' ? v / 100 + 1 : 100 / v + 1);
+    if (!(v >= 100)) return { error: 'American odds need a sign and at least 100, like +250 or −150.' };
+    dec = am[1] === '+' ? v / 100 + 1 : 100 / v + 1;
+  } else if (dec == null && /^(\d+\.\d*|\.\d+)$/.test(s) && format === 'decimal') {
+    const v = parseFloat(s);
+    if (!(v > 1)) return { error: 'Decimal odds must be above 1.00.' };
+    dec = v;
   }
-  const num = /^(\d+(?:\.\d+)?)$/.exec(s);
-  if (num) {
-    const v = parseFloat(num[1]);
-    if (!(v > 0)) return null;
-    if (format === 'decimal') return v > 1 ? round4(v) : null;
-    if (format === 'american') return v >= 100 ? round4(v / 100 + 1) : round4(v + 1);
-    return round4(v + 1); // "12" means 12-1 on a US tote
+  if (dec == null || !Number.isFinite(dec)) {
+    const eg = format === 'decimal' ? '5-2, 9/5 or 3.50' : format === 'american' ? '5-2, 9/5 or +250' : '5-2, 9/5 or 12-1';
+    return { error: `Enter the price like ${eg}.` };
   }
-  return null;
+  if (dec > MAX_DECIMAL + 1e-9) return { error: 'Prices above 999-1 aren\u2019t accepted.' };
+  return { decimal: round4(dec) };
+}
+
+/** Convenience: the parsed decimal, or null when the input is rejected. */
+export function parseOddsInput(input: string, format: OddsFormat): number | null {
+  return parsePrice(input, format).decimal ?? null;
+}
+
+/** Paper stake: a plain number of dollars (a leading "$" and thousands commas allowed), 0.01 to 100,000. */
+export function parseStake(input: string): { value: number; error?: undefined } | { value?: undefined; error: string } {
+  const v = Number(input.trim().replace(/^\$/, '').replace(/,/g, ''));
+  if (!input.trim() || !Number.isFinite(v)) return { error: 'Stake must be a number of dollars, like 10 or 2.50.' };
+  if (v < 0.01) return { error: 'Stake must be at least $0.01.' };
+  if (v > 100_000) return { error: 'Stake can be at most $100,000.' };
+  return { value: Math.round(v * 100) / 100 };
 }
 
 /** Wire format the backend accepts ("5-2", "2.4-1"). */

@@ -68,17 +68,18 @@
    }
   ],
   "deep_link": null,
-  "fetched_at": "2026-10-21T18:16:12+00:00",
+  "fetched_at": "2026-10-21T19:44:26+00:00",
   "odds_updated_at": null
  },
- "now": "2026-06-06T14:20:08+00:00",
+ "now": "2026-06-06T14:20:09+00:00",
  "prediction": {
   "market": "live",
-  "model_version": "form-20261021-1810",
+  "model_version": "form-20261021-1857",
   "weights": {
    "a": 1.0,
    "b": 0.4
   },
+  "blend_calibrated": false,
   "evidence": "some",
   "coverage": 0.667,
   "overround": 1.1159,
@@ -182,19 +183,19 @@
    "coupled": false,
    "model": {
     "key": "2",
-    "p_model": 0.2859,
+    "p_model": 0.28441,
     "p_market": 0.29871,
-    "p_form": 0.17002,
-    "p_top2": 0.52204,
-    "p_top3": 0.70824,
-    "fair_decimal": 3.498,
+    "p_form": 0.16705,
+    "p_top2": 0.52024,
+    "p_top3": 0.70678,
+    "fair_decimal": 3.516,
     "fair_us": "5-2",
-    "min_price_decimal": 4.022,
+    "min_price_decimal": 4.043,
     "min_price_us": "3-1",
     "price_decimal": 3.0,
     "price_source": "live",
-    "edge_pts": -1.28,
-    "exp_return": -0.1423,
+    "edge_pts": -1.43,
+    "exp_return": -0.1468,
     "value": false,
     "evidence": "some",
     "starts": 5,
@@ -271,19 +272,19 @@
    "coupled": false,
    "model": {
     "key": "3",
-    "p_model": 0.09661,
+    "p_model": 0.09623,
     "p_market": 0.11202,
-    "p_form": 0.10147,
-    "p_top2": 0.2256,
-    "p_top3": 0.38953,
-    "fair_decimal": 10.351,
+    "p_form": 0.09926,
+    "p_top2": 0.22486,
+    "p_top3": 0.38856,
+    "fair_decimal": 10.392,
     "fair_us": "9-1",
-    "min_price_decimal": 11.904,
+    "min_price_decimal": 11.951,
     "min_price_us": "11-1",
     "price_decimal": 8.0,
     "price_source": "live",
-    "edge_pts": -1.54,
-    "exp_return": -0.2271,
+    "edge_pts": -1.58,
+    "exp_return": -0.2302,
     "value": false,
     "evidence": "thin",
     "starts": 2,
@@ -333,19 +334,19 @@
    "coupled": false,
    "model": {
     "key": "4",
-    "p_model": 0.06767,
+    "p_model": 0.0675,
     "p_market": 0.08147,
-    "p_form": 0.10919,
-    "p_top2": 0.16722,
-    "p_top3": 0.30677,
-    "fair_decimal": 14.778,
+    "p_form": 0.1082,
+    "p_top2": 0.16687,
+    "p_top3": 0.30627,
+    "fair_decimal": 14.815,
     "fair_us": "14-1",
-    "min_price_decimal": 16.994,
+    "min_price_decimal": 17.037,
     "min_price_us": "16-1",
     "price_decimal": 11.0,
     "price_source": "live",
-    "edge_pts": -1.38,
-    "exp_return": -0.2556,
+    "edge_pts": -1.4,
+    "exp_return": -0.2575,
     "value": false,
     "evidence": "some",
     "starts": 5,
@@ -422,19 +423,19 @@
    "coupled": false,
    "model": {
     "key": "5",
-    "p_model": 0.2381,
+    "p_model": 0.23895,
     "p_market": 0.22403,
-    "p_form": 0.21739,
-    "p_top2": 0.46012,
-    "p_top3": 0.65414,
-    "fair_decimal": 4.2,
+    "p_form": 0.21899,
+    "p_top2": 0.4613,
+    "p_top3": 0.65526,
+    "fair_decimal": 4.185,
     "fair_us": "3-1",
-    "min_price_decimal": 4.83,
+    "min_price_decimal": 4.813,
     "min_price_us": "4-1",
     "price_decimal": 4.0,
     "price_source": "live",
-    "edge_pts": 1.41,
-    "exp_return": -0.0476,
+    "edge_pts": 1.49,
+    "exp_return": -0.0442,
     "value": false,
     "evidence": "strong",
     "starts": 7,
@@ -511,19 +512,19 @@
    "coupled": false,
    "model": {
     "key": "6",
-    "p_model": 0.05447,
+    "p_model": 0.05463,
     "p_market": 0.05974,
-    "p_form": 0.13814,
-    "p_top2": 0.13902,
-    "p_top3": 0.26399,
-    "fair_decimal": 18.36,
+    "p_form": 0.1405,
+    "p_top2": 0.13939,
+    "p_top3": 0.26458,
+    "fair_decimal": 18.303,
     "fair_us": "17-1",
-    "min_price_decimal": 21.114,
+    "min_price_decimal": 21.049,
     "min_price_us": "20-1",
     "price_decimal": 15.0,
     "price_source": "live",
-    "edge_pts": -0.53,
-    "exp_return": -0.183,
+    "edge_pts": -0.51,
+    "exp_return": -0.1805,
     "value": false,
     "evidence": "thin",
     "starts": 1,
@@ -564,19 +565,19 @@
    "coupled": false,
    "model": {
     "key": "7",
-    "p_model": 0.25726,
+    "p_model": 0.25828,
     "p_market": 0.22403,
-    "p_form": 0.2638,
-    "p_top2": 0.486,
-    "p_top3": 0.67732,
-    "fair_decimal": 3.887,
+    "p_form": 0.266,
+    "p_top2": 0.48734,
+    "p_top3": 0.67855,
+    "fair_decimal": 3.872,
     "fair_us": "3-1",
-    "min_price_decimal": 4.47,
+    "min_price_decimal": 4.453,
     "min_price_us": "7-2",
     "price_decimal": 4.0,
     "price_source": "live",
-    "edge_pts": 3.32,
-    "exp_return": 0.029,
+    "edge_pts": 3.42,
+    "exp_return": 0.0331,
     "value": false,
     "evidence": "strong",
     "starts": 6,
@@ -638,96 +639,96 @@
      "2",
      "7"
     ],
-    "p": 0.09483,
-    "fair_2": 21.09
+    "p": 0.09449,
+    "fair_2": 21.17
    },
    {
     "combo": [
      "7",
      "2"
     ],
-    "p": 0.09027,
-    "fair_2": 22.16
+    "p": 0.09034,
+    "fair_2": 22.14
    },
    {
     "combo": [
      "2",
      "5"
     ],
-    "p": 0.08906,
-    "fair_2": 22.46
+    "p": 0.08872,
+    "fair_2": 22.54
    },
    {
     "combo": [
      "5",
      "2"
     ],
-    "p": 0.08194,
-    "fair_2": 24.41
+    "p": 0.08196,
+    "fair_2": 24.4
    },
    {
     "combo": [
      "7",
      "5"
     ],
-    "p": 0.07784,
-    "fair_2": 25.69
+    "p": 0.07846,
+    "fair_2": 25.49
    },
    {
     "combo": [
      "5",
      "7"
     ],
-    "p": 0.07523,
-    "fair_2": 26.59
+    "p": 0.07581,
+    "fair_2": 26.38
    },
    {
     "combo": [
      "2",
      "3"
     ],
-    "p": 0.04289,
-    "fair_2": 46.63
+    "p": 0.04247,
+    "fair_2": 47.09
    },
    {
     "combo": [
      "7",
      "3"
     ],
-    "p": 0.03749,
-    "fair_2": 53.35
+    "p": 0.03756,
+    "fair_2": 53.25
    },
    {
     "combo": [
      "5",
      "3"
     ],
-    "p": 0.03403,
-    "fair_2": 58.77
+    "p": 0.03407,
+    "fair_2": 58.7
    },
    {
     "combo": [
      "2",
      "4"
     ],
-    "p": 0.03215,
-    "fair_2": 62.21
+    "p": 0.03187,
+    "fair_2": 62.76
    },
    {
     "combo": [
      "3",
      "2"
     ],
-    "p": 0.02882,
-    "fair_2": 69.41
+    "p": 0.02857,
+    "fair_2": 70.0
    },
    {
     "combo": [
      "7",
      "4"
     ],
-    "p": 0.0281,
-    "fair_2": 71.18
+    "p": 0.02818,
+    "fair_2": 70.97
    }
   ],
   "trifecta": [
@@ -737,8 +738,8 @@
      "7",
      "5"
     ],
-    "p": 0.03982,
-    "fair_1": 25.11
+    "p": 0.03976,
+    "fair_1": 25.15
    },
    {
     "combo": [
@@ -746,8 +747,8 @@
      "5",
      "7"
     ],
-    "p": 0.0385,
-    "fair_1": 25.97
+    "p": 0.03843,
+    "fair_1": 26.02
    },
    {
     "combo": [
@@ -755,8 +756,8 @@
      "2",
      "5"
     ],
-    "p": 0.03791,
-    "fair_1": 26.38
+    "p": 0.03801,
+    "fair_1": 26.31
    },
    {
     "combo": [
@@ -764,8 +765,8 @@
      "2",
      "7"
     ],
-    "p": 0.03542,
-    "fair_1": 28.23
+    "p": 0.0355,
+    "fair_1": 28.17
    },
    {
     "combo": [
@@ -773,8 +774,8 @@
      "5",
      "2"
     ],
-    "p": 0.03496,
-    "fair_1": 28.6
+    "p": 0.03519,
+    "fair_1": 28.41
    },
    {
     "combo": [
@@ -782,8 +783,8 @@
      "7",
      "2"
     ],
-    "p": 0.03379,
-    "fair_1": 29.59
+    "p": 0.03401,
+    "fair_1": 29.41
    },
    {
     "combo": [
@@ -791,8 +792,8 @@
      "7",
      "3"
     ],
-    "p": 0.02216,
-    "fair_1": 45.13
+    "p": 0.02201,
+    "fair_1": 45.43
    },
    {
     "combo": [
@@ -800,8 +801,8 @@
      "2",
      "3"
     ],
-    "p": 0.02109,
-    "fair_1": 47.41
+    "p": 0.02105,
+    "fair_1": 47.51
    },
    {
     "combo": [
@@ -809,8 +810,8 @@
      "5",
      "3"
     ],
-    "p": 0.02037,
-    "fair_1": 49.09
+    "p": 0.02023,
+    "fair_1": 49.44
    },
    {
     "combo": [
@@ -818,8 +819,8 @@
      "2",
      "3"
     ],
-    "p": 0.01874,
-    "fair_1": 53.36
+    "p": 0.01869,
+    "fair_1": 53.51
    },
    {
     "combo": [
@@ -827,8 +828,8 @@
      "7",
      "4"
     ],
-    "p": 0.01758,
-    "fair_1": 56.88
+    "p": 0.01748,
+    "fair_1": 57.2
    },
    {
     "combo": [
@@ -836,13 +837,14 @@
      "5",
      "3"
     ],
-    "p": 0.01727,
-    "fair_1": 57.9
+    "p": 0.0174,
+    "fair_1": 57.47
    }
   ]
  },
  "result": null,
  "status": {
+  "now": "2026-06-06T14:20:09+00:00",
   "source": "archive",
   "live": false,
   "ok": true,
@@ -850,9 +852,9 @@
   "detail": "Replaying recorded TVG cards from the repository archive.",
   "last_success": null,
   "recent_errors": [],
-  "model_version": "form-20261021-1810",
+  "model_version": "form-20261021-1857",
   "model_loaded": true,
-  "history_runs": 794526,
+  "history_runs": 762553,
   "history_horses": 83469,
   "history_through": "2026-05-09"
  }

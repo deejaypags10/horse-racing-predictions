@@ -20,7 +20,7 @@ function surfaceOf(s: string | null | undefined): string {
 }
 
 export function pastRunLine(p: PastRun): string {
-  const pos = p.position ? `${ordinal(p.position)}${p.field ? ` of ${p.field}` : ''}` : 'finish unknown';
+  const pos = p.position ? `${ordinal(p.position)}${p.field ? ` of ${p.field}` : ''}` : `unplaced${p.field ? ` in a field of ${p.field}` : ''}`;
   return pos;
 }
 
@@ -59,7 +59,7 @@ export function runnerNotes(r: Runner, race: RaceDetail, field: Runner[], format
     notes.push(`Last time out: ${pastRunLine(last)}${where ? ` (${where})` : ''}${last.favorite ? ', as the favourite' : ''}${d != null ? `, ${plural(d, 'day')} ago` : ''}.`);
     if (d != null && d >= 90) notes.push(`Returning from a layoff of ${plural(d, 'day')}.`);
     const wins = r.recent.filter((p) => p.position === 1).length;
-    const top3 = r.recent.filter((p) => p.position != null && p.position <= 3).length;
+    const top3 = r.recent.filter((p) => !!p.position && p.position <= 3).length;
     if (r.recent.length >= 3) notes.push(`${wins === 0 ? 'No wins' : plural(wins, 'win')} and ${top3} top-3 finish${top3 === 1 ? '' : 'es'} in the last ${r.recent.length} starts we hold.`);
     const raceSurface = surfaceOf(race.surface);
     if (raceSurface && r.recent.every((p) => surfaceOf(p.surface) && surfaceOf(p.surface) !== raceSurface)) {

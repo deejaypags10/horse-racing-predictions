@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { api } from '../api/client';
+import { api, errorText } from '../api/client';
 import type { RaceResponse, TicketKind } from '../api/types';
 import { useApi } from '../api/useApi';
 import { DumbbellChart } from '../components/Dumbbell';
@@ -15,12 +15,14 @@ import { breedName } from '../domain/breed';
 import { fmtDateline, fmtPct, fmtPurse, fmtTime, ordinal, tzAbbr } from '../domain/format';
 import { mtpState } from '../domain/mtp';
 import { ODDS_FORMAT_LABEL, type OddsFormat } from '../domain/odds';
-import { activeInterests, marketMode, oddsStale, runnerByProgram, SORT_CYCLE, SORT_LABEL, sortRunners, type SortKey } from '../domain/race';
+import { activeInterests, isOut, marketMode, oddsStale, runnerByProgram, SORT_CYCLE, SORT_LABEL, sortRunners, type SortKey } from '../domain/race';
 import { announce } from '../state/announcer';
 import { useBoard } from '../state/board';
 import { useNow } from '../state/clock';
 import { useShortcuts } from '../state/keys';
 import { useSettings } from '../state/settings';
+import { useToast } from '../state/toast';
+import { defaultTicketRunner, raceVerdict, type Verdict as VerdictT } from '../domain/verdict';
 import { classAbbr, conditions } from './Track';
 import { NotFoundPage } from './NotFound';
 
@@ -34,6 +36,7 @@ export function RacePage() {
   const [params, setParams] = useSearchParams();
   const nav = useNavigate();
   const { settings, update } = useSettings();
+  const toast = useToast();
   const fmt = settings.oddsFormat;
   const whatif = useMemo(() => parseWhatIf(params.get('whatif')), [params]);
   const sortParam = params.get('sort') as SortKey | null;
@@ -92,7 +95,7 @@ export function RacePage() {
   }, [whatif, setQuery]);
 
   const openTicket = useCallback((program?: string, kind: TicketKind = 'win', selection?: string[]) => {
-    const r = program ? runnerByProgram(d?.runners ?? [], program) : undefined;
+    const r = program ? runnerByProgram(d?.runners ?? [], program) : !selection && d ? defaultTicketRunner(d) : undefined;
     setSheet({ open: true, preset: { kind, selection: selection ?? (r ? [r.interest] : []) } });
   }, [d]);
 
@@ -124,8 +127,16 @@ export function RacePage() {
     }
     if (k === 'X' && whatif.length) { setQuery({ whatif: null }); return true; }
     if (k === 'x' && focused) { toggleWhatIf(focused); return true; }
-    if (k === 't' && d.race.status === 'open') { openTicket(focused ?? undefined); return true; }
-    if (k === 'b' && deepLink) { window.open(deepLink, '_blank', 'noopener,noreferrer'); return true; }
+    if (k === 't') {
+      if (d.race.status === 'open') openTicket(focused ?? undefined);
+      else toast({ text: 'Betting on this race is closed. Tickets can only be saved before post.' });
+      return true;
+    }
+    if (k === 'b') {
+      if (deepLink) window.open(deepLink, '_blank', 'noopener,noreferrer');
+      else toast({ text: replay ? 'Replay — betting links are off.' : 'No TwinSpires link for this race.' });
+      return true;
+    }
     if ((k === '[' || k === ']') && board.data) {
       const order = board.data.tracks.filter((t) => t.next_race).sort((a, b) => Date.parse(a.next_race!.post_time ?? '') - Date.parse(b.next_race!.post_time ?? ''));
       const i = order.findIndex((t) => t.id === d.race.track_id);
@@ -146,7 +157,7 @@ export function RacePage() {
       <div className="page race">
         {st.error ? (
           <InlineError title="Couldn't load this race." onRetry={st.refresh} back={{ to: '/', label: 'Back to Today' }} error={st.error}>
-            {st.error.isOutage ? 'The data source didn’t respond. Nothing is lost; try again in a moment.' : st.error.message}
+            {errorText(st.error, false)}
           </InlineError>
         ) : (
           <div aria-busy="true">
@@ -163,12 +174,14 @@ export function RacePage() {
   const ml = mode !== 'live';
   const mtpNow = mtp!;
   const { stale, ageS } = oddsStale(d, now, mtpNow.minutes);
-  const noModel = d.runners.every((x) => !x.model);
+  const noModel = d.runners.every((x) => !x.model) && !d.runners.every(isOut);
   const scratchedOfficial = d.runners.filter((x) => x.scratched);
   const whatIfRunners = d.runners.filter((x) => x.whatif_scratched);
   const purse = fmtPurse(r.purse);
   const cancelled = r.status === 'cancelled';
   const ints = activeInterests(d.runners);
+  const allOut = d.runners.length > 0 && d.runners.every(isOut);
+  const verdict = raceVerdict(d, fmt, { valueFlags: settings.valueFlags, coolOff: settings.coolOff });
 
   const resultNote = (() => {
     if (!d.result || !d.result.finish.length) return null;
@@ -183,7 +196,7 @@ export function RacePage() {
         {r.status === 'official' ? 'Official. ' : 'Unofficial result. '}
         {winner && <>#{winner.program} {winner.name} won. </>}
         {wP != null && <>We had it at <span className="model-ink num">{fmtPct(wP)}</span>{wInt >= 0 ? `, ${wInt === 0 ? 'highest' : `${ordinal(wInt + 1)}-highest`} in the field` : ''}. </>}
-        {top && top.lead.interest !== winner?.interest && <>Our top pick #{top.key} {topPos ? `finished ${ordinal(topPos)}` : 'was out of the top finishers'}.</>}
+        {top && top.lead.interest !== winner?.interest && <>The model's highest-chance runner, #{top.key}, {topPos ? `finished ${ordinal(topPos)}` : 'was out of the top finishers'}.</>}
       </p>
     );
   })();
@@ -248,7 +261,7 @@ export function RacePage() {
 
       </header>
 
-      {st.error && <p className="stale-note" role="status">Couldn't refresh. Showing data from {fmtTime(st.updatedAt)}.</p>}
+      {st.error && <p className="stale-note" role="status">{errorText(st.error, true).replace(/\.$/, '')} from {fmtTime(st.updatedAt)}.</p>}
 
       {cancelled ? (
         <p className="banner banner-warn">Race {r.number} was cancelled. Wagers are refunded by TwinSpires.</p>
@@ -277,11 +290,9 @@ export function RacePage() {
               <button type="button" className="btn btn-secondary btn-sm" onClick={() => setQuery({ whatif: null })}>Reset</button>
             </div>
           )}
-          {mode === 'ml' && r.status === 'open' && (
-            <p className="banner banner-muted">Tote opens closer to post. Edge is shown against the morning line for now, muted, and nothing is flagged until real tote odds exist.</p>
-          )}
           {stale && <p className="banner banner-warn">Odds are out of date. Edge is shown hollow and nothing is flagged until prices refresh.</p>}
-          {noModel && <p className="banner banner-muted">We're not showing a model opinion for this race: too few runners have enough history. Odds are still shown.</p>}
+          {!allOut && <Verdict v={verdict} />}
+          {allOut && <p className="banner banner-whatif" role="status">Every runner is scratched in this what-if. <button type="button" className="btn-link" onClick={() => setQuery({ whatif: null })}>Reset</button></p>}
           {r.status === 'closed' && !hasResult && <p className="banner banner-muted">Betting is closed. Results pending.</p>}
           {resultNote}
           {scratchedOfficial.length > 0 && !whatIfRunners.length && (
@@ -324,7 +335,7 @@ export function RacePage() {
             <aside className="race-side" aria-label="Charts and exotics">
               <section className="panel panel-chart">
                 <h2 className="panel-title">Model vs {ml ? 'morning line' : 'market'}</h2>
-                <DumbbellChart runners={sorted} breed={r.breed} ml={ml} highlight={highlight} onHighlight={setHighlight} />
+                <DumbbellChart runners={sorted} breed={r.breed} ml={ml} highlight={highlight} onHighlight={setHighlight} hideEdge={settings.coolOff} />
               </section>
               <section className="panel panel-exotics" ref={exoticsRef}>
                 <details open={exoticsOpen || undefined} className="exotics-details" onToggle={(e) => setExoticsOpen((e.target as HTMLDetailsElement).open)}>
@@ -389,4 +400,14 @@ function bugle(id: string) {
   } catch {
     /* no audio */
   }
+}
+
+function Verdict({ v }: { v: VerdictT }) {
+  return (
+    <p className={`verdict verdict-${v.kind}`}>
+      <span className="verdict-label">{v.kind === 'value' ? 'Value' : 'Verdict'}</span>
+      <span className="verdict-text">{v.text}{v.thin && <> Thin history: mostly the market's view.</>}</span>
+      {v.unvalidated && <Link to="/model#limits" className="tag tag-unvalidated" title="Blend weights are fixed priors until fitted from recorded races">unvalidated blend</Link>}
+    </p>
+  );
 }

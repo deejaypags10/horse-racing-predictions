@@ -162,8 +162,9 @@
   .race-table .c-cond { grid-area: cond; font-size: var(--fs-12); color: var(--c-ink-2); }
   .race-table .c-purse { display: none; }
   .race-table .c-pick { grid-area: pick; }
-  .race-table .c-pick::before { content: "Pick "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
+  .race-table .c-pick::before { content: "Highest "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
   .race-table .c-over { grid-area: over; text-align: right; }
-  .race-table .c-over::before { content: "Overlay "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
+  .race-table .c-over::before { content: "Value "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
   .race-table .pick-name { display: none; }
 }
+.race-link { position: relative; }

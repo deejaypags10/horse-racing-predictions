@@ -26,7 +26,7 @@ function mockFetch(race: unknown, calls: string[] = []) {
 
 function renderAt(path: string) {
   return render(
-    <MemoryRouter initialEntries={[path]}>
+    <MemoryRouter initialEntries={[path]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <SettingsProvider initial={{ oddsFormat: 'fractional', shortcuts: true }}>
         <App />
       </SettingsProvider>
@@ -60,7 +60,7 @@ describe('race view', () => {
     expect((bet as HTMLButtonElement).disabled).toBe(true);
     expect(bet.getAttribute('title')).toBe('Replay — betting links are off');
     // Replay ribbon.
-    expect(screen.getByRole('note', { name: 'Replay mode' })).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Replay mode' })).toBeTruthy();
   });
 
   it('shows the model block once per coupled interest', async () => {
