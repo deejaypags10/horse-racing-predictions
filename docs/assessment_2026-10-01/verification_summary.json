@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-10-02",
+  "markdown_files": 8,
+  "category_counts": {
+    "02_FEATURES.md": 15,
+    "03_DESIGN.md": 15,
+    "04_BACKEND.md": 15,
+    "05_MODELS.md": 15
+  },
+  "proposal_count": 60,
+  "code_languages": {
+    "python": 56,
+    "toml": 1,
+    "sql": 2,
+    "yaml": 1
+  },
+  "python_syntax": "passed",
+  "toml_syntax": "passed",
+  "sqlite_syntax": "passed",
+  "yaml_syntax": "Parser unavailable; inspected only",
+  "local_file_links": "passed",
+  "roadmap_id_coverage": "passed",
+  "deterministic_checks": [
+    "F01 scratch excluded and remaining probabilities sum to one",
+    "F02 late correction excluded at replay cutoff",
+    "F05 tiny edge skipped rather than rounded up",
+    "F05 race exposure cap enforced",
+    "F05 negative edge has no stake",
+    "F13 identical distributions have zero divergence",
+    "F13 different distributions have positive divergence",
+    "D04 proposed button contrast meets 4.5 ratio",
+    "D04 current source color pair fails ordinary-text threshold",
+    "D05 cumulative fields are not double counted",
+    "B06 exact feature order preserved",
+    "B06 ordering mismatch rejected",
+    "B06 fabricated input rejected",
+    "B09 independent expected coverage finds missing race",
+    "B12 publication follows probability validation",
+    "M01 race groups preserved with temporal gap",
+    "M03 stable softmax sums to one",
+    "M03 race log loss matches winner probability",
+    "M04 de-vig and log-pool outputs coherent",
+    "M06 finish probabilities monotone",
+    "M06 cumulative field sums equal places available",
+    "M08 sparse perfect record shrunk",
+    "M11 extracted tags retain source and spans",
+    "M12 quantile produces explicit winner set",
+    "M14 day bootstrap uses return on stakes",
+    "M15 incomplete market withheld"
+  ],
+  "deterministic_check_count": 26,
+  "button_contrast_current": 2.106,
+  "button_contrast_proposed": 8.8216,
+  "limitations": [
+    "No Streamlit integration execution",
+    "No project pytest suite",
+    "No live model training or independent reproduction of metrics",
+    "Optional-library snippets syntax checked only"
+  ]
+}
