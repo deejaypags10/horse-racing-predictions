@@ -1,0 +1,6 @@
+{"finishers": [
+  {"programNumber": "3", "finishPosition": 1, "winPayoff": 8.4, "placePayoff": 4.2, "showPayoff": 3.0},
+  {"programNumber": "1", "finishPosition": 2, "placePayoff": 3.8, "showPayoff": 2.6},
+  {"programNumber": "2", "finishPosition": 3, "showPayoff": 2.4}
+ ],
+ "payoffs": [{"wagerType": "Exacta", "payoff": 31.6}, {"wagerType": "Trifecta", "payoff": 88.2}]}
