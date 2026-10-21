@@ -90,8 +90,29 @@ def load_archive(path: Path) -> pd.DataFrame:
     df["post"] = pd.to_numeric(df["draw"], errors="coerce")
     df["favorite"] = df["is_favorite"].fillna(False).astype(bool)
     df["race_id"] = df["race_id"].astype(str)
+    df = dedupe_mirrors(df)
     return df[["key", "day", "race_id", "track", "breed", "surface", "dist_f", "purse",
                "field_size", "position", "favorite", "post"]]
+
+
+def dedupe_mirrors(df: pd.DataFrame) -> pd.DataFrame:
+    """Keep one run per horse per day.
+
+    TVG republishes big cards under wagering "mirror" codes (SX5, SA5, GT3,
+    OD6, CH5, SAS ...), so the archive holds the same start up to five
+    times. Left in, a single Derby run reads as five starts of "strong"
+    evidence and whole races are double-counted in training. A horse never
+    runs twice in a day, so (horse, day) is the identity; we keep the row
+    from the most plausible real track: codes without digits first, then
+    the code with the most rows overall.
+    """
+    if df.empty:
+        return df
+    volume = df["track"].map(df["track"].value_counts())
+    has_digit = df["track"].str.contains(r"\d", regex=True)
+    order = pd.DataFrame({"d": has_digit.astype(int), "v": -volume}, index=df.index)
+    ranked = df.assign(_d=order["d"], _v=order["v"]).sort_values(["key", "day", "_d", "_v"], kind="mergesort")
+    return ranked.drop_duplicates(["key", "day"], keep="first").drop(columns=["_d", "_v"])
 
 
 class History:
@@ -135,8 +156,9 @@ class History:
         if not frames:
             return cls.empty()
         runs = pd.concat(frames, ignore_index=True)
-        # The same race may arrive from the archive and from v2 ingestion.
-        runs = runs.drop_duplicates(["key", "day", "track"], keep="last")
+        # The same race may arrive from the archive and from v2 ingestion, and
+        # a horse runs at most once a day.
+        runs = runs.drop_duplicates(["key", "day"], keep="last")
         return cls(runs)
 
     @classmethod

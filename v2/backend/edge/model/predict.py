@@ -39,9 +39,11 @@ BLEND = {
     "morning_line": {"a": 0.85, "b": 0.60},
 }
 BLEND_FILE = Path(__file__).parent / "artifacts" / "blend.json"
+BLEND_CALIBRATED = False      # True once weights come from the app's own recorded races
 if BLEND_FILE.exists():  # written by `edge calibrate` once enough races are recorded
     try:
         BLEND.update({k: v for k, v in json.loads(BLEND_FILE.read_text()).get("weights", {}).items() if k in BLEND})
+        BLEND_CALIBRATED = True
     except (OSError, ValueError):
         pass
 MIN_PRICE_PREMIUM = 0.15      # "bet above" = fair price × (1 + premium)

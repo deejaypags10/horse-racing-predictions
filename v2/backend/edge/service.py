@@ -273,6 +273,7 @@ class Service:
             "now": _iso(now),
             "prediction": {
                 "market": pred.market, "model_version": pred.model_version, "weights": pred.weights,
+                "blend_calibrated": _blend_calibrated(),
                 "evidence": pred.evidence, "coverage": round(pred.coverage, 3),
                 "overround": None if pred.overround is None else round(pred.overround, 4),
                 "whatif": pred.scratched_by_user, "active_interests": len(pred.interests),
@@ -463,7 +464,8 @@ class Service:
         meta = self.model.meta or {}
         record = self._track_record()
         return {"version": self.model.version, "features": list(self.model.features), "meta": meta,
-                "track_record": record, "blend": __import__("edge.model.predict", fromlist=["BLEND"]).BLEND}
+                "track_record": record, "blend": __import__("edge.model.predict", fromlist=["BLEND"]).BLEND,
+                "blend_calibrated": _blend_calibrated()}
 
     def _track_record(self) -> dict:
         """Live, out-of-sample record from pre-post snapshots and results."""
@@ -488,6 +490,11 @@ class Service:
 
 
 # ----------------------------------------------------------------- helpers
+
+def _blend_calibrated() -> bool:
+    from .model import predict as _p
+    return _p.BLEND_CALIBRATED
+
 
 def _iso(dt: datetime | None) -> str | None:
     return dt.isoformat(timespec="seconds") if dt else None
