@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 5173,
-    proxy: { '/api': { target: 'http://127.0.0.1:8765', changeOrigin: false } },
+    // The API only accepts Host 127.0.0.1/localhost; pin it explicitly.
+    proxy: { '/api': { target: 'http://127.0.0.1:8765', changeOrigin: false, headers: { Host: '127.0.0.1:8765' } } },
   },
   build: {
     outDir: 'dist',

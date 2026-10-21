@@ -1,0 +1,154 @@
+/* Design tokens — DESIGN.md §2. The only place colour literals live (plus saddlecloths.ts). */
+:root {
+  /* ---------- Light: Newsprint ---------- */
+  --c-paper:        #F3EFE4;
+  --c-sheet:        #FBF9F4;
+  --c-sheet-sunk:   #E7E0CF;
+  --c-ink:          #1C1B18;
+  --c-ink-2:        #45423B;
+  --c-ink-3:        #625E55;
+  --c-rule:         #CBC3B1;
+  --c-rule-strong:  #857E70;
+  --c-rule-heavy:   #1C1B18;
+  --c-brand:        #1E4D3B;
+  --c-on-brand:     #FFFFFF;
+  --c-model:        #0A58A8;
+  --c-market:       #8C8576;
+  --c-over:         #0A58A8;
+  --c-over-wash:    #DCE8F5;
+  --c-under:        #A3470C;
+  --c-under-fill:   #B85A1E;
+  --c-under-wash:   #F4E2D3;
+  --c-live:         #7A5200;
+  --c-live-lamp:    #E9A21B;
+  --c-danger:       #A51D17;
+  --c-danger-wash:  #F6DCD9;
+  --c-focus:        #0A58A8;
+  --c-scrim:        rgb(28 27 24 / 0.45);
+  --c-replay-a:     #F4E2B8;
+  --c-replay-b:     #EAD39A;
+  --c-cloth-fold:   rgb(28 27 24 / 0.15);
+  --shadow-pop:     0 1px 0 var(--c-rule), 0 8px 24px rgb(28 27 24 / 0.14);
+  --hover-filter:   brightness(1.08);
+  color-scheme: light;
+
+  /* ---------- Type ---------- */
+  --ff-display: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --ff-ui:      "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ff-num:     "IBM Plex Sans Condensed", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  --fs-12: 0.75rem;
+  --fs-13: 0.8125rem;
+  --fs-14: 0.875rem;
+  --fs-15: 0.9375rem;
+  --fs-17: 1.0625rem;
+  --fs-20: 1.25rem;
+  --fs-24: 1.5rem;
+  --fs-32: 2rem;
+  --fs-44: 2.75rem;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --tracking-caps: 0.04em;
+
+  /* ---------- Space / layout ---------- */
+  --sp-0: 2px; --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --gutter: 16px;
+  --content-max: 1280px;
+  --row-h: 40px;
+  --row-h-compact: 32px;
+  --tap-min: 44px;
+  --mast-h: 48px;
+  --tabbar-h: 56px;
+  --radius-0: 0;
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --bw-hair: 1px;
+  --bw-control: 1px;
+  --bw-heavy: 2px;
+  --rule-double: 3px double var(--c-rule-heavy);
+  --z-sticky: 10; --z-ribbon: 20; --z-pop: 30; --z-sheet: 40; --z-toast: 50;
+
+  /* ---------- Motion ---------- */
+  --dur-instant: 80ms;
+  --dur-fast: 140ms;
+  --dur-flip: 180ms;
+  --dur-med: 240ms;
+  --dur-slow: 400ms;
+  --ease-out: cubic-bezier(.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+  --ease-flip: cubic-bezier(.5, 0, .5, 1);
+}
+
+@media (min-width: 768px) { :root { --gutter: 24px; --mast-h: 56px; } }
+@media (min-width: 1200px) { :root { --gutter: 32px; } }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --c-paper:        #0E1311;
+  --c-sheet:        #151C18;
+  --c-sheet-sunk:   #1E2A24;
+  --c-ink:          #EEE9DC;
+  --c-ink-2:        #BDB7A7;
+  --c-ink-3:        #959083;
+  --c-rule:         #2E3832;
+  --c-rule-strong:  #5E6A63;
+  --c-rule-heavy:   #BDB7A7;
+  --c-brand:        #86C9A4;
+  --c-on-brand:     #0E1311;
+  --c-model:        #74B6FF;
+  --c-market:       #7C776B;
+  --c-over:         #74B6FF;
+  --c-over-wash:    #15283D;
+  --c-under:        #F29A5E;
+  --c-under-fill:   #F29A5E;
+  --c-under-wash:   #33221A;
+  --c-live:         #F4B740;
+  --c-live-lamp:    #F4B740;
+  --c-danger:       #FF8F87;
+  --c-danger-wash:  #3A1B19;
+  --c-focus:        #F4B740;
+  --c-scrim:        rgb(0 0 0 / 0.6);
+  --c-replay-a:     #2B2414;
+  --c-replay-b:     #3A3019;
+  --c-cloth-fold:   rgb(0 0 0 / 0.22);
+  --shadow-pop:     0 1px 0 var(--c-rule), 0 8px 24px rgb(0 0 0 / 0.5);
+  --hover-filter:   brightness(0.92);
+  color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --c-paper:        #0E1311;
+  --c-sheet:        #151C18;
+  --c-sheet-sunk:   #1E2A24;
+  --c-ink:          #EEE9DC;
+  --c-ink-2:        #BDB7A7;
+  --c-ink-3:        #959083;
+  --c-rule:         #2E3832;
+  --c-rule-strong:  #5E6A63;
+  --c-rule-heavy:   #BDB7A7;
+  --c-brand:        #86C9A4;
+  --c-on-brand:     #0E1311;
+  --c-model:        #74B6FF;
+  --c-market:       #7C776B;
+  --c-over:         #74B6FF;
+  --c-over-wash:    #15283D;
+  --c-under:        #F29A5E;
+  --c-under-fill:   #F29A5E;
+  --c-under-wash:   #33221A;
+  --c-live:         #F4B740;
+  --c-live-lamp:    #F4B740;
+  --c-danger:       #FF8F87;
+  --c-danger-wash:  #3A1B19;
+  --c-focus:        #F4B740;
+  --c-scrim:        rgb(0 0 0 / 0.6);
+  --c-replay-a:     #2B2414;
+  --c-replay-b:     #3A3019;
+  --c-cloth-fold:   rgb(0 0 0 / 0.22);
+  --shadow-pop:     0 1px 0 var(--c-rule), 0 8px 24px rgb(0 0 0 / 0.5);
+  --hover-filter:   brightness(0.92);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-flip: 0ms; --dur-med: 0ms; --dur-slow: 0ms; }
+}

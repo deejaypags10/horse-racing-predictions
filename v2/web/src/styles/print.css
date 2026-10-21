@@ -1,0 +1,15 @@
+/* A race prints as a one-page program. */
+@media print {
+  :root, :root[data-theme="dark"] {
+    --c-paper: #fff; --c-sheet: #fff; --c-sheet-sunk: #eee; --c-ink: #000; --c-ink-2: #222; --c-ink-3: #444;
+    --c-rule: #bbb; --c-rule-strong: #555; --c-rule-heavy: #000; --c-over-wash: #fff; --c-model: #000; --c-over: #000; --c-under: #000;
+  }
+  body { background: #fff; padding: 0; }
+  .ribbon, .nextup, .mast-nav, .lamp-wrap, .mast-settings, .tabbar, .toasts, .action-bar, .race-actions, .race-toolbar,
+  .c-menu, .panel-exotics, .panel-about, .site-footer-meta, .skip-link, .race-nav ol, .race-nav-hint { display: none !important; }
+  .masthead { position: static; }
+  .cloth { background: #fff !important; color: #000 !important; box-shadow: inset 0 0 0 1px #000; }
+  .race-grid { grid-template-columns: 1fr !important; }
+  .runner-table tbody tr.runner > * { height: auto; padding-top: 3px; padding-bottom: 3px; }
+  a { text-decoration: none; }
+}

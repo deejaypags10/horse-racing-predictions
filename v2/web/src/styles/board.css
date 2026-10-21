@@ -1,0 +1,169 @@
+/* Today board + Track card. */
+
+.board-head { align-items: center; }
+.board .chips { margin-bottom: var(--sp-2); }
+.board-list { margin-top: var(--sp-2); }
+
+.track-group.is-pinned .group-title { color: var(--c-brand); }
+.track-list { border-top: var(--bw-heavy) solid var(--c-rule-heavy); background: var(--c-sheet); }
+.track-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(180px, 1.6fr) 56px 84px 92px 64px minmax(120px, 1fr) 132px 16px;
+  align-items: center;
+  column-gap: var(--sp-3);
+  min-height: 44px;
+  padding: 0 var(--sp-3) 0 var(--sp-1);
+  border-bottom: 1px solid var(--c-rule);
+  font-size: var(--fs-14);
+}
+.track-row:not(.track-row-head):hover { background: var(--c-sheet-sunk); }
+.track-row-head {
+  min-height: 32px;
+  background: var(--c-sheet-sunk);
+  border-bottom: 0;
+  font-family: var(--ff-num);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-ink-2);
+}
+.track-group .track-row-head + .track-list { border-top-width: var(--bw-heavy); }
+.num-col { text-align: right; font-family: var(--ff-num); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.track-link { text-decoration: none; min-width: 0; }
+.track-link::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.track-link:focus-visible { outline: none; }
+.track-link:focus-visible::after { outline: 2px solid var(--c-focus); outline-offset: -2px; }
+.track-name { font-weight: 600; font-size: var(--fs-15); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.track-row .of { color: var(--c-ink-3); font-size: var(--fs-13); }
+.track-surface { color: var(--c-ink-2); font-size: var(--fs-13); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.track-signal { font-family: var(--ff-num); font-weight: 600; white-space: nowrap; }
+.signal-over { color: var(--c-over); }
+.signal-muted { color: var(--c-ink-3); font-weight: 500; }
+.track-chev { color: var(--c-ink-3); font-size: var(--fs-20); line-height: 1; }
+.track-row.is-done .track-name { color: var(--c-ink-2); }
+.pin {
+  position: relative; z-index: 2;
+  display: inline-grid; place-items: center;
+  width: 32px; height: 32px;
+  border: 0; background: transparent;
+  color: var(--c-ink-3);
+  border-radius: var(--radius-1);
+}
+.pin:hover { color: var(--c-ink); background: var(--c-paper); }
+.pin[aria-pressed="true"] { color: var(--c-live-lamp); }
+:root[data-theme="dark"] .pin[aria-pressed="true"] { color: var(--c-live); }
+.finished { margin-top: var(--sp-5); }
+.finished summary { cursor: pointer; font-family: var(--ff-num); font-size: var(--fs-12); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: var(--sp-2) 0; }
+
+@media (max-width: 1023px) {
+  .track-row { grid-template-columns: 36px minmax(160px, 1.6fr) 48px 72px 84px 56px 120px 16px; }
+  .track-surface { display: none; }
+  .track-row-head > span:nth-child(7) { display: none; }
+}
+
+@media (max-width: 767px) {
+  .board-head .search { display: none; }
+  .chip-long { display: none; }
+  .chip-short { display: inline; }
+  .board .chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 calc(-1 * var(--gutter)) var(--sp-2); padding: 2px var(--gutter); }
+  .track-row-head { display: none; }
+  .track-row {
+    grid-template-columns: 32px auto auto 1fr auto;
+    grid-template-areas: "pin name name name mtp" "pin breed race post signal";
+    row-gap: 2px;
+    min-height: 64px;
+    padding: var(--sp-2) var(--sp-2) var(--sp-2) 0;
+    column-gap: var(--sp-2);
+  }
+  .track-row .pin { grid-area: pin; align-self: start; }
+  .track-link { grid-area: name; }
+  .track-name { font-size: var(--fs-15); }
+  .track-breed { grid-area: breed; }
+  .track-race { grid-area: race; text-align: left; font-size: var(--fs-13); color: var(--c-ink-2); }
+  .track-post { grid-area: post; text-align: left; font-size: var(--fs-13); color: var(--c-ink-2); }
+  .track-race::before, .track-post::before { content: "· "; color: var(--c-ink-3); }
+  .track-mtp { grid-area: mtp; }
+  .track-mtp .mtp:not(.mtp-k-far):not(.mtp-k-none)::after { content: " MTP"; font-size: var(--fs-12); font-weight: 500; }
+  .track-signal { grid-area: signal; font-size: var(--fs-13); text-align: right; }
+  .track-surface, .track-chev { display: none; }
+}
+
+/* ---------- Track card ---------- */
+.page-head.track-head { align-items: flex-end; }
+.track-title { margin-top: var(--sp-1); }
+.head-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.pin-btn[aria-pressed="true"] svg { color: var(--c-live-lamp); }
+.table-wrap { width: 100%; }
+.race-table { width: 100%; background: var(--c-sheet); border-top: var(--bw-heavy) solid var(--c-rule-heavy); font-size: var(--fs-14); }
+.race-table thead th, .runner-table thead th, .metric-table thead th, .exotics-table thead th, .pp-table thead th {
+  font-family: var(--ff-num);
+  font-size: var(--fs-13);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--c-ink-2);
+  background: var(--c-sheet-sunk);
+  padding: 6px var(--sp-2);
+  white-space: nowrap;
+}
+.race-table th.num, .race-table td.num, .runner-table .num, .metric-table .num, .exotics-table .num, .pp-table .num { text-align: right; font-family: var(--ff-num); font-variant-numeric: tabular-nums; }
+.race-table tbody tr { position: relative; border-bottom: 1px solid var(--c-rule); height: 44px; }
+.race-table tbody tr:hover { background: var(--c-sheet-sunk); }
+.race-table tbody td, .race-table tbody th { padding: 6px var(--sp-2); vertical-align: middle; }
+.race-table .c-r { width: 52px; box-shadow: inset 3px 0 0 transparent; }
+.race-table tr.is-next .c-r { box-shadow: inset 3px 0 0 var(--c-live-lamp); }
+.race-n { font-family: var(--ff-num); font-weight: 700; font-size: var(--fs-15); }
+.stretched { text-decoration: none; }
+.stretched::after { content: ""; position: absolute; inset: 0; }
+.race-table tr { transform: scale(1); } /* containing block for stretched links in tables */
+.stretched:focus-visible { outline: none; }
+.stretched:focus-visible::after { outline: 2px solid var(--c-focus); outline-offset: -2px; }
+.cond-main { font-weight: 500; }
+.cond-class, .cond-name, .cond-field { color: var(--c-ink-2); }
+.cond-field { color: var(--c-ink-3); font-size: var(--fs-13); }
+.pick { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.pick-p { font-family: var(--ff-num); }
+.pick-name { color: var(--c-ink-2); font-size: var(--fs-13); max-width: 140px; overflow: hidden; text-overflow: ellipsis; }
+.status { font-family: var(--ff-num); font-weight: 600; font-size: var(--fs-13); white-space: nowrap; }
+.status-open { color: var(--c-ink-2); font-weight: 500; }
+.is-next .status-open { color: var(--c-live); font-weight: 700; }
+.status-closed { color: var(--c-ink); }
+.status-cancelled { text-decoration: line-through; color: var(--c-ink-3); }
+.finish-chips { display: inline-flex; gap: 2px; margin-left: var(--sp-2); vertical-align: middle; }
+.banner-muted { color: var(--c-ink-2); }
+
+@media (max-width: 1100px) {
+  .race-table .pick-name { display: none; }
+}
+@media (max-width: 767px) {
+  .race-table, .race-table tbody { display: block; }
+  .race-table thead { display: none; }
+  .race-table tbody tr {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    grid-template-areas: "r post mtp status" "cond cond cond cond" "pick pick over over";
+    align-items: center;
+    column-gap: var(--sp-3);
+    row-gap: 2px;
+    padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-3);
+    height: auto;
+  }
+  .race-table tbody td, .race-table tbody th { padding: 0; }
+  .race-table .c-r { grid-area: r; width: auto; }
+  .race-table tr.is-next { box-shadow: inset 3px 0 0 var(--c-live-lamp); }
+  .race-table tr.is-next .c-r { box-shadow: none; }
+  .race-table .c-post { grid-area: post; text-align: left; }
+  .race-table .c-mtp { grid-area: mtp; text-align: left; }
+  .race-table .c-mtp .mtp:not(.mtp-k-far):not(.mtp-k-none):not(.mtp-k-off)::after { content: " MTP"; font-size: var(--fs-12); font-weight: 500; }
+  .race-table .c-mtp .mtp-k-far, .race-table .c-mtp .mtp-k-none { display: none; }
+  .race-table .c-status { grid-area: status; text-align: right; }
+  .race-table .c-cond { grid-area: cond; font-size: var(--fs-12); color: var(--c-ink-2); }
+  .race-table .c-purse { display: none; }
+  .race-table .c-pick { grid-area: pick; }
+  .race-table .c-pick::before { content: "Pick "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
+  .race-table .c-over { grid-area: over; text-align: right; }
+  .race-table .c-over::before { content: "Overlay "; font-size: var(--fs-12); color: var(--c-ink-3); margin-right: 4px; }
+  .race-table .pick-name { display: none; }
+}
