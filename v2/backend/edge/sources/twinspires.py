@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import os
 import re
 import threading
@@ -30,6 +31,7 @@ import time
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -53,6 +55,9 @@ ENDPOINTS: dict[str, str] = {
 TTL = {"tracks": 120.0, "races": 60.0, "entries": 45.0, "odds": 15.0, "results": 60.0}
 
 USER_AGENT = "EquineEdge/2.0 (personal handicapping tool; low-rate polling)"
+MAX_BYTES = 5_000_000
+# Provider values that end up in URLs and capture filenames.
+_SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9 _-]{0,39}$")
 
 _TYPE_TO_BREED = {"thoroughbred": Breed.THOROUGHBRED, "harness": Breed.HARNESS,
                   "quarter horse": Breed.QUARTER_HORSE, "quarterhorse": Breed.QUARTER_HORSE}
@@ -92,9 +97,12 @@ def _slug(name: str) -> str:
 def _parse_time(raw: Any) -> datetime | None:
     if raw is None:
         return None
-    if isinstance(raw, (int, float)):
-        secs = raw / 1000.0 if raw > 1e11 else float(raw)
-        return datetime.fromtimestamp(secs, tz=timezone.utc)
+    if isinstance(raw, (int, float)) and not isinstance(raw, bool):
+        try:
+            secs = raw / 1000.0 if raw > 1e11 else float(raw)
+            return datetime.fromtimestamp(secs, tz=timezone.utc)
+        except (OverflowError, OSError, ValueError):
+            return None
     if isinstance(raw, str):
         s = raw.strip()
         if s.isdigit():
@@ -128,7 +136,7 @@ class TwinSpiresSource:
         self.min_interval = min_interval
         self.capture_dir = capture_dir
         self._client = client or httpx.Client(timeout=timeout, headers={
-            "User-Agent": USER_AGENT, "Accept": "application/json"}, follow_redirects=True)
+            "User-Agent": USER_AGENT, "Accept": "application/json"}, follow_redirects=False)
         self._lock = threading.Lock()
         self._last_request = 0.0
         self._cache: dict[str, tuple[float, Any]] = {}
@@ -147,7 +155,8 @@ class TwinSpiresSource:
 
     # -- HTTP ----------------------------------------------------------------
     def _get(self, kind: str, **params: Any) -> Any:
-        path = self.endpoints[kind].format(affid=self.affid, **params)
+        path = self.endpoints[kind].format(affid=quote(str(self.affid), safe=""),
+                                           **{k: quote(str(v), safe="") for k, v in params.items()})
         url = self.base + path
         hit = self._cache.get(url)
         if hit and time.monotonic() - hit[0] < TTL[kind]:
@@ -160,16 +169,22 @@ class TwinSpiresSource:
                     time.sleep(wait)
                 self._last_request = time.monotonic()
             try:
-                resp = self._client.get(url)
-                if resp.status_code == 404:
-                    payload: Any = None
-                    break
-                if resp.status_code in (429, 500, 502, 503, 504):
-                    raise httpx.HTTPStatusError(f"HTTP {resp.status_code}", request=resp.request, response=resp)
-                resp.raise_for_status()
-                payload = resp.json()
+                with self._client.stream("GET", url) as resp:
+                    if resp.status_code == 404:
+                        payload: Any = None
+                        break
+                    if resp.status_code in (429, 500, 502, 503, 504):
+                        raise httpx.HTTPStatusError(f"HTTP {resp.status_code}", request=resp.request, response=resp)
+                    resp.raise_for_status()
+                    body = bytearray()
+                    for chunk in resp.iter_bytes():
+                        body += chunk
+                        if len(body) > MAX_BYTES:
+                            raise ValueError(f"{kind} response larger than {MAX_BYTES} bytes")
+                # NaN/Infinity literals become None; never let them reach the store
+                payload = json.loads(bytes(body), parse_constant=lambda _c: None)
                 break
-            except (httpx.HTTPError, ValueError) as exc:
+            except (httpx.HTTPError, ValueError, RecursionError) as exc:
                 last_exc = exc
                 time.sleep(0.5 * 2 ** attempt)
         else:
@@ -193,7 +208,11 @@ class TwinSpiresSource:
             return
         day = self.today().isoformat()
         parts = [kind] + [str(params[k]) for k in ("code", "type", "race") if k in params]
-        path = self.capture_dir / day / ("_".join(parts) + ".json")
+        name = re.sub(r"[^A-Za-z0-9_-]", "_", "_".join(parts))[:120] + ".json"
+        root = self.capture_dir.resolve()
+        path = (root / day / name).resolve()
+        if root not in path.parents:
+            return
         try:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(payload, indent=1))
@@ -249,9 +268,9 @@ def parse_tracks(payload: Any, day: date, source: str = "twinspires") -> list[Tr
     out = []
     for t in _as_list(payload, "tracks", "todaysTracks", "data"):
         code = _pick(t, "brisCode", "trackCode", "code", "id")
-        if not code:
-            continue
         ttype = str(_pick(t, "trackType", "type", "breed", default="Thoroughbred"))
+        if not code or not _SAFE_ID.fullmatch(str(code)) or not _SAFE_ID.fullmatch(ttype) or " " in str(code):
+            continue
         breed = _TYPE_TO_BREED.get(ttype.lower(), Breed.parse(ttype))
         if ttype.lower().startswith("grey") or ttype.lower() == "g":
             continue  # greyhounds are out of scope
@@ -380,15 +399,16 @@ def _to_float(v: Any) -> float | None:
     if v is None:
         return None
     try:
-        return float(str(v).replace("$", "").replace(",", ""))
+        f = float(str(v).replace("$", "").replace(",", ""))
     except ValueError:
         return None
+    return f if math.isfinite(f) else None
 
 
 def _to_int(v: Any) -> int | None:
     try:
         return int(v)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return None
 
 

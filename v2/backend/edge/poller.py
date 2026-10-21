@@ -18,7 +18,6 @@ import threading
 from datetime import timedelta
 
 from .domain import RaceStatus
-from .sources.base import SourceError
 
 log = logging.getLogger(__name__)
 
@@ -58,21 +57,24 @@ class Poller:
         now = svc.source.now()
         refreshed = 0
         for track in svc.tracks():
-            races = svc.card(track)  # cached; cheap when nothing is due
-            due = any(
-                r.post_time and (
-                    (r.status == RaceStatus.OPEN and r.post_time - now <= self.window and r.post_time > now - timedelta(minutes=5))
-                    or (r.status != RaceStatus.OFFICIAL and now - self.settle <= r.post_time <= now))
-                for r in races)
-            if not due:
-                continue
-            svc.invalidate(track.id)
             try:
-                for r in svc.card(track):
-                    if r.status == RaceStatus.OPEN:
-                        svc.predict(r)
-                refreshed += 1
-            except SourceError as exc:
-                log.warning("poller: %s: %s", track.code, exc)
+                refreshed += self._track(svc, track, now)
+            except Exception:  # one bad card must not stop the others
+                log.exception("poller: %s failed", track.code)
         self.cycles += 1
         return refreshed
+
+    def _track(self, svc, track, now) -> int:
+        races = svc.card(track)  # cached; cheap when nothing is due
+        due = any(
+            r.post_time and (
+                (r.status == RaceStatus.OPEN and r.post_time - now <= self.window and r.post_time > now - timedelta(minutes=5))
+                or (r.status != RaceStatus.OFFICIAL and now - self.settle <= r.post_time <= now))
+            for r in races)
+        if not due:
+            return 0
+        svc.invalidate(track.id)
+        for r in svc.card(track):
+            if r.status == RaceStatus.OPEN:
+                svc.predict(r)
+        return 1

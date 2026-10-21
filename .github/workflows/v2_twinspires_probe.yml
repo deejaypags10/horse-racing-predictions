@@ -27,11 +27,15 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install
-        run: pip install ./v2/backend
+        run: pip install -c v2/backend/constraints.txt ./v2/backend
       - name: Probe
+        shell: bash
         env:
           EDGE_CAPTURE_DIR: ${{ github.workspace }}/captures
-        run: edge ts-probe --races "${{ github.event.inputs.tracks }}" | tee probe.json
+          TRACKS: ${{ github.event.inputs.tracks }}
+        run: |
+          [[ "$TRACKS" =~ ^[0-9]{1,2}$ ]] || { echo "tracks must be a number"; exit 1; }
+          edge ts-probe --races "$TRACKS" | tee probe.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

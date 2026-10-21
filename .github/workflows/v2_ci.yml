@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -e './v2/backend[dev]'
+      - run: pip install -c v2/backend/constraints.txt -e './v2/backend[dev]'
       - run: pytest -q v2/backend/tests
   web:
     runs-on: ubuntu-latest

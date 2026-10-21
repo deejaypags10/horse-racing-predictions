@@ -12,6 +12,8 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.concurrency import run_in_threadpool
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .config import Settings
 from .service import BadRequest, NotFound, Service
@@ -35,6 +37,12 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
     settings = settings or Settings.load()
     app = FastAPI(title="Equine Edge", version="2.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
     state: dict[str, Service] = {}
+
+    # The API has no auth (personal, loopback-only). Two guards stop other
+    # websites from using it through the user's browser: reject foreign Host
+    # headers (DNS rebinding) and foreign Origins on writes (CSRF).
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost", "testserver"])
+    local_origins = {f"http://{h}:{p}" for h in ("127.0.0.1", "localhost") for p in (8765, 5173, 4173)}
 
     def svc() -> Service:
         if "svc" not in state:
@@ -64,6 +72,10 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
 
     @app.middleware("http")
     async def _headers(request: Request, call_next):
+        if request.method not in ("GET", "HEAD", "OPTIONS"):
+            origin = request.headers.get("origin")
+            if origin and origin not in local_origins:
+                return JSONResponse({"error": "forbidden_origin", "detail": "cross-site request refused"}, status_code=403)
         resp = await call_next(request)
         resp.headers.setdefault("X-Content-Type-Options", "nosniff")
         resp.headers.setdefault("Referrer-Policy", "no-referrer")
@@ -73,8 +85,8 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
         else:
             resp.headers.setdefault(
                 "Content-Security-Policy",
-                "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-                "font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; "
+                "default-src 'self'; style-src 'self' 'unsafe-inline'; "
+                "font-src 'self' data:; img-src 'self' data:; connect-src 'self'; "
                 "frame-ancestors 'none'; base-uri 'none'; form-action 'self'")
         return resp
 
@@ -100,13 +112,15 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
 
     @app.post("/api/tickets", status_code=201)
     async def create_ticket(request: Request):
+        if request.headers.get("content-type", "").split(";")[0].strip().lower() != "application/json":
+            raise HTTPException(415, "Content-Type must be application/json")
         try:
             body = await request.json()
         except ValueError:
             raise HTTPException(400, "body must be JSON") from None
         if not isinstance(body, dict):
             raise HTTPException(400, "body must be a JSON object")
-        return svc().create_ticket(body)
+        return await run_in_threadpool(svc().create_ticket, body)
 
     @app.delete("/api/tickets/{ticket_id}", status_code=204)
     def delete_ticket(ticket_id: str):
@@ -125,7 +139,7 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
 
         @app.get("/{path:path}", include_in_schema=False)
         def spa(path: str):
-            if path.startswith("api/"):
+            if path.startswith("api/") or "\x00" in path:
                 raise HTTPException(404)
             candidate = (dist / path).resolve()
             if path and candidate.is_file() and dist.resolve() in candidate.parents:

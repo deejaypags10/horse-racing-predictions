@@ -176,6 +176,10 @@ class Service:
             except SourceError as exc:
                 rows.append({**self._track_dto(t), "error": str(exc), "races": []})
                 continue
+            except Exception as exc:  # malformed provider data for one track
+                log.exception("board: %s failed", t.code)
+                rows.append({**self._track_dto(t), "error": f"could not read this card ({type(exc).__name__})", "races": []})
+                continue
             nxt = next((r for r in races if r.status == RaceStatus.OPEN and r.post_time and r.post_time >= now - timedelta(minutes=2)), None)
             official = sum(1 for r in races if r.status == RaceStatus.OFFICIAL)
             overlays = 0
@@ -290,12 +294,15 @@ class Service:
         if not isinstance(sel, list) or len(sel) != TICKET_KINDS[kind] or len(set(map(str, sel))) != len(sel):
             raise BadRequest(f"{kind} needs exactly {TICKET_KINDS[kind]} distinct selections")
         sel = [str(s).upper() for s in sel]
+        raw_stake = body.get("stake")
+        if isinstance(raw_stake, bool) or not isinstance(raw_stake, (int, float, str)):
+            raise BadRequest("stake must be a number")
         try:
-            stake = float(body.get("stake", 0))
+            stake = round(float(raw_stake), 2)
         except (TypeError, ValueError):
             raise BadRequest("stake must be a number") from None
-        if not (0 < stake <= 100_000) or not math.isfinite(stake):
-            raise BadRequest("stake must be between 0 and 100,000")
+        if not math.isfinite(stake) or not (0.01 <= stake <= 100_000):
+            raise BadRequest("stake must be between $0.01 and $100,000")
         t, r, _ = self.race(str(body.get("race_id", "")))
         if r.status != RaceStatus.OPEN:
             raise BadRequest("betting on this race is closed")
@@ -331,7 +338,7 @@ class Service:
         note = str(body.get("note") or "")[:280] or None
         return self.store.add_ticket({
             "race_id": r.id, "track_name": t.name, "race_number": r.number, "post_time": _iso(r.post_time),
-            "kind": kind, "selection": sel, "stake": round(stake, 2), "odds_taken": odds_taken,
+            "kind": kind, "selection": sel, "stake": stake, "odds_taken": odds_taken,
             "model_prob": model_prob, "fair_decimal": (1.0 / model_prob) if model_prob else None,
             "model": pred.model_version, "note": note,
         })
