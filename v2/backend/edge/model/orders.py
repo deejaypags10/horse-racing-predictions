@@ -61,7 +61,7 @@ def order_probabilities(win: np.ndarray, lam2: float = LAMBDA_SECOND, lam3: floa
     # third_k = sum_{i,j != k} exacta[i, j] * q3_k / (1 - q3_i - q3_j)
     rem = 1.0 - q3[:, None] - q3[None, :]
     with np.errstate(divide="ignore", invalid="ignore"):
-        w = np.where(exacta > 0, exacta / rem, 0.0)
+        w = np.where((exacta > 0) & (rem > 1e-12), exacta / np.where(rem > 1e-12, rem, 1.0), 0.0)
     third = q3 * (w.sum() - w.sum(axis=0) - w.sum(axis=1))
     top3 = top2 + third if n >= 3 else np.ones(n)
 

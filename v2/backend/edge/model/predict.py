@@ -146,8 +146,9 @@ def predict_race(race: Race, history: History, model: FormModel, scratches: froz
     s = np.array([i.form_score for i in interests])
     pf = np.exp(s - s.max())
     pf /= pf.sum()
-    hist_mask = np.array([i.starts > 0 for i in interests])
-    centre = s[hist_mask].mean() if hist_mask.any() else s.mean()
+    # Centre on the whole field (unknown runners sit at the model's prior for a
+    # debut), so a lone known horse is still judged against the others.
+    centre = s.mean()
     w = np.array([evidence_for(i.starts)[1] for i in interests])
 
     weights = dict(BLEND.get(market, {"a": 0.0, "b": 1.0}))

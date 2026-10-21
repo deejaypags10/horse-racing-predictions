@@ -1,0 +1,40 @@
+name: v2 — tests
+
+on:
+  pull_request:
+    paths: ["v2/**", ".github/workflows/v2_ci.yml"]
+  push:
+    branches: [main]
+    paths: ["v2/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e './v2/backend[dev]'
+      - run: pytest -q v2/backend/tests
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: v2/web
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm test
+      - run: npm run build

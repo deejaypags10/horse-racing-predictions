@@ -202,10 +202,12 @@ def distance_furlongs(raw: object, breed: str | None = None) -> float | None:
         if frac and frac not in _FRACTION_WORDS:
             a, b = frac.split("/")
             val += float(a) / float(b)
-        if unit.startswith("mi") or unit == "m":
+        if unit.startswith("mi") or (unit == "m" and val <= 20):
             total += val * 8.0
         elif unit.startswith("f"):
             total += val
+        elif unit == "m":
+            total += val / 201.168  # "1200m" is metres, "1m" is a mile
         elif unit.startswith("y"):
             total += val / 220.0
         else:

@@ -1,0 +1,859 @@
+{
+ "race": {
+  "id": "IJN-20260606-1",
+  "number": 1,
+  "post_time": "2026-06-06T14:45:00+00:00",
+  "mtp": 24,
+  "status": "open",
+  "distance": "8f",
+  "distance_furlongs": 8.0,
+  "surface": "Dirt",
+  "race_class": "Maiden Claiming",
+  "race_name": null,
+  "purse": 18500.0,
+  "breed": "thoroughbred",
+  "field": 7,
+  "date": "2026-06-06",
+  "track_id": "IJN-20260606",
+  "track_name": "Horseshoe Indianapolis",
+  "track_code": "IJN",
+  "country": "USA",
+  "prev": null,
+  "next": "IJN-20260606-2",
+  "race_numbers": [
+   {
+    "id": "IJN-20260606-1",
+    "number": 1,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-2",
+    "number": 2,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-3",
+    "number": 3,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-4",
+    "number": 4,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-5",
+    "number": 5,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-6",
+    "number": 6,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-7",
+    "number": 7,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-8",
+    "number": 8,
+    "status": "open"
+   },
+   {
+    "id": "IJN-20260606-9",
+    "number": 9,
+    "status": "open"
+   }
+  ],
+  "deep_link": null,
+  "fetched_at": "2026-10-21T18:16:12+00:00",
+  "odds_updated_at": null
+ },
+ "now": "2026-06-06T14:20:08+00:00",
+ "prediction": {
+  "market": "live",
+  "model_version": "form-20261021-1810",
+  "weights": {
+   "a": 1.0,
+   "b": 0.4
+  },
+  "evidence": "some",
+  "coverage": 0.667,
+  "overround": 1.1159,
+  "whatif": [
+   "1"
+  ],
+  "active_interests": 6,
+  "sum_p": 1.0
+ },
+ "runners": [
+  {
+   "program": "1",
+   "interest": "1",
+   "post": 1,
+   "name": "Z's Fireball",
+   "jockey": "Alberto Burgos",
+   "trainer": "Stephen V Fosdick",
+   "sire": "Z Lucky",
+   "dam": "C J's Sunrise",
+   "age": 3,
+   "sex": "G",
+   "weight": 120.0,
+   "morning_line": "6-1",
+   "morning_line_decimal": 7.0,
+   "live_odds": "9-2",
+   "live_decimal": 5.5,
+   "scratched": false,
+   "whatif_scratched": true,
+   "saddle_color": "#BC0000",
+   "saddle_text_color": "#FFFFFF",
+   "coupled": false,
+   "model": null,
+   "recent": [
+    {
+     "date": "2026-05-05",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 6.0,
+     "position": 7,
+     "field": 7,
+     "favorite": false
+    },
+    {
+     "date": "2025-11-13",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 9,
+     "field": 12,
+     "favorite": false
+    },
+    {
+     "date": "2025-11-06",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 2,
+     "field": 6,
+     "favorite": true
+    },
+    {
+     "date": "2025-10-06",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 6,
+     "field": 10,
+     "favorite": true
+    },
+    {
+     "date": "2025-09-29",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 2,
+     "field": 7,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "2",
+   "interest": "2",
+   "post": 2,
+   "name": "Powerful Justice",
+   "jockey": "La Cruz Fernando De",
+   "trainer": "Randy L Klopp",
+   "sire": "Harry's Holiday",
+   "dam": "Traditionalist",
+   "age": 3,
+   "sex": "G",
+   "weight": 120.0,
+   "morning_line": "7-2",
+   "morning_line_decimal": 4.5,
+   "live_odds": "2-1",
+   "live_decimal": 3.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#C3CDD4",
+   "saddle_text_color": "#000000",
+   "coupled": false,
+   "model": {
+    "key": "2",
+    "p_model": 0.2859,
+    "p_market": 0.29871,
+    "p_form": 0.17002,
+    "p_top2": 0.52204,
+    "p_top3": 0.70824,
+    "fair_decimal": 3.498,
+    "fair_us": "5-2",
+    "min_price_decimal": 4.022,
+    "min_price_us": "3-1",
+    "price_decimal": 3.0,
+    "price_source": "live",
+    "edge_pts": -1.28,
+    "exp_return": -0.1423,
+    "value": false,
+    "evidence": "some",
+    "starts": 5,
+    "rank": 1
+   },
+   "recent": [
+    {
+     "date": "2026-04-22",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 7,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2026-04-08",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 11,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-11-13",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 12,
+     "field": 12,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-25",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 2,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-06",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 7,
+     "field": 10,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "3",
+   "interest": "3",
+   "post": 3,
+   "name": "Big Red Express",
+   "jockey": "Amir Mendoza",
+   "trainer": "Genaro Garcia",
+   "sire": "Unbridled Express",
+   "dam": "Rose Medallion",
+   "age": 3,
+   "sex": "G",
+   "weight": 115.0,
+   "morning_line": "20-1",
+   "morning_line_decimal": 21.0,
+   "live_odds": "7-1",
+   "live_decimal": 8.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#253B84",
+   "saddle_text_color": "#FFFFFF",
+   "coupled": false,
+   "model": {
+    "key": "3",
+    "p_model": 0.09661,
+    "p_market": 0.11202,
+    "p_form": 0.10147,
+    "p_top2": 0.2256,
+    "p_top3": 0.38953,
+    "fair_decimal": 10.351,
+    "fair_us": "9-1",
+    "min_price_decimal": 11.904,
+    "min_price_us": "11-1",
+    "price_decimal": 8.0,
+    "price_source": "live",
+    "edge_pts": -1.54,
+    "exp_return": -0.2271,
+    "value": false,
+    "evidence": "thin",
+    "starts": 2,
+    "rank": 4
+   },
+   "recent": [
+    {
+     "date": "2026-05-05",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 6.0,
+     "position": null,
+     "field": 7,
+     "favorite": false
+    },
+    {
+     "date": "2026-04-08",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 11,
+     "field": 11,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "4",
+   "interest": "4",
+   "post": 4,
+   "name": "Cool Hunting",
+   "jockey": "Hannah Leahey",
+   "trainer": "Gregory R Bland",
+   "sire": "Looking Cool",
+   "dam": "Secret Hunting",
+   "age": 5,
+   "sex": "G",
+   "weight": 124.0,
+   "morning_line": "4-1",
+   "morning_line_decimal": 5.0,
+   "live_odds": "10-1",
+   "live_decimal": 11.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#C1A800",
+   "saddle_text_color": "#000000",
+   "coupled": false,
+   "model": {
+    "key": "4",
+    "p_model": 0.06767,
+    "p_market": 0.08147,
+    "p_form": 0.10919,
+    "p_top2": 0.16722,
+    "p_top3": 0.30677,
+    "fair_decimal": 14.778,
+    "fair_us": "14-1",
+    "min_price_decimal": 16.994,
+    "min_price_us": "16-1",
+    "price_decimal": 11.0,
+    "price_source": "live",
+    "edge_pts": -1.38,
+    "exp_return": -0.2556,
+    "value": false,
+    "evidence": "some",
+    "starts": 5,
+    "rank": 5
+   },
+   "recent": [
+    {
+     "date": "2026-04-22",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 10,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-30",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 6.0,
+     "position": 5,
+     "field": 6,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-21",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 8,
+     "field": 8,
+     "favorite": false
+    },
+    {
+     "date": "2025-08-12",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 6.0,
+     "position": 7,
+     "field": 8,
+     "favorite": false
+    },
+    {
+     "date": "2025-07-12",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 3,
+     "field": 8,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "5",
+   "interest": "5",
+   "post": 5,
+   "name": "Hunted Prayer",
+   "jockey": "Jose R Gutierrez",
+   "trainer": "John Haran",
+   "sire": "Prayer For Relief",
+   "dam": "Huntingtons Beauty",
+   "age": 3,
+   "sex": "G",
+   "weight": 115.0,
+   "morning_line": "9-5",
+   "morning_line_decimal": 2.8,
+   "live_odds": "3-1",
+   "live_decimal": 4.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#1C5B1B",
+   "saddle_text_color": "#FFFFFF",
+   "coupled": false,
+   "model": {
+    "key": "5",
+    "p_model": 0.2381,
+    "p_market": 0.22403,
+    "p_form": 0.21739,
+    "p_top2": 0.46012,
+    "p_top3": 0.65414,
+    "fair_decimal": 4.2,
+    "fair_us": "3-1",
+    "min_price_decimal": 4.83,
+    "min_price_us": "4-1",
+    "price_decimal": 4.0,
+    "price_source": "live",
+    "edge_pts": 1.41,
+    "exp_return": -0.0476,
+    "value": false,
+    "evidence": "strong",
+    "starts": 7,
+    "rank": 3
+   },
+   "recent": [
+    {
+     "date": "2026-04-22",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 4,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-11-06",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 8.0,
+     "position": 7,
+     "field": 9,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-28",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 8,
+     "field": 12,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-25",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": null,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-10-06",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 4,
+     "field": 10,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "6",
+   "interest": "6",
+   "post": 6,
+   "name": "Here's Rafiki",
+   "jockey": "Luis Contreras",
+   "trainer": "Kevin Fletcher",
+   "sire": "Charming Kitten",
+   "dam": "Jewelisa",
+   "age": 3,
+   "sex": "G",
+   "weight": 120.0,
+   "morning_line": "15-1",
+   "morning_line_decimal": 16.0,
+   "live_odds": "14-1",
+   "live_decimal": 15.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#252525",
+   "saddle_text_color": "#FFFFFF",
+   "coupled": false,
+   "model": {
+    "key": "6",
+    "p_model": 0.05447,
+    "p_market": 0.05974,
+    "p_form": 0.13814,
+    "p_top2": 0.13902,
+    "p_top3": 0.26399,
+    "fair_decimal": 18.36,
+    "fair_us": "17-1",
+    "min_price_decimal": 21.114,
+    "min_price_us": "20-1",
+    "price_decimal": 15.0,
+    "price_source": "live",
+    "edge_pts": -0.53,
+    "exp_return": -0.183,
+    "value": false,
+    "evidence": "thin",
+    "starts": 1,
+    "rank": 6
+   },
+   "recent": [
+    {
+     "date": "2025-10-16",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 8.0,
+     "position": 8,
+     "field": 8,
+     "favorite": false
+    }
+   ]
+  },
+  {
+   "program": "7",
+   "interest": "7",
+   "post": 7,
+   "name": "Boss Justice",
+   "jockey": "Joshua Morales",
+   "trainer": "Kenia Hernandez",
+   "sire": "Harry's Holiday",
+   "dam": "Tour For Love",
+   "age": 3,
+   "sex": "G",
+   "weight": 120.0,
+   "morning_line": "9-2",
+   "morning_line_decimal": 5.5,
+   "live_odds": "3-1",
+   "live_decimal": 4.0,
+   "scratched": false,
+   "whatif_scratched": false,
+   "saddle_color": "#B63D13",
+   "saddle_text_color": "#000000",
+   "coupled": false,
+   "model": {
+    "key": "7",
+    "p_model": 0.25726,
+    "p_market": 0.22403,
+    "p_form": 0.2638,
+    "p_top2": 0.486,
+    "p_top3": 0.67732,
+    "fair_decimal": 3.887,
+    "fair_us": "3-1",
+    "min_price_decimal": 4.47,
+    "min_price_us": "7-2",
+    "price_decimal": 4.0,
+    "price_source": "live",
+    "edge_pts": 3.32,
+    "exp_return": 0.029,
+    "value": false,
+    "evidence": "strong",
+    "starts": 6,
+    "rank": 2
+   },
+   "recent": [
+    {
+     "date": "2026-05-01",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 6.0,
+     "position": 5,
+     "field": 8,
+     "favorite": false
+    },
+    {
+     "date": "2026-04-08",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.5,
+     "position": 5,
+     "field": 11,
+     "favorite": false
+    },
+    {
+     "date": "2025-07-29",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.0,
+     "position": 5,
+     "field": 9,
+     "favorite": false
+    },
+    {
+     "date": "2025-07-04",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.0,
+     "position": 5,
+     "field": 8,
+     "favorite": false
+    },
+    {
+     "date": "2025-06-14",
+     "track": "IJN",
+     "surface": "dirt",
+     "dist_f": 5.0,
+     "position": 6,
+     "field": 7,
+     "favorite": false
+    }
+   ]
+  }
+ ],
+ "exotics": {
+  "exacta": [
+   {
+    "combo": [
+     "2",
+     "7"
+    ],
+    "p": 0.09483,
+    "fair_2": 21.09
+   },
+   {
+    "combo": [
+     "7",
+     "2"
+    ],
+    "p": 0.09027,
+    "fair_2": 22.16
+   },
+   {
+    "combo": [
+     "2",
+     "5"
+    ],
+    "p": 0.08906,
+    "fair_2": 22.46
+   },
+   {
+    "combo": [
+     "5",
+     "2"
+    ],
+    "p": 0.08194,
+    "fair_2": 24.41
+   },
+   {
+    "combo": [
+     "7",
+     "5"
+    ],
+    "p": 0.07784,
+    "fair_2": 25.69
+   },
+   {
+    "combo": [
+     "5",
+     "7"
+    ],
+    "p": 0.07523,
+    "fair_2": 26.59
+   },
+   {
+    "combo": [
+     "2",
+     "3"
+    ],
+    "p": 0.04289,
+    "fair_2": 46.63
+   },
+   {
+    "combo": [
+     "7",
+     "3"
+    ],
+    "p": 0.03749,
+    "fair_2": 53.35
+   },
+   {
+    "combo": [
+     "5",
+     "3"
+    ],
+    "p": 0.03403,
+    "fair_2": 58.77
+   },
+   {
+    "combo": [
+     "2",
+     "4"
+    ],
+    "p": 0.03215,
+    "fair_2": 62.21
+   },
+   {
+    "combo": [
+     "3",
+     "2"
+    ],
+    "p": 0.02882,
+    "fair_2": 69.41
+   },
+   {
+    "combo": [
+     "7",
+     "4"
+    ],
+    "p": 0.0281,
+    "fair_2": 71.18
+   }
+  ],
+  "trifecta": [
+   {
+    "combo": [
+     "2",
+     "7",
+     "5"
+    ],
+    "p": 0.03982,
+    "fair_1": 25.11
+   },
+   {
+    "combo": [
+     "2",
+     "5",
+     "7"
+    ],
+    "p": 0.0385,
+    "fair_1": 25.97
+   },
+   {
+    "combo": [
+     "7",
+     "2",
+     "5"
+    ],
+    "p": 0.03791,
+    "fair_1": 26.38
+   },
+   {
+    "combo": [
+     "5",
+     "2",
+     "7"
+    ],
+    "p": 0.03542,
+    "fair_1": 28.23
+   },
+   {
+    "combo": [
+     "7",
+     "5",
+     "2"
+    ],
+    "p": 0.03496,
+    "fair_1": 28.6
+   },
+   {
+    "combo": [
+     "5",
+     "7",
+     "2"
+    ],
+    "p": 0.03379,
+    "fair_1": 29.59
+   },
+   {
+    "combo": [
+     "2",
+     "7",
+     "3"
+    ],
+    "p": 0.02216,
+    "fair_1": 45.13
+   },
+   {
+    "combo": [
+     "7",
+     "2",
+     "3"
+    ],
+    "p": 0.02109,
+    "fair_1": 47.41
+   },
+   {
+    "combo": [
+     "2",
+     "5",
+     "3"
+    ],
+    "p": 0.02037,
+    "fair_1": 49.09
+   },
+   {
+    "combo": [
+     "5",
+     "2",
+     "3"
+    ],
+    "p": 0.01874,
+    "fair_1": 53.36
+   },
+   {
+    "combo": [
+     "2",
+     "7",
+     "4"
+    ],
+    "p": 0.01758,
+    "fair_1": 56.88
+   },
+   {
+    "combo": [
+     "7",
+     "5",
+     "3"
+    ],
+    "p": 0.01727,
+    "fair_1": 57.9
+   }
+  ]
+ },
+ "result": null,
+ "status": {
+  "source": "archive",
+  "live": false,
+  "ok": true,
+  "replay_date": "2026-06-06",
+  "detail": "Replaying recorded TVG cards from the repository archive.",
+  "last_success": null,
+  "recent_errors": [],
+  "model_version": "form-20261021-1810",
+  "model_loaded": true,
+  "history_runs": 794526,
+  "history_horses": 83469,
+  "history_through": "2026-05-09"
+ }
+}
