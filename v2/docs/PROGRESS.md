@@ -19,7 +19,7 @@ verified from an open network (see Next steps 1).
 | Live poller, `edge calibrate` | done; nothing to calibrate until live races are recorded |
 | FastAPI API with security hardening | done |
 | Web app (board, track, race, exotics, tickets, model, settings) | done |
-| CI workflow (`v2 — tests`), manual TwinSpires probe workflow | written; not yet run on GitHub |
+| CI workflow (`v2 — tests`), manual TwinSpires probe workflow | written; CI runs on PR #1 |
 
 ## How it was built and checked
 
@@ -79,7 +79,3 @@ specs are in `docs/PRODUCT.md` and `docs/DESIGN.md`.
   available from the data.
 - Archive "current odds" mostly equal the morning line, so replay is
   morning-line-only except for a few recorded cards (e.g. Belmont Stakes day).
-- Pushing to GitHub was blocked during the rebuild session: the Claude
-  GitHub App lacked write access. The work is committed on
-  `claude/project-thread-bn8tyj`, and a bundle was saved alongside the
-  project files.
