@@ -79,3 +79,20 @@ revisit with richer inputs (speed figures, connections).
 **D-013 · Paper tickets are immutable once settled; CLV uses the last
 pre-post snapshot.** Win CLV = (1/closing − 1/taken) × 100 points.
 Exotic payouts assume $2 exacta / $1 trifecta bases.
+
+**D-014 · One start per horse per day.** The TVG archive repeats big-card
+starts under wagering mirror codes (SX5, SA5, GT3, OD6, CH5, SAS…); ~33k
+duplicate horse-day rows made one Derby run look like five starts of
+"strong" evidence and double-counted races in training. History keeps one
+row per (horse, day), preferring codes without digits, then the busiest
+code. Found by the product-critic review; thoroughbred held-out log loss
+improved 1.934 → 1.916 after the fix.
+
+**D-015 · "Overlay" means the price beats fair.** UI overlay language and
+colour require positive expected return at the shown price, not just a
+positive point difference against the takeout-free market. Value flags stay
+on by default but carry an "unvalidated blend" tag until `edge calibrate`
+has fitted the blend from recorded races (`blend_calibrated`).
+
+**D-016 · Paper tickets can't be withdrawn after the off.** Otherwise the
+record could be curated by deleting losers.
