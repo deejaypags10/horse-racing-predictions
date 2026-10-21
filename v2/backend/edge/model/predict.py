@@ -17,7 +17,9 @@ Pipeline for a race:
 """
 from __future__ import annotations
 
+import json
 import math
+from pathlib import Path
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -36,6 +38,12 @@ BLEND = {
     "live": {"a": 1.0, "b": 0.40},
     "morning_line": {"a": 0.85, "b": 0.60},
 }
+BLEND_FILE = Path(__file__).parent / "artifacts" / "blend.json"
+if BLEND_FILE.exists():  # written by `edge calibrate` once enough races are recorded
+    try:
+        BLEND.update({k: v for k, v in json.loads(BLEND_FILE.read_text()).get("weights", {}).items() if k in BLEND})
+    except (OSError, ValueError):
+        pass
 MIN_PRICE_PREMIUM = 0.15      # "bet above" = fair price × (1 + premium)
 VALUE_EDGE_PTS = 2.0          # model % − market % needed to flag value...
 VALUE_MIN_RETURN = 0.10       # ...and expected return per $1 at the current price
@@ -64,6 +72,7 @@ class InterestPrediction:
     evidence: str
     form_score: float
     p_form: float = 0.0
+    form_term: float = 0.0           # w · (s − mean s): the form input to the blend
     p_market: float | None = None
     p_model: float = 0.0
     p_top2: float = 0.0
@@ -163,6 +172,7 @@ def predict_race(race: Race, history: History, model: FormModel, scratches: froz
     labels = [i.key for i in interests]
     for idx, i in enumerate(interests):
         i.p_form = float(pf[idx])
+        i.form_term = float(w[idx] * (s[idx] - centre))
         i.p_market = None if market == "none" else float(q[idx])
         i.p_model = float(pm[idx])
         i.p_top2 = float(op.top2[idx])

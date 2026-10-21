@@ -18,6 +18,8 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("train", help="train + evaluate the form model (see edge.model.train --help)", add_help=False)
 
+    sub.add_parser("calibrate", help="refit the market/form blend from recorded races", add_help=False)
+
     p = sub.add_parser("ts-probe", help="check the TwinSpires endpoints from this network and save raw captures")
     p.add_argument("--races", type=int, default=2, help="how many tracks to sample race/entry calls from")
 
@@ -34,6 +36,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "train":
         from .model.train import main as train_main
         return train_main(rest)
+    if args.cmd == "calibrate":
+        from .model.calibrate import main as cal_main
+        return cal_main(rest)
     if args.cmd == "ts-probe":
         from .probe import probe
         report = probe(sample=args.races)

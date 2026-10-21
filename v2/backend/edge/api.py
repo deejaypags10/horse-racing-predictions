@@ -41,6 +41,15 @@ def create_app(service: Service | None = None, settings: Settings | None = None)
             state["svc"] = service or Service(settings)
         return state["svc"]
 
+    @app.on_event("startup")
+    def _start() -> None:
+        if service is None and settings.poll:
+            s = svc()
+            if s.live:
+                from .poller import Poller
+                state["poller"] = Poller(s)  # type: ignore[assignment]
+                state["poller"].start()  # type: ignore[attr-defined]
+
     @app.exception_handler(NotFound)
     async def _nf(_: Request, exc: NotFound):
         return JSONResponse({"error": "not_found", "detail": str(exc)}, status_code=404)

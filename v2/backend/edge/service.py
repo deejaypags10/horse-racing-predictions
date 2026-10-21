@@ -96,6 +96,10 @@ class Service:
             self._cache[key] = _Cached(time.monotonic(), value)
         return value
 
+    def invalidate(self, track_id: str) -> None:
+        with self._lock:
+            self._cache.pop(f"card:{track_id}", None)
+
     # ------------------------------------------------------------- lookups
     def today(self) -> date:
         return self.source.today()
@@ -159,7 +163,7 @@ class Service:
         self.store.add_snapshot(
             race.id, race.post_time.isoformat() if race.post_time else None, pred.model_version, pred.market,
             [{"bi": i.key, "p_model": round(i.p_model, 5), "p_market": round(i.p_market or 0, 5),
-              "odds": i.price} for i in pred.interests])
+              "form_term": round(i.form_term, 5), "odds": i.price} for i in pred.interests])
 
     def board(self, day: date | None = None) -> dict:
         day = day or self.today()

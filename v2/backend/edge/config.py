@@ -33,6 +33,7 @@ class Settings:
     ts_affid: str
     ts_min_interval: float      # seconds between TwinSpires requests (politeness)
     web_dist: Path              # built SPA to serve
+    poll: bool                  # live mode: background refresh for snapshots/results
 
     @classmethod
     def load(cls) -> "Settings":
@@ -49,4 +50,5 @@ class Settings:
             ts_affid=os.environ.get("EDGE_TS_AFFID", "2800"),
             ts_min_interval=float(os.environ.get("EDGE_TS_MIN_INTERVAL", "0.35")),
             web_dist=_path("EDGE_WEB_DIST", V2_ROOT / "web" / "dist"),
+            poll=os.environ.get("EDGE_POLL", "1") not in ("0", "false", "no"),
         )
