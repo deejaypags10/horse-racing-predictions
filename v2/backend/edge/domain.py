@@ -106,6 +106,7 @@ class Race(BaseModel):
     track_name: str
     breed: Breed
     number: int
+    country: str = "USA"
     card_date: date
     post_time: datetime | None = None  # timezone-aware UTC
     distance: str | None = None        # as printed: "6f", "1 1/16m", "1m", "350y"

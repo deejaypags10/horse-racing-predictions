@@ -96,3 +96,11 @@ has fitted the blend from recorded races (`blend_calibrated`).
 
 **D-016 · Paper tickets can't be withdrawn after the off.** Otherwise the
 record could be curated by deleting losers.
+
+**D-017 · Hong Kong is market-only and never borrows US form.** HKJC cards
+come from meeting files (`sources/hkjc.py`) because HKJC is not on
+TwinSpires and could not be reached from the build sandbox. History is keyed
+by name, so an HK horse could match a US namesake; HK runners use their own
+`hk:` history namespace and the predictor ignores history outside the US,
+since the form model is trained on US races. Recorded HK results accumulate
+under `hk:` for a future HK model.

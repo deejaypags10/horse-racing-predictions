@@ -118,13 +118,16 @@ def predict_race(race: Race, history: History, model: FormModel, scratches: froz
         return RacePrediction(race, [], "none", model.version, {}, scratched_by_user=scratched_user)
 
     breed = race.breed.value
-    bg = breed_group(breed)
+    bg = breed_group(breed, race.country)
+    # The form model is trained on US races only; outside the US every runner
+    # has no usable history, so the prediction is the de-vigged market.
+    use_history = race.country == "USA"
     ctx = RaceContext(day=race.card_date, track=race.track_code, surface=normalise_surface(race.surface),
                       dist_f=race.distance_furlongs, purse=race.purse, field_size=len(active))
 
     feats, starts = [], []
     for r in active:
-        past = history.past(horse_key(r.name, bg), before=race.card_date)
+        past = history.past(horse_key(r.name, bg), before=race.card_date) if use_history else []
         feats.append(runner_features(past, ctx, r.post or _program_int(r.program)))
         starts.append(len(past))
     scores = model.score(breed, np.vstack(feats))

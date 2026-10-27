@@ -23,6 +23,7 @@ from .model.predict import RacePrediction, predict_race, to_us
 from .odds import parse_odds
 from .sources.archive import ArchiveSource
 from .sources.base import RaceSource, SourceError
+from .sources.hkjc import HKJCSource
 from .sources.twinspires import TwinSpiresSource, deep_link
 from .store import Store
 
@@ -49,6 +50,8 @@ class _Cached:
 def build_source(settings: Settings) -> RaceSource:
     if settings.source == "twinspires":
         return TwinSpiresSource(settings.ts_base, settings.ts_affid, settings.ts_min_interval, settings.capture_dir)
+    if settings.source == "hkjc":
+        return HKJCSource(settings.hk_dir, settings.replay_date)
     return ArchiveSource(settings.archive_dir, settings.replay_date)
 
 
@@ -79,6 +82,10 @@ class Service:
 
     @property
     def live(self) -> bool:
+        return self.source.name in ("twinspires", "hkjc")
+
+    @property
+    def _twinspires(self) -> bool:
         return self.source.name == "twinspires"
 
     def _ttl(self, kind: str) -> float:
@@ -237,7 +244,7 @@ class Service:
         runners = []
         for ru in r.runners:
             bi = by_bi.get(ru.coupled_with or ru.program)
-            past = self.history.past(horse_key(ru.name, breed_group(r.breed.value)), before=r.card_date, limit=5)
+            past = self.history.past(horse_key(ru.name, breed_group(r.breed.value, r.country)), before=r.card_date, limit=5)
             runners.append({
                 "program": ru.program, "interest": ru.coupled_with or ru.program, "post": ru.post,
                 "name": ru.name, "jockey": ru.jockey, "trainer": ru.trainer, "sire": ru.sire, "dam": ru.dam,
@@ -268,7 +275,7 @@ class Service:
                      "country": t.country, "prev": races[pos - 1].id if pos > 0 else None,
                      "next": races[pos + 1].id if pos + 1 < len(races) else None,
                      "race_numbers": [{"id": x.id, "number": x.number, "status": x.status.value} for x in races],
-                     "deep_link": None if not self.live else deep_link(r, t),
+                     "deep_link": deep_link(r, t) if self._twinspires else None,
                      "fetched_at": _iso(r.fetched_at), "odds_updated_at": _iso(r.odds_updated_at)},
             "now": _iso(now),
             "prediction": {
@@ -284,7 +291,7 @@ class Service:
 
     def _track_dto(self, t: Track) -> dict:
         link = None
-        if self.live:
+        if self._twinspires:
             ref = t.provider_ref
             link = f"https://www.twinspires.com/bet/program/classic/{ref.get('slug')}/{ref.get('code')}/{ref.get('type')}/1/advanced"
         return {"id": t.id, "code": t.code, "name": t.name, "breed": t.breed.value, "country": t.country,
@@ -393,7 +400,7 @@ class Service:
             return
         payload = {
             "finish": [f.model_dump() for f in race.result.finish], "exotics": race.result.exotic_pays,
-            "track": race.track_code, "breed": race.breed.value, "surface": race.surface,
+            "track": race.track_code, "country": race.country, "breed": race.breed.value, "surface": race.surface,
             "dist_f": race.distance_furlongs, "purse": race.purse, "date": race.card_date.isoformat(),
             "runners": [{"program": r.program, "name": r.name, "post": r.post, "scratched": r.scratched,
                          "interest": r.coupled_with or r.program,
@@ -455,7 +462,8 @@ class Service:
             fav = min(active, key=lambda r: r.get("final_decimal") or 1e9)["program"] if active else None
             for r in active:
                 rows.append(RunRow(
-                    key=horse_key(r["name"], breed_group(res.get("breed", ""))), day=day, race_id=race_id,
+                    key=horse_key(r["name"], breed_group(res.get("breed", ""), res.get("country", "USA"))),
+                    day=day, race_id=race_id,
                     track=res.get("track", ""), breed=res.get("breed", ""), surface=normalise_surface(res.get("surface")),
                     dist_f=res.get("dist_f"), purse=res.get("purse"), field_size=len(active),
                     position=int(pos.get(r["program"], 0)), favorite=r["program"] == fav, post=r.get("post")))

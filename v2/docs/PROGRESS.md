@@ -54,6 +54,15 @@ specs are in `docs/PRODUCT.md` and `docs/DESIGN.md`.
   - Cold LCP: board about 0.1 s, race about 0.25 s.
   - Size: JS 95 KB gzip.
 
+## Hong Kong (HKJC), added 2026-10-27
+
+`EDGE_SOURCE=hkjc` reads Sha Tin / Happy Valley meetings from `v2/hkjc/`
+(card JSON + odds/results CSV). `edge hk-fetch` pulls card and win odds from
+HKJC's GraphQL endpoint but is **unverified** (the build sandbox blocks
+hkjc.com). `edge hk-show` prints a race table. HK runners never use US
+history (separate `hk:` namespace, D-017), so HK chances equal the
+de-vigged market until HK form is ingested. See `v2/hkjc/README.md`.
+
 ## Next steps (in priority order)
 
 1. **Verify TwinSpires from an open network.** Run `edge ts-probe`, or the

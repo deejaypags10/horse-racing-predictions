@@ -30,6 +30,7 @@ v2/
     model/calibrate.py     refit blend weights from recorded snapshots + results
     sources/twinspires.py  live adapter (defensive parsing, captures, rate limit)
     sources/archive.py     replay of recorded TVG cards (demo/dev/tests)
+    sources/hkjc.py        Hong Kong meetings from card/odds files + HKJC GraphQL fetch
     service.py             app service: caching, DTOs, snapshots, tickets, settlement
     poller.py              live-mode background refresh
     store.py               SQLite (snapshots, results, tickets)
@@ -48,6 +49,8 @@ edge train                                 # retrain form model (~1 min) from da
 edge serve                                 # http://127.0.0.1:8765 — replay mode by default
 EDGE_SOURCE=twinspires edge serve          # live TwinSpires mode
 edge ts-probe                              # check TwinSpires endpoints from this network, save captures
+EDGE_SOURCE=hkjc edge serve                # Hong Kong meetings from v2/hkjc/ (see v2/hkjc/README.md)
+edge hk-fetch --venue ST --odds-only       # refresh HKJC win odds (unverified endpoint); edge hk-show prints chances
 edge calibrate --dry-run                   # refit blend weights once ≥500 live races are recorded
 cd v2/web && npm ci && npm run dev         # Vite dev server, proxies /api → :8765
 npm test && npx tsc --noEmit && npm run build
