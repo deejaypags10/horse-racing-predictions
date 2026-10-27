@@ -151,8 +151,11 @@ def horse_key(name: str, breed_group: str) -> str:
     return f"{breed_group}:{s}"
 
 
-def breed_group(breed: str) -> str:
-    """History namespace: harness horses never collide with runners."""
+def breed_group(breed: str, country: str = "USA") -> str:
+    """History namespace: harness horses never collide with runners, and
+    Hong Kong horses never borrow a US namesake's form."""
+    if country == "HKG":
+        return "hk"
     return "h" if breed == "harness" else "r"
 
 

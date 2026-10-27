@@ -118,7 +118,10 @@ def predict_race(race: Race, history: History, model: FormModel, scratches: froz
         return RacePrediction(race, [], "none", model.version, {}, scratched_by_user=scratched_user)
 
     breed = race.breed.value
-    bg = breed_group(breed)
+    bg = breed_group(breed, race.country)
+    # Hong Kong runners read their own ``hk:`` history (v2/hkjc/history.csv).
+    # The form model was fitted on US races and is applied to it unchanged,
+    # so HK form edges are unvalidated (D-018).
     ctx = RaceContext(day=race.card_date, track=race.track_code, surface=normalise_surface(race.surface),
                       dist_f=race.distance_furlongs, purse=race.purse, field_size=len(active))
 

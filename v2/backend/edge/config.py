@@ -22,12 +22,13 @@ def _path(name: str, default: Path) -> Path:
 
 @dataclass(frozen=True)
 class Settings:
-    source: str                 # "twinspires" | "archive"
+    source: str                 # "twinspires" | "archive" | "hkjc"
     history_path: Path          # legacy TVG results parquet
     model_path: Path            # trained form model (JSON)
     db_path: Path               # SQLite: snapshots, results, tickets
     archive_dir: Path           # recorded TVG entries used by the archive source
     capture_dir: Path           # where raw TwinSpires responses are saved
+    hk_dir: Path                # HKJC meeting files (card JSON, odds/results CSV)
     replay_date: date | None    # archive source: which recorded day to replay
     ts_base: str
     ts_affid: str
@@ -45,6 +46,7 @@ class Settings:
             db_path=_path("EDGE_DB_PATH", V2_ROOT / "var" / "edge.sqlite3"),
             archive_dir=_path("EDGE_ARCHIVE_DIR", REPO_ROOT / "scraping" / "scrapers" / "us" / "output" / "raw" / "tvg"),
             capture_dir=_path("EDGE_CAPTURE_DIR", V2_ROOT / "var" / "captures"),
+            hk_dir=_path("EDGE_HK_DIR", V2_ROOT / "hkjc"),
             replay_date=date.fromisoformat(replay) if replay else None,
             ts_base=os.environ.get("EDGE_TS_BASE", "https://www.twinspires.com/adw").rstrip("/"),
             ts_affid=os.environ.get("EDGE_TS_AFFID", "2800"),
