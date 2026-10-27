@@ -119,15 +119,15 @@ def predict_race(race: Race, history: History, model: FormModel, scratches: froz
 
     breed = race.breed.value
     bg = breed_group(breed, race.country)
-    # The form model is trained on US races only; outside the US every runner
-    # has no usable history, so the prediction is the de-vigged market.
-    use_history = race.country == "USA"
+    # Hong Kong runners read their own ``hk:`` history (v2/hkjc/history.csv).
+    # The form model was fitted on US races and is applied to it unchanged,
+    # so HK form edges are unvalidated (D-018).
     ctx = RaceContext(day=race.card_date, track=race.track_code, surface=normalise_surface(race.surface),
                       dist_f=race.distance_furlongs, purse=race.purse, field_size=len(active))
 
     feats, starts = [], []
     for r in active:
-        past = history.past(horse_key(r.name, bg), before=race.card_date) if use_history else []
+        past = history.past(horse_key(r.name, bg), before=race.card_date)
         feats.append(runner_features(past, ctx, r.post or _program_int(r.program)))
         starts.append(len(past))
     scores = model.score(breed, np.vstack(feats))

@@ -61,7 +61,9 @@ specs are in `docs/PRODUCT.md` and `docs/DESIGN.md`.
 HKJC's GraphQL endpoint but is **unverified** (the build sandbox blocks
 hkjc.com). `edge hk-show` prints a race table. HK runners never use US
 history (separate `hk:` namespace, D-017), so HK chances equal the
-de-vigged market until HK form is ingested. See `v2/hkjc/README.md`.
+de-vigged market unless `v2/hkjc/history.csv` has their form (D-018:
+HKJC form records for the 2026-10-28 Sha Tin runners are included; the
+US-fitted model is applied to them unvalidated). See `v2/hkjc/README.md`.
 
 ## Next steps (in priority order)
 

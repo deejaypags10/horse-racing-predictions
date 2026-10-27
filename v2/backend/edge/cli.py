@@ -112,13 +112,13 @@ def _hk_show(args) -> int:
         if pred.market == "none":
             print("  no win odds in the odds file yet; add them (or run `edge hk-fetch --odds-only`) to see chances")
             continue
-        print(f"  {'no':>3} {'horse':<22} {'draw':>4} {'odds':>6} {'mkt%':>6} {'model%':>7} {'fair':>6}  value")
+        print(f"  {'no':>3} {'horse':<22} {'draw':>4} {'odds':>6} {'mkt%':>6} {'model%':>7} {'fair':>6} {'form':>6}  value")
         for i in sorted(pred.interests, key=lambda x: x.rank):
             r = i.runners[0]
             mkt = f"{100 * i.p_market:5.1f}" if i.p_market is not None else "    -"
             odds = f"{i.price:6.1f}" if i.price else "     -"
             fair = f"{i.fair:6.1f}" if i.fair else "     -"
-            print(f"  {i.key:>3} {r.name[:22]:<22} {r.post or '':>4} {odds} {mkt} {100 * i.p_model:7.1f} {fair}  "
+            print(f"  {i.key:>3} {r.name[:22]:<22} {r.post or '':>4} {odds} {mkt} {100 * i.p_model:7.1f} {fair} {i.evidence:>6}  "
                   f"{'VALUE' if i.value else ''}")
     return 0
 

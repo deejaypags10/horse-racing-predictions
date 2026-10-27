@@ -29,12 +29,21 @@ EDGE_SOURCE=hkjc edge serve                     # or the full app on http://127.
 
 ## What the numbers mean (read this)
 
-v2's form model is trained on US races only, so every Hong Kong runner has
-"no evidence" and the model's chance **equals the de-vigged HKJC market**.
-Value flags never fire. A Hong Kong session tests the pipeline (card,
-odds, scratchings, probabilities, exotics, paper tickets, settlement), not
-the model's judgement. Real HK picks need HK form history (HKJC publishes
-results free; an ingestion job is the next step).
+- **Form:** `history.csv` holds HKJC form records (last ~12 starts) for the
+  runners on the card, so HK horses get "some"/"strong" evidence. v2's form
+  model was fitted on **US** races and is applied to this HK form unchanged;
+  nobody has checked yet whether it helps in Hong Kong (D-018). Treat the
+  model's moves away from the market as an experiment.
+- **Morning line:** HKJC does not publish one. The card's `morning_line`
+  field is the Racing Post betting forecast (a tipster's prices, not tote
+  odds). With only that, the model blends form with the forecast and never
+  flags value. Value flags need live HKJC win odds in the `_odds.csv` file.
+- History proxies: field size is taken as 14 (Sha Tin) / 12 (Happy Valley),
+  "favourite" as win odds of 3.5 or shorter, and purse as a typical prize for
+  the class.
+- 4 runners on 2026-10-28 have no history: their HKJC pages returned an old
+  record (Armour War Eagle, Firefoot, Sovereign Fund, Storm Runner). Two are
+  debutants (Trophy Raider, United Hua Steed). They sit at the market.
 
 HKJC "place" pays the first 3 (first 2 with 4 to 6 runners); the app's
 place tickets settle on the first 2, so use win and exotics for HK tests.

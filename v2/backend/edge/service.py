@@ -23,7 +23,7 @@ from .model.predict import RacePrediction, predict_race, to_us
 from .odds import parse_odds
 from .sources.archive import ArchiveSource
 from .sources.base import RaceSource, SourceError
-from .sources.hkjc import HKJCSource
+from .sources.hkjc import HKJCSource, load_history
 from .sources.twinspires import TwinSpiresSource, deep_link
 from .store import Store
 
@@ -63,7 +63,7 @@ class Service:
         self.store = store or Store(settings.db_path)
         self.model = model or self._load_model(settings.model_path)
         self.history = history if history is not None else History.from_sources(
-            settings.history_path, self._result_runs())
+            settings.history_path, self._result_runs() + load_history(settings.hk_dir))
         self._cache: dict[str, _Cached] = {}
         self._lock = threading.RLock()
         self._last_snapshot: dict[str, datetime] = {}

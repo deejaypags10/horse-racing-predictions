@@ -104,3 +104,11 @@ by name, so an HK horse could match a US namesake; HK runners use their own
 `hk:` history namespace and the predictor ignores history outside the US,
 since the form model is trained on US races. Recorded HK results accumulate
 under `hk:` for a future HK model.
+
+**D-018 · HK runners use HKJC form with the US-fitted model (experimental).**
+`v2/hkjc/history.csv` (from HKJC horse pages) feeds the `hk:` namespace and the
+predictor now reads it, superseding D-017's "market-only". The same feature
+function and US weights are used; field size, favourite and purse are proxies
+(see `v2/hkjc/README.md`). This is unvalidated: an HK backtest needs full HKJC
+results (every runner per race), which is the next step before trusting HK
+value flags.

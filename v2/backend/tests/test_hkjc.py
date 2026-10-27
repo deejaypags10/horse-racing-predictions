@@ -125,3 +125,27 @@ def test_graphql_mapping():
         {"oddsType": "WIN", "oddsNodes": [{"combString": "01", "oddsValue": "4.5"}, {"combString": "02", "oddsValue": "SCR"}]},
         {"oddsType": "PLA", "oddsNodes": [{"combString": "01", "oddsValue": "1.5"}]}]}]})
     assert odds == {"1": "4.5", "2": "SCR"}
+
+
+def test_hk_history_gives_evidence_and_morning_line(tmp_path, hk_dir):
+    from edge.sources.hkjc import load_history
+
+    card = json.loads((hk_dir / f"{DAY.isoformat()}_HV.json").read_text())
+    for ru, ml in zip(card["races"][0]["runners"], ["2/1", "3/1", "6/1"]):
+        ru["morning_line"] = ml
+    (hk_dir / f"{DAY.isoformat()}_HV.json").write_text(json.dumps(card))
+    rows = ["brand,horse,date,place,venue,track,distance_m,class,draw,rating,win_odds,weight"]
+    for i in range(1, 8):  # SECOND HORSE: seven recent wins; one withdrawal row that must be skipped
+        rows.append(f"K001,SECOND HORSE,{DAY - timedelta(days=14 * i)},1,HV,Turf,1200,4,1,50,2.5,125")
+    rows.append(f"K001,SECOND HORSE,{DAY - timedelta(days=200)},WV,HV,Turf,1200,4,,50,,125")
+    (hk_dir / "history.csv").write_text("\n".join(rows) + "\n")
+    runs = load_history(hk_dir)
+    assert len(runs) == 7 and runs[0].key == horse_key("Second Horse", "hk") and runs[0].favorite
+    assert runs[0].surface == "turf" and runs[0].field_size == 12 and runs[0].purse == 1_170_000.0
+
+    svc, c = _service(tmp_path, hk_dir, History(pd.DataFrame([r.__dict__ for r in runs])))
+    view = c.get("/api/races/HV-20990107-1").json()
+    assert view["prediction"]["market"] == "morning_line"
+    by = {r["program"]: r["model"] for r in view["runners"]}
+    assert by["2"]["evidence"] == "strong" and by["1"]["evidence"] == "none"
+    assert by["2"]["p_model"] != pytest.approx(by["2"]["p_market"], abs=1e-3)  # form moved it off the market

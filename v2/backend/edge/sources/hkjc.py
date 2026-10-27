@@ -10,6 +10,9 @@ files in ``EDGE_HK_DIR`` (default ``v2/hkjc/``):
     Optional. ``race,no,win_odds`` with HKJC win odds (dividend per $1,
     stake included, e.g. ``4.5``). ``SCR`` marks a scratching. Fill it by
     hand from the HKJC app or let ``edge hk-fetch --watch`` keep it fresh.
+``history.csv``
+    Optional. Past runs per horse (one row per start) from the HKJC horse
+    pages, so HK runners have form evidence. See ``load_history``.
 ``<YYYY-MM-DD>_<VENUE>_results.csv``
     Optional. ``race,no,position,win_div,place_div`` (dividends per HK$10)
     so paper tickets settle.
@@ -34,6 +37,9 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from ..domain import Breed, FinishLine, Odds, Race, RaceResult, RaceStatus, Runner, Track, make_race_id, make_track_id
+from ..features import horse_key
+from ..history import RunRow
+from ..odds import parse_odds
 from .base import SourceError, utcnow
 
 log = logging.getLogger(__name__)
@@ -121,6 +127,7 @@ def _race(track: Track, r: dict, odds: dict, results: dict, now: datetime, odds_
             program=no, post=_int(ru.get("draw")), name=str(ru["name"]).strip().title(),
             jockey=ru.get("jockey"), trainer=ru.get("trainer"), age=_int(ru.get("age")), sex=ru.get("sex"),
             weight=_float(ru.get("weight")),
+            morning_line=parse_odds(ru.get("morning_line")),
             live_odds=price if isinstance(price, Odds) else None,
             scratched=bool(ru.get("scratched")) or price == "SCR",
         ))
@@ -163,6 +170,52 @@ def read_odds(path: Path) -> dict[tuple[int, str], Odds | str]:
             continue  # blank or "---": pool not formed yet
         if dec > 1.0:
             out[key] = Odds(raw=raw, decimal=dec)
+    return out
+
+
+# Typical prize money (HK$) by class, used as the "purse" of past runs so the
+# purse-change feature sees class rises and drops. Group races and 4YO series
+# are rated above Class 1.
+CLASS_PRIZE = {"5": 875_000.0, "4": 1_170_000.0, "3": 1_860_000.0, "2": 2_750_000.0, "1": 4_300_000.0,
+               "4YO": 5_000_000.0, "G3": 5_000_000.0, "G2": 7_000_000.0, "G1": 14_000_000.0}
+# HKJC horse pages do not give field size: use the usual maximum per venue.
+FIELD_SIZE = {"ST": 14, "HV": 12}
+FAVOURITE_MAX_ODDS = 3.5   # proxy for "was favourite" when only the horse's own odds are known
+
+
+def load_history(root: Path) -> list[RunRow]:
+    """Past starts from ``history.csv`` as v2 history rows in the ``hk:`` namespace.
+
+    Columns: brand,horse,date,place,venue,track,distance_m,class,draw,rating,
+    win_odds,weight. Non-finishes (WV, PU, DISQ, ...) are skipped.
+    """
+    path = root / "history.csv"
+    if not path.exists():
+        return []
+    out = []
+    with path.open(newline="", encoding="utf-8") as fh:
+        for row in csv.DictReader(fh):
+            place = str(row.get("place") or "").strip()
+            if not place.isdigit():
+                continue
+            try:
+                day = date.fromisoformat(row["date"])
+            except (KeyError, ValueError):
+                continue
+            venue = str(row.get("venue") or "").strip()
+            track = str(row.get("track") or "").lower()
+            metres = _float(row.get("distance_m"))
+            odds = _float(row.get("win_odds"))
+            out.append(RunRow(
+                key=horse_key(str(row["horse"]).title(), "hk"), day=day, race_id=f"HK-{row.get('brand')}-{day:%Y%m%d}",
+                track=venue if venue in VENUES else "OS",
+                breed="thoroughbred",
+                surface="synthetic" if "awt" in track or "all weather" in track else
+                        ("turf" if "turf" in track or not track else "dirt"),
+                dist_f=round(metres / METRES_PER_FURLONG, 2) if metres else None,
+                purse=CLASS_PRIZE.get(str(row.get("class") or "").strip().upper()),
+                field_size=FIELD_SIZE.get(venue, 12), position=int(place),
+                favorite=bool(odds and odds <= FAVOURITE_MAX_ODDS), post=_int(row.get("draw"))))
     return out
 
 
