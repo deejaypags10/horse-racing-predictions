@@ -96,3 +96,11 @@ has fitted the blend from recorded races (`blend_calibrated`).
 
 **D-016 · Paper tickets can't be withdrawn after the off.** Otherwise the
 record could be curated by deleting losers.
+
+**D-017 · Handicapper picks are a separate signal.** Tipsters' top picks,
+best/next-best bets and multi-race legs load from a small CSV
+(`edge.picks`) and are shown beside the model (agreement, the model's rank
+for their pick, how much win chance a leg covers). They are never blended
+into model probabilities: there is no record yet of how good any tipster
+is, and mixing them in would hide where the model and the tipster differ.
+*Revisit* once settled results show a tipster adds information.
