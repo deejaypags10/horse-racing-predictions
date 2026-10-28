@@ -1,0 +1,8 @@
+[
+ {"brisCode": "cd", "trackType": "Thoroughbred", "name": "Churchill Downs", "country": "USA", "raceCount": 10, "currentRace": 3, "mtp": 7, "status": "Open"},
+ {"brisCode": "m", "trackType": "Harness", "name": "MEADOWLANDS", "country": "USA", "raceCount": 13},
+ {"brisCode": "lad", "trackType": "Thoroughbred", "name": "Louisiana Downs", "hostCountry": "USA"},
+ {"brisCode": "hk", "trackType": "Thoroughbred", "name": "Sha Tin", "country": "HKG", "raceCount": 10},
+ {"brisCode": "wd1", "trackType": "Greyhound", "name": "Some Greyhound Track"},
+ {"trackType": "Thoroughbred", "name": "missing code"}
+]

@@ -1,0 +1,4 @@
+{
+ "error": "bad_request",
+ "detail": "exacta needs exactly 2 distinct selections"
+}

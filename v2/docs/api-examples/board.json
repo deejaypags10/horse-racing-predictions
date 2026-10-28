@@ -1,0 +1,1023 @@
+{
+ "date": "2026-06-06",
+ "now": "2026-06-06T14:20:09+00:00",
+ "tracks": [
+  {
+   "id": "ABQ-20260606",
+   "code": "ABQ",
+   "name": "Downs at Albuquerque",
+   "breed": "quarter_horse",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 11,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "ABQ-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-07T00:05:00+00:00",
+    "mtp": 584
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-07T00:05:00+00:00",
+   "last_post": "2026-06-07T04:15:00+00:00"
+  },
+  {
+   "id": "BEL-20260606",
+   "code": "BEL",
+   "name": "Belmont at Saratoga",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 14,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "BEL-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T15:00:00+00:00",
+    "mtp": 39
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Inner Track",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T15:00:00+00:00",
+   "last_post": "2026-06-07T00:02:00+00:00"
+  },
+  {
+   "id": "BUF-20260606",
+   "code": "BUF",
+   "name": "Buffalo Raceway",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 14,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "BUF-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T18:30:00+00:00",
+    "mtp": 249
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T18:30:00+00:00",
+   "last_post": "2026-06-06T22:50:00+00:00"
+  },
+  {
+   "id": "CBY-20260606",
+   "code": "CBY",
+   "name": "Canterbury Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 7,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "CBY-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:10:00+00:00",
+    "mtp": 469
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T22:10:00+00:00",
+   "last_post": "2026-06-07T01:35:00+00:00"
+  },
+  {
+   "id": "CD-20260606",
+   "code": "CD",
+   "name": "Churchill Downs",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 11,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "CD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:45:00+00:00",
+    "mtp": 144
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T16:45:00+00:00",
+   "last_post": "2026-06-06T21:59:00+00:00"
+  },
+  {
+   "id": "CHT-20260606",
+   "code": "CHT",
+   "name": "Charles Town",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "CHT-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T23:00:00+00:00",
+    "mtp": 519
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T23:00:00+00:00",
+   "last_post": "2026-06-07T02:32:00+00:00"
+  },
+  {
+   "id": "DED-20260606",
+   "code": "DED",
+   "name": "Delta Downs",
+   "breed": "quarter_horse",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 9,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "DED-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T23:15:00+00:00",
+    "mtp": 534
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T23:15:00+00:00",
+   "last_post": "2026-06-07T02:35:00+00:00"
+  },
+  {
+   "id": "DEL-20260606",
+   "code": "DEL",
+   "name": "Delaware Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "DEL-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:20:00+00:00",
+    "mtp": 119
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T16:20:00+00:00",
+   "last_post": "2026-06-06T20:04:00+00:00"
+  },
+  {
+   "id": "EMD-20260606",
+   "code": "EMD",
+   "name": "Emerald Downs",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "EMD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T20:50:00+00:00",
+    "mtp": 389
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T20:50:00+00:00",
+   "last_post": "2026-06-07T00:31:00+00:00"
+  },
+  {
+   "id": "EVD-20260606",
+   "code": "EVD",
+   "name": "Evangeline Downs",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 10,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "EVD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:30:00+00:00",
+    "mtp": 489
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T22:30:00+00:00",
+   "last_post": "2026-06-07T02:34:00+00:00"
+  },
+  {
+   "id": "FP-20260606",
+   "code": "FP",
+   "name": "Fairmount Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 7,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "FP-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T18:30:00+00:00",
+    "mtp": 249
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T18:30:00+00:00",
+   "last_post": "2026-06-06T21:00:00+00:00"
+  },
+  {
+   "id": "FTC-20260606",
+   "code": "FTC",
+   "name": "Cumberland",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 10,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "FTC-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T18:45:00+00:00",
+    "mtp": 264
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T18:45:00+00:00",
+   "last_post": "2026-06-06T22:03:00+00:00"
+  },
+  {
+   "id": "GP-20260606",
+   "code": "GP",
+   "name": "Gulfstream Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 11,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "GP-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:50:00+00:00",
+    "mtp": 149
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Synthetic"
+   ],
+   "first_post": "2026-06-06T16:50:00+00:00",
+   "last_post": "2026-06-06T22:08:00+00:00"
+  },
+  {
+   "id": "HOO-20260606",
+   "code": "HOO",
+   "name": "Hoosier Park",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 14,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "HOO-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T21:30:00+00:00",
+    "mtp": 429
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T21:30:00+00:00",
+   "last_post": "2026-06-07T02:29:00+00:00"
+  },
+  {
+   "id": "HOU-20260606",
+   "code": "HOU",
+   "name": "Sam Houston Race Park",
+   "breed": "quarter_horse",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 11,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "HOU-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T18:00:00+00:00",
+    "mtp": 219
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T18:00:00+00:00",
+   "last_post": "2026-06-06T23:15:00+00:00"
+  },
+  {
+   "id": "IJN-20260606",
+   "code": "IJN",
+   "name": "Horseshoe Indianapolis",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 9,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "IJN-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T14:45:00+00:00",
+    "mtp": 24
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T14:45:00+00:00",
+   "last_post": "2026-06-06T19:33:00+00:00"
+  },
+  {
+   "id": "LA-20260606",
+   "code": "LA",
+   "name": "Los Alamitos Quarter Horse",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "LA-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-07T01:25:00+00:00",
+    "mtp": 664
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-07T01:25:00+00:00",
+   "last_post": "2026-06-07T04:37:00+00:00"
+  },
+  {
+   "id": "LAD-20260606",
+   "code": "LAD",
+   "name": "Louisiana Downs",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 7,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "LAD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T21:05:00+00:00",
+    "mtp": 404
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T21:05:00+00:00",
+   "last_post": "2026-06-07T00:03:00+00:00"
+  },
+  {
+   "id": "LRL-20260606",
+   "code": "LRL",
+   "name": "Laurel Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 14,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "LRL-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:00:00+00:00",
+    "mtp": 99
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T16:00:00+00:00",
+   "last_post": "2026-06-06T22:55:00+00:00"
+  },
+  {
+   "id": "MED-20260606",
+   "code": "MED",
+   "name": "Meadowlands",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 15,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "MED-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:35:00+00:00",
+    "mtp": 494
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T22:35:00+00:00",
+   "last_post": "2026-06-07T04:25:00+00:00"
+  },
+  {
+   "id": "MMA-20260606",
+   "code": "MMA",
+   "name": "The Meadows",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 13,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "MMA-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:45:00+00:00",
+    "mtp": 144
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T16:45:00+00:00",
+   "last_post": "2026-06-06T20:45:00+00:00"
+  },
+  {
+   "id": "MTH-20260606",
+   "code": "MTH",
+   "name": "Monmouth Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "MTH-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:50:00+00:00",
+    "mtp": 149
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T16:50:00+00:00",
+   "last_post": "2026-06-06T20:32:00+00:00"
+  },
+  {
+   "id": "NFL-20260606",
+   "code": "NFL",
+   "name": "Northfield Park",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 16,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "NFL-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:00:00+00:00",
+    "mtp": 459
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T22:00:00+00:00",
+   "last_post": "2026-06-07T03:30:00+00:00"
+  },
+  {
+   "id": "PHI-20260606",
+   "code": "PHI",
+   "name": "Parx Racing",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 9,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "PHI-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:10:00+00:00",
+    "mtp": 109
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T16:10:00+00:00",
+   "last_post": "2026-06-06T20:46:00+00:00"
+  },
+  {
+   "id": "POC-20260606",
+   "code": "POC",
+   "name": "Pocono Downs",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 14,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "POC-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T17:00:00+00:00",
+    "mtp": 159
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T17:00:00+00:00",
+   "last_post": "2026-06-06T20:54:00+00:00"
+  },
+  {
+   "id": "PRM-20260606",
+   "code": "PRM",
+   "name": "Prairie Meadows",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 9,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "PRM-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:00:00+00:00",
+    "mtp": 459
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T22:00:00+00:00",
+   "last_post": "2026-06-07T02:12:00+00:00"
+  },
+  {
+   "id": "RD-20260606",
+   "code": "RD",
+   "name": "Belterra Park",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "RD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:35:00+00:00",
+    "mtp": 134
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T16:35:00+00:00",
+   "last_post": "2026-06-06T20:05:00+00:00"
+  },
+  {
+   "id": "SA-20260606",
+   "code": "SA",
+   "name": "Santa Anita",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 10,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "SA-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T20:00:00+00:00",
+    "mtp": 339
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt",
+    "Turf"
+   ],
+   "first_post": "2026-06-06T20:00:00+00:00",
+   "last_post": "2026-06-07T00:51:00+00:00"
+  },
+  {
+   "id": "SCD-20260606",
+   "code": "SCD",
+   "name": "Scioto Downs",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 15,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "SCD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T21:15:00+00:00",
+    "mtp": 414
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T21:15:00+00:00",
+   "last_post": "2026-06-07T02:44:00+00:00"
+  },
+  {
+   "id": "TDN-20260606",
+   "code": "TDN",
+   "name": "Thistledown",
+   "breed": "thoroughbred",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 8,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "TDN-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T16:25:00+00:00",
+    "mtp": 124
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T16:25:00+00:00",
+   "last_post": "2026-06-06T20:50:00+00:00"
+  },
+  {
+   "id": "TGD-20260606",
+   "code": "TGD",
+   "name": "Tioga Downs",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 11,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "TGD-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T22:15:00+00:00",
+    "mtp": 474
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T22:15:00+00:00",
+   "last_post": "2026-06-07T01:35:00+00:00"
+  },
+  {
+   "id": "VER-20260606",
+   "code": "VER",
+   "name": "Vernon Downs",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 12,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "VER-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T21:05:00+00:00",
+    "mtp": 404
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T21:05:00+00:00",
+   "last_post": "2026-06-07T00:45:00+00:00"
+  },
+  {
+   "id": "YON-20260606",
+   "code": "YON",
+   "name": "Yonkers Raceway",
+   "breed": "harness",
+   "country": "USA",
+   "date": "2026-06-06",
+   "race_count": 9,
+   "deep_link": null,
+   "next_race": {
+    "race_id": "YON-20260606-1",
+    "number": 1,
+    "post_time": "2026-06-06T19:30:00+00:00",
+    "mtp": 309
+   },
+   "official": 0,
+   "overlays_next_hour": 0,
+   "surfaces": [
+    "Dirt"
+   ],
+   "first_post": "2026-06-06T19:30:00+00:00",
+   "last_post": "2026-06-06T22:10:00+00:00"
+  }
+ ],
+ "next_up": [
+  {
+   "race_id": "IJN-20260606-1",
+   "track_id": "IJN-20260606",
+   "track_code": "IJN",
+   "track_name": "Horseshoe Indianapolis",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T14:45:00+00:00",
+   "mtp": 24,
+   "market": "live",
+   "top_pick": {
+    "program": "2",
+    "name": "Powerful Justice",
+    "p_model": 0.2487,
+    "edge_pts": -0.81,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "BEL-20260606-1",
+   "track_id": "BEL-20260606",
+   "track_code": "BEL",
+   "track_name": "Belmont at Saratoga",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T15:00:00+00:00",
+   "mtp": 39,
+   "market": "live",
+   "top_pick": {
+    "program": "4",
+    "name": "Cold Spell",
+    "p_model": 0.4251,
+    "edge_pts": 2.83,
+    "evidence": "thin"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "IJN-20260606-2",
+   "track_id": "IJN-20260606",
+   "track_code": "IJN",
+   "track_name": "Horseshoe Indianapolis",
+   "breed": "thoroughbred",
+   "number": 2,
+   "post_time": "2026-06-06T15:20:00+00:00",
+   "mtp": 59,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "1",
+    "name": "Catty Justice",
+    "p_model": 0.3353,
+    "edge_pts": 1.86,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "BEL-20260606-2",
+   "track_id": "BEL-20260606",
+   "track_code": "BEL",
+   "track_name": "Belmont at Saratoga",
+   "breed": "thoroughbred",
+   "number": 2,
+   "post_time": "2026-06-06T15:37:00+00:00",
+   "mtp": 76,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "3",
+    "name": "Life And Times",
+    "p_model": 0.3061,
+    "edge_pts": 2.12,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "IJN-20260606-3",
+   "track_id": "IJN-20260606",
+   "track_code": "IJN",
+   "track_name": "Horseshoe Indianapolis",
+   "breed": "thoroughbred",
+   "number": 3,
+   "post_time": "2026-06-06T15:54:00+00:00",
+   "mtp": 93,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "7",
+    "name": "Pro Fever",
+    "p_model": 0.3324,
+    "edge_pts": 6.38,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "LRL-20260606-1",
+   "track_id": "LRL-20260606",
+   "track_code": "LRL",
+   "track_name": "Laurel Park",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T16:00:00+00:00",
+   "mtp": 99,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "4",
+    "name": "Enzo",
+    "p_model": 0.252,
+    "edge_pts": -2.99,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "PHI-20260606-1",
+   "track_id": "PHI-20260606",
+   "track_code": "PHI",
+   "track_name": "Parx Racing",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T16:10:00+00:00",
+   "mtp": 109,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "2",
+    "name": "Tavern Time",
+    "p_model": 0.2468,
+    "edge_pts": -2.93,
+    "evidence": "strong"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "BEL-20260606-3",
+   "track_id": "BEL-20260606",
+   "track_code": "BEL",
+   "track_name": "Belmont at Saratoga",
+   "breed": "thoroughbred",
+   "number": 3,
+   "post_time": "2026-06-06T16:15:00+00:00",
+   "mtp": 114,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "8",
+    "name": "Intellect (Fr)",
+    "p_model": 0.7594,
+    "edge_pts": 27.2,
+    "evidence": "strong"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "DEL-20260606-1",
+   "track_id": "DEL-20260606",
+   "track_code": "DEL",
+   "track_name": "Delaware Park",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T16:20:00+00:00",
+   "mtp": 119,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "2",
+    "name": "Worker Bee",
+    "p_model": 0.265,
+    "edge_pts": -6.32,
+    "evidence": "strong"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "TDN-20260606-1",
+   "track_id": "TDN-20260606",
+   "track_code": "TDN",
+   "track_name": "Thistledown",
+   "breed": "thoroughbred",
+   "number": 1,
+   "post_time": "2026-06-06T16:25:00+00:00",
+   "mtp": 124,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "2",
+    "name": "Cowgirl Chic",
+    "p_model": 0.2981,
+    "edge_pts": 7.79,
+    "evidence": "strong"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "IJN-20260606-4",
+   "track_id": "IJN-20260606",
+   "track_code": "IJN",
+   "track_name": "Horseshoe Indianapolis",
+   "breed": "thoroughbred",
+   "number": 4,
+   "post_time": "2026-06-06T16:30:00+00:00",
+   "mtp": 129,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "3",
+    "name": "Basil",
+    "p_model": 0.2525,
+    "edge_pts": 0.09,
+    "evidence": "some"
+   },
+   "best_value": null
+  },
+  {
+   "race_id": "LRL-20260606-2",
+   "track_id": "LRL-20260606",
+   "track_code": "LRL",
+   "track_name": "Laurel Park",
+   "breed": "thoroughbred",
+   "number": 2,
+   "post_time": "2026-06-06T16:35:00+00:00",
+   "mtp": 134,
+   "market": "morning_line",
+   "top_pick": {
+    "program": "2",
+    "name": "Kessel Run",
+    "p_model": 0.2197,
+    "edge_pts": -0.66,
+    "evidence": "none"
+   },
+   "best_value": null
+  }
+ ],
+ "status": {
+  "now": "2026-06-06T14:20:09+00:00",
+  "source": "archive",
+  "live": false,
+  "ok": true,
+  "replay_date": "2026-06-06",
+  "detail": "Replaying recorded TVG cards from the repository archive.",
+  "last_success": null,
+  "recent_errors": [],
+  "model_version": "form-20261021-1857",
+  "model_loaded": true,
+  "history_runs": 762553,
+  "history_horses": 83469,
+  "history_through": "2026-05-09"
+ }
+}

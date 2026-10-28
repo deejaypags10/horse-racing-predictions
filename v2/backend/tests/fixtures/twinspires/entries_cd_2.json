@@ -1,0 +1,8 @@
+[
+ {"programNumber": "1", "horseName": "First Light", "jockeyName": "Irad Ortiz Jr.", "trainerName": "Todd Pletcher", "morningLineOdds": "5/2", "liveOdds": "3/1", "postPosition": 1, "scratched": false, "weight": 122},
+ {"programNumber": "1A", "horseName": "Second Light", "jockeyName": "Jose Ortiz", "trainerName": "Todd Pletcher", "morningLineOdds": "5/2", "postPosition": 2},
+ {"programNumber": "2", "horseName": "Midday Sun", "jockeyName": "Flavien Prat", "trainerName": "Brad Cox", "morningLineOdds": "8-5", "liveOdds": "9-5", "postPosition": 3},
+ {"programNumber": "3", "horseName": "Evening Star", "morningLineOdds": "4-1", "liveOdds": "5-1", "postPosition": 4},
+ {"programNumber": "4", "horseName": "Scratched Horse", "morningLineOdds": "10-1", "scratched": true, "postPosition": 5},
+ {"programNumber": "5", "horseName": "Long Shot (IRE)", "morningLineOdds": "20", "liveOdds": "30-1", "postPosition": 6}
+]

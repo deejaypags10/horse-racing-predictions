@@ -1,0 +1,235 @@
+{
+ "version": "form-20261021-1810",
+ "features": [
+  "has_history",
+  "log_starts",
+  "win_rate",
+  "top3_rate",
+  "form_last",
+  "form_avg3",
+  "won_last",
+  "fav_last",
+  "log_days",
+  "layoff",
+  "purse_delta",
+  "same_surface",
+  "surface_win_rate",
+  "dist_delta",
+  "track_seen",
+  "post_rel",
+  "post_rel_sq",
+  "recent_starts"
+ ],
+ "meta": {
+  "trained_at": "2026-10-21T18:10:32+00:00",
+  "archive": "us_races_cleaned.parquet",
+  "train_period": [
+   "2025-01-01",
+   "2026-05-09"
+  ],
+  "evaluation": {
+   "protocol": "fit on races before 2026-01-01, scored on 2026-01-01..2026-05-09",
+   "metrics": {
+    "thoroughbred": {
+     "races": 4739,
+     "runners": 37718,
+     "log_loss": 1.9344,
+     "log_loss_uniform": 2.0456,
+     "log_loss_gain_vs_uniform": 0.1113,
+     "top1": 0.2505,
+     "top1_uniform": 0.1328,
+     "favorite_top1": 0.3696,
+     "model_top1_same_races": 0.2563,
+     "second_log_loss": 1.8198,
+     "second_log_loss_uniform": 1.9027,
+     "share_runners_with_history": 0.9463
+    },
+    "harness": {
+     "races": 7101,
+     "runners": 57866,
+     "log_loss": 1.8736,
+     "log_loss_uniform": 2.0882,
+     "log_loss_gain_vs_uniform": 0.2146,
+     "top1": 0.2914,
+     "top1_uniform": 0.1252,
+     "favorite_top1": 0.4538,
+     "model_top1_same_races": 0.2914,
+     "second_log_loss": 1.8211,
+     "second_log_loss_uniform": 1.9543,
+     "share_runners_with_history": 0.9901
+    },
+    "quarter_horse": {
+     "races": 593,
+     "runners": 5214,
+     "log_loss": 2.0115,
+     "log_loss_uniform": 2.1593,
+     "log_loss_gain_vs_uniform": 0.1478,
+     "top1": 0.2648,
+     "top1_uniform": 0.1174,
+     "favorite_top1": 0.4013,
+     "model_top1_same_races": 0.2648,
+     "second_log_loss": 1.9625,
+     "second_log_loss_uniform": 2.0341,
+     "share_runners_with_history": 0.7275
+    },
+    "all": {
+     "races": 12433,
+     "runners": 100798,
+     "log_loss": 1.9034,
+     "log_loss_uniform": 2.0754,
+     "log_loss_gain_vs_uniform": 0.172,
+     "top1": 0.2745,
+     "top1_uniform": 0.1277,
+     "favorite_top1": 0.4212,
+     "model_top1_same_races": 0.2776,
+     "second_log_loss": 1.8275,
+     "second_log_loss_uniform": 1.9393,
+     "share_runners_with_history": 0.9601
+    },
+    "calibration": [
+     {
+      "lo": 0.0,
+      "hi": 0.03,
+      "n": 3673,
+      "predicted": 0.0215,
+      "observed": 0.0237
+     },
+     {
+      "lo": 0.03,
+      "hi": 0.06,
+      "n": 15472,
+      "predicted": 0.0467,
+      "observed": 0.0434
+     },
+     {
+      "lo": 0.06,
+      "hi": 0.1,
+      "n": 28906,
+      "predicted": 0.0799,
+      "observed": 0.076
+     },
+     {
+      "lo": 0.1,
+      "hi": 0.15,
+      "n": 25765,
+      "predicted": 0.1225,
+      "observed": 0.1252
+     },
+     {
+      "lo": 0.15,
+      "hi": 0.2,
+      "n": 13097,
+      "predicted": 0.1721,
+      "observed": 0.1794
+     },
+     {
+      "lo": 0.2,
+      "hi": 0.3,
+      "n": 9922,
+      "predicted": 0.2389,
+      "observed": 0.2524
+     },
+     {
+      "lo": 0.3,
+      "hi": 0.4,
+      "n": 2717,
+      "predicted": 0.3402,
+      "observed": 0.3338
+     },
+     {
+      "lo": 0.4,
+      "hi": 0.55,
+      "n": 992,
+      "predicted": 0.4566,
+      "observed": 0.375
+     },
+     {
+      "lo": 0.55,
+      "hi": 1.0,
+      "n": 254,
+      "predicted": 0.6533,
+      "observed": 0.4724
+     }
+    ]
+   }
+  },
+  "coefficients": {
+   "thoroughbred": {
+    "has_history": 0.0285,
+    "log_starts": 0.0,
+    "win_rate": -0.0914,
+    "top3_rate": 0.1237,
+    "form_last": 0.1365,
+    "form_avg3": 0.203,
+    "won_last": -0.101,
+    "fav_last": 0.1464,
+    "log_days": 0.0198,
+    "layoff": -0.0378,
+    "purse_delta": -0.3821,
+    "same_surface": 0.0299,
+    "surface_win_rate": 0.1413,
+    "dist_delta": -0.0533,
+    "track_seen": -0.0354,
+    "post_rel": -0.0588,
+    "post_rel_sq": 0.0817,
+    "recent_starts": 0.0238
+   },
+   "harness": {
+    "has_history": 0.0104,
+    "log_starts": -0.0645,
+    "win_rate": 0.0858,
+    "top3_rate": 0.1279,
+    "form_last": 0.1857,
+    "form_avg3": 0.2196,
+    "won_last": -0.0154,
+    "fav_last": 0.1558,
+    "log_days": -0.2685,
+    "layoff": 0.0506,
+    "purse_delta": -0.5227,
+    "same_surface": 0.0104,
+    "surface_win_rate": 0.0858,
+    "dist_delta": -0.0076,
+    "track_seen": -0.0674,
+    "post_rel": 0.2171,
+    "post_rel_sq": -0.5128,
+    "recent_starts": -0.0765
+   },
+   "quarter_horse": {
+    "has_history": 0.1411,
+    "log_starts": 0.1328,
+    "win_rate": -0.4656,
+    "top3_rate": 0.1546,
+    "form_last": 0.1258,
+    "form_avg3": 0.1858,
+    "won_last": -0.0544,
+    "fav_last": 0.0558,
+    "log_days": -0.0415,
+    "layoff": 0.0062,
+    "purse_delta": -0.3936,
+    "same_surface": -0.0466,
+    "surface_win_rate": 0.5966,
+    "dist_delta": -0.055,
+    "track_seen": 0.0011,
+    "post_rel": -0.2374,
+    "post_rel_sq": 0.3174,
+    "recent_starts": -0.0107
+   }
+  },
+  "l2": 1.0
+ },
+ "track_record": {
+  "races": 0,
+  "log_loss_model": null,
+  "log_loss_market": null
+ },
+ "blend": {
+  "live": {
+   "a": 1.0,
+   "b": 0.4
+  },
+  "morning_line": {
+   "a": 0.85,
+   "b": 0.6
+  }
+ }
+}

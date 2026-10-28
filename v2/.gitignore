@@ -1,0 +1,10 @@
+var/
+web/node_modules/
+web/dist/
+*.sqlite3*
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+# The root .gitignore ignores every tests/ directory; v2 keeps its tests.
+!backend/tests/

@@ -1,0 +1,42 @@
+{
+ "now": "2026-06-06T14:20:09+00:00",
+ "tickets": [
+  {
+   "id": "20d1f287b2fd",
+   "created_at": "2026-10-21T19:44:26+00:00",
+   "race_id": "IJN-20260606-1",
+   "track_name": "Horseshoe Indianapolis",
+   "race_number": 1,
+   "post_time": "2026-06-06T14:45:00+00:00",
+   "kind": "win",
+   "selection": [
+    "2"
+   ],
+   "stake": 10.0,
+   "odds_taken": 3.5,
+   "model_prob": 0.24874365246932192,
+   "fair_decimal": 4.020203088894227,
+   "model": "form-20261021-1857",
+   "note": "example",
+   "status": "open",
+   "payout": null,
+   "closing_odds": null,
+   "settled_at": null,
+   "breed": "thoroughbred",
+   "clv": null
+  }
+ ],
+ "summary": {
+  "count": 1,
+  "settled": 0,
+  "open": 1,
+  "staked": 0,
+  "returned": 0,
+  "net": 0,
+  "roi": null,
+  "roi_ci": null,
+  "avg_clv": null,
+  "beat_close": 0,
+  "clv_n": 0
+ }
+}

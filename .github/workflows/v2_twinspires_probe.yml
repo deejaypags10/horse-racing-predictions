@@ -1,0 +1,46 @@
+name: v2 — TwinSpires probe
+
+# Manual only. Checks that the v2 TwinSpires adapter can read today's
+# program from GitHub's network and uploads the raw responses as an
+# artifact so parser fixtures can be refreshed. Makes a few dozen GET
+# requests; never runs on a schedule.
+on:
+  workflow_dispatch:
+    inputs:
+      tracks:
+        description: "How many tracks to sample"
+        required: false
+        default: "3"
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: v2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -c v2/backend/constraints.txt ./v2/backend
+      - name: Probe
+        shell: bash
+        env:
+          EDGE_CAPTURE_DIR: ${{ github.workspace }}/captures
+          TRACKS: ${{ github.event.inputs.tracks }}
+        run: |
+          [[ "$TRACKS" =~ ^[0-9]{1,2}$ ]] || { echo "tracks must be a number"; exit 1; }
+          edge ts-probe --races "$TRACKS" | tee probe.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: twinspires-captures
+          path: |
+            probe.json
+            captures/
+          retention-days: 14

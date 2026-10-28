@@ -1,0 +1,5 @@
+{"races": [
+ {"raceNumber": 1, "postTimeLong": 1781112300000, "status": "Official", "distance": "6 F", "surface": "Dirt", "raceType": "Claiming", "purse": 36000},
+ {"raceNumber": 2, "postTime": "2026-06-06T17:15:00Z", "status": "Open", "distance": "1 1/16 Miles", "surface": {"name": "Turf"}, "raceType": "Allowance", "purse": "$90,000"},
+ {"raceNumber": "x"}
+]}

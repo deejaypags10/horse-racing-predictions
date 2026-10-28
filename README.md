@@ -1,3 +1,8 @@
+> **Equine Edge v2 lives in [`v2/`](v2/README.md).** It is a ground-up rebuild that covers any
+> TwinSpires track (thoroughbred, harness, quarter horse) with one track-agnostic model, a
+> race-first web app and paper-ticket tracking. The rest of this README documents the original
+> app, which is kept intact because its scheduled jobs still collect the results v2 trains on.
+
 # Horse Racing Predictions
 
 <p align="left">

@@ -1,0 +1,15 @@
+{
+ "now": "2026-06-06T14:20:09+00:00",
+ "source": "archive",
+ "live": false,
+ "ok": true,
+ "replay_date": "2026-06-06",
+ "detail": "Replaying recorded TVG cards from the repository archive.",
+ "last_success": null,
+ "recent_errors": [],
+ "model_version": "form-20261021-1857",
+ "model_loaded": true,
+ "history_runs": 762553,
+ "history_horses": 83469,
+ "history_through": "2026-05-09"
+}
